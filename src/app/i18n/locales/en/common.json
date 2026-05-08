@@ -1,0 +1,265 @@
+{
+  "auth": {
+    "brand": {
+      "title": "Mashena Admin",
+      "subtitle": "Operations & Management Console"
+    },
+    "hero": {
+      "headline": "Control trips, drivers, and pricing",
+      "highlight": "in one place.",
+      "description": "A professional admin dashboard for delivery apps: live trip tracking, driver & rider management, and pricing control."
+    },
+    "features": {
+      "liveTracking": "Live Tracking",
+      "liveTrackingDesc": "Track trips in real time",
+      "driverVerification": "Driver Verification",
+      "driverVerificationDesc": "Verify drivers and documents",
+      "pricingRules": "Pricing Rules",
+      "pricingRulesDesc": "Pricing algorithms",
+      "roles": "Roles & Access",
+      "rolesDesc": "Admin permissions"
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Enter your admin credentials to continue.",
+      "email": "Email",
+      "password": "Password",
+      "show": "Show",
+      "hide": "Hide",
+      "submit": "Sign In",
+      "loading": "Signing in...",
+      "apiNote": "Connected to real API — POST /api/auth/admin/login",
+      "emailPlaceholder": "admin@example.com",
+      "passwordPlaceholder": "••••••••",
+      "errors": { "generic": "Login failed" }
+    }
+  },
+
+  "topbar": {
+    "search": "Search (Trip ID, Driver, Rider...)"
+  },
+
+  "sidebar": {
+    "brand": "Mashena",
+    "vehicleTypes": "Vehicle Types",
+    "subtitle": "Admin Panel",
+    "collapse": "Collapse",
+    "dashboard": "Dashboard",
+    "drivers": "Drivers",
+    "requests": "Driver Requests",
+    "riders": "Riders",
+    "trips": "Trips",
+    "admins": "Admins",
+    "settings": "Settings",
+    "logout": "Logout",
+    "roles": "Role Management"
+  },
+
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "total": "total",
+    "search": "Search",
+    "no":"no",
+    "yes":"yes",
+    "nodata": "No data available"
+  },
+
+  "roles": {
+    "title": "Role Management",
+    "subtitle": "Create roles and assign permissions.",
+    "addRole": "Add Role",
+    "searchRole": "Search roles...",
+    "permissionsCount": "{{count}} permissions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "manageFor": "Manage permissions for",
+    "panelHint": "Assign or remove permissions. Later we will sync with API.",
+    "assigned": "Assigned permissions",
+    "available": "Available permissions",
+    "assign": "Assign",
+    "remove": "Remove",
+    "noPermissions": "No permissions assigned yet.",
+    "allAssigned": "All permissions are already assigned.",
+    "saveChanges": "Save changes",
+    "saveHint": "Later this will call PUT /api/roles/{roleId}/permissions",
+
+    "toast": {
+      "roleExists": "Role already exists.",
+      "roleCreated": "Role created successfully.",
+      "roleUpdated": "Role updated successfully.",
+      "roleDeleted": "Role deleted successfully.",
+      "cannotDeleteAdmin": "You cannot delete ADMIN role.",
+      "permissionsSaved": "Permissions saved successfully."
+    },
+    "modal": {
+      "createTitle": "Add Role",
+      "createSubtitle": "Create a new role (name will be uppercased).",
+      "editTitle": "Edit Role",
+      "editSubtitle": "Update role name.",
+      "nameLabel": "Role name",
+      "namePlaceholder": "Role nace (e.g. ADMIN)",
+      "nameRequired": "Role name is required.",
+      "hint": "Tip: use names like ADMIN, TRACKING_AGENT, SUPERADMIN"
+    },
+    "confirm": {
+      "title": "Delete role",
+      "message": "Are you sure you want to delete \"{{name}}\"?",
+      "delete": "Delete"
+    }
+  },
+
+  "drivers": {
+    "title": "Drivers",
+    "searchPlaceholder": "Search drivers...",
+    "pageInfo": "Page {{current}} / {{total}} — {{count}} total",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "city": "City",
+      "status": "Status",
+      "createdAt": "Created At",
+      "verified": "Verified",
+      "online": "Online",
+      "updatedAt": "Updated At"
+    },
+    "statuses": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "submitted": "Submitted",
+      "rejected": "Rejected",
+      "suspended": "Suspended"
+    }
+  },
+  "riders": {
+    "title": "Riders",
+    "searchPlaceholder": "Search riders...",
+    "pageInfo": "Page {{current}} / {{total}} — {{count}} total",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "city": "City",
+      "status": "Status",
+      "createdAt": "Created At",
+      "verified": "Verified",
+      "online": "Online",
+      "updatedAt": "Updated At",
+      "ratingAvg": "AvgRating",
+      "ratingCount": "Rating Count",
+      "cancelledTripCount": "Cancelled Trips"
+    },
+    "statuses": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "submitted": "Submitted",
+      "rejected": "Rejected",
+      "suspended": "Suspended"
+    }
+  },
+  "vehicleTypes": {
+    "title": "Vehicle Types",
+    "searchPlaceholder": "Search for vehicle type...",
+    "addType": "Add Type",
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "multiplier": "Multiplier",
+      "status": "Status",
+      "createdAt": "Created At",
+      "actions": "Actions"
+    }
+  },
+  "admins": {
+    "title": "Admins",
+    "searchPlaceholder": "Search admins...",
+    "pageInfo": "Page {{current}} / {{total}} — {{count}} total",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status",
+      "createdAt": "Created At"
+    }
+  },
+  "requestDetails": {
+    "title": "Onboarding Request",
+    "refId": "Reference ID",
+    "registered": "Registered At",
+    "driverInfo": "Driver Information",
+    "vehicleSetup": "Vehicle Setup",
+    "requiredDocs": "Required Documentation",
+    "requiredDocsSubtitle": "Upload and verify all driver legal files",
+    "required": "Required",
+    "approve": "Final Approval",
+    "reject": "Reject Request",
+    "rejectionReason": "Enter rejection reason (sent to driver):",
+    "saveChanges": "Save Changes",
+    "uploading": "Uploading...",
+    "verified": "Verified",
+    "needsUpload": "Needs Upload",
+    "modified": "Modified - Save Changes",
+    "updateFailed": "Update Failed",
+    "clickToUpload": "Click to upload",
+    "placeholderDate": "YYYY-MM-DD",
+    "validation": {
+      "blocked": "Approval Blocked",
+      "noVehicle": "Please select a vehicle classification",
+      "noPlate": "Vehicle plate number is required",
+      "missingDoc": "Missing or unverified required document: {{type}}",
+      "expiryError": "Expiry date must be after issuance date"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "nationalId": "National ID",
+      "license": "License Number",
+      "city": "City",
+      "plate": "Plate Number",
+      "status": "Status",
+      "vehicleType": "Vehicle Type",
+      "model": "Model",
+      "color": "Color",
+      "year": "Year"
+    },
+    "docLabels": {
+      "license": "Driver's License",
+      "insurance": "Vehicle Insurance",
+      "mechanic": "Mechanic Clearance",
+      "identity": "National Identity",
+      "other": "Other Documents"
+    }
+  },
+  "settings": {
+    "title": "Global Settings",
+    "subtitle": "Manage application configuration and fare rules.",
+    "search": "Search settings...",
+    "editValue": "Edit Value",
+    "key": "Setting Key",
+    "value": "Value",
+    "table": {
+      "key": "Key",
+      "value": "Value",
+      "updatedAt": "Last Updated",
+      "actions": "Actions"
+    },
+    "modal": {
+      "editTitle": "Edit Setting",
+      "editSubtitle": "Update the value for",
+      "valueLabel": "Setting Value",
+      "valuePlaceholder": "Enter new numeric value",
+      "valueRequired": "Value is required.",
+      "numericRequired": "Value must be a valid number."
+    },
+    "toast": {
+      "updated": "Setting updated successfully.",
+      "failed": "Failed to update setting.",
+      "loaded": "Settings loaded."
+    }
+  }
+}

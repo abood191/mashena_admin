@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dynamic Variables mappings */
+  --color-primary: #4880FF;
+  --color-surface: var(--surface-color);
+  --color-background: var(--bg-color);
+  --color-foreground: var(--text-main);
+  --color-muted: var(--text-muted);
+  --color-border-subtle: var(--border-color);
+}
+
+@layer base {
+  :root {
+    --surface-color: #0b1220;
+    --bg-color: #070b14;
+    --text-main: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-color: rgba(255, 255, 255, 0.1);
+    color-scheme: dark;
+  }
+
+  .light {
+    --surface-color: #ffffff;
+    --bg-color: #f1f5f9;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}

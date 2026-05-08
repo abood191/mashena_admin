@@ -1,0 +1,264 @@
+{
+  "auth": {
+    "brand": {
+      "title": "مشينا – لوحة الإدارة",
+      "subtitle": "منصة العمليات والإدارة"
+    },
+    "hero": {
+      "headline": "تحكّم بالرحلات والسائقين والتسعير",
+      "highlight": "من مكان واحد.",
+      "description": "لوحة إدارة احترافية لتطبيقات التوصيل: تتبّع الرحلات المباشرة، إدارة السائقين والركاب، والتحكم بالتسعير."
+    },
+    "features": {
+      "liveTracking": "التتبع المباشر",
+      "liveTrackingDesc": "متابعة الرحلات في الوقت الحقيقي",
+      "driverVerification": "توثيق السائقين",
+      "driverVerificationDesc": "التحقق من السائقين والوثائق",
+      "pricingRules": "قواعد التسعير",
+      "pricingRulesDesc": "خوارزميات التسعير",
+      "roles": "الصلاحيات والوصول",
+      "rolesDesc": "صلاحيات الأدمن"
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "أدخل بيانات الأدمن للمتابعة.",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "show": "إظهار",
+      "hide": "إخفاء",
+      "submit": "دخول",
+      "loading": "جاري تسجيل الدخول...",
+      "apiNote": "متصل بواجهة API — POST /api/auth/admin/login",
+      "emailPlaceholder": "admin@example.com",
+      "passwordPlaceholder": "••••••••",
+      "errors": { "generic": "فشل تسجيل الدخول" }
+    }
+  },
+
+  "topbar": {
+    "search": "بحث (رقم الرحلة، السائق، الراكب...)"
+  },
+
+  "sidebar": {
+    "vehicleTypes": "أنواع المركبات",
+    "brand": "مشينا",
+    "subtitle": "لوحة الإدارة",
+    "collapse": "تصغير القائمة",
+    "dashboard": "لوحة التحكم",
+    "drivers": "السائقون",
+    "requests": "طلبات السائقون",
+    "riders": "الركاب",
+    "trips": "الرحلات",
+    "admins": "الأدمن",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "roles": "إدارة الصلاحيات"
+  },
+
+  "common": {
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "saving": "جاري الحفظ...",
+    "prev": "السابق",
+    "next": "التالي",
+    "page": "صفحة",
+    "of": "من",
+    "total": "الإجمالي",
+    "search": "بحث",
+    "no": "لا",
+    "yes": "نعم",
+    "nodata": "لا توجد بيانات متاحة"
+  },
+
+  "roles": {
+    "title": "إدارة الصلاحيات",
+    "subtitle": "إنشاء الأدوار وإسناد الصلاحيات.",
+    "addRole": "إضافة دور",
+    "searchRole": "بحث عن دور...",
+    "permissionsCount": "{{count}} صلاحية",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "manageFor": "إدارة صلاحيات",
+    "panelHint": "قم بإضافة أو إزالة الصلاحيات. لاحقاً سنربطها مع الـ API.",
+    "assigned": "الصلاحيات المسندة",
+    "available": "الصلاحيات المتاحة",
+    "assign": "إسناد",
+    "remove": "إزالة",
+    "noPermissions": "لا توجد صلاحيات مسندة بعد.",
+    "allAssigned": "كل الصلاحيات مسندة بالفعل.",
+    "saveChanges": "حفظ التغييرات",
+    "saveHint": "لاحقاً سيستدعي هذا PUT /api/roles/{roleId}/permissions",
+
+    "toast": {
+      "roleExists": "هذا الدور موجود بالفعل.",
+      "roleCreated": "تم إنشاء الدور بنجاح.",
+      "roleUpdated": "تم تعديل الدور بنجاح.",
+      "roleDeleted": "تم حذف الدور بنجاح.",
+      "cannotDeleteAdmin": "لا يمكن حذف دور ADMIN.",
+      "permissionsSaved": "تم حفظ الصلاحيات بنجاح."
+    },
+    "modal": {
+      "createTitle": "إضافة دور",
+      "createSubtitle": "إنشاء دور جديد (سيتم تحويل الاسم إلى أحرف كبيرة).",
+      "editTitle": "تعديل دور",
+      "editSubtitle": "تعديل اسم الدور.",
+      "nameLabel": "اسم الدور",
+      "namePlaceholder": "مثال: SUPERADMIN",
+      "nameRequired": "اسم الدور مطلوب.",
+      "hint": "نصيحة: استخدم أسماء مثل ADMIN, TRACKING_AGENT, SUPERADMIN"
+    },
+    "confirm": {
+      "title": "حذف الدور",
+      "message": "هل أنت متأكد أنك تريد حذف \"{{name}}\"؟",
+      "delete": "حذف"
+    }
+  },
+
+  "drivers": {
+    "title": "السائقون",
+    "searchPlaceholder": "بحث عن سائق...",
+    "pageInfo": "صفحة {{current}} / {{total}} — {{count}} إجمالي",
+    "table": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "city": "المدينة",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء",
+      "verified": "موثق",
+      "online": "متصل",
+      "updatedAt": "تاريخ التحديث"
+    },
+    "statuses": {
+      "approved": "مقبول",
+      "pending": "قيد المراجعة",
+      "submitted": "بانتظار المراجعة",
+      "rejected": "مرفوض",
+      "suspended": "موقوف"
+    }
+  },
+  "riders": {
+    "title": "الركاب",
+    "searchPlaceholder": "بحث عن راكب...",
+    "pageInfo": "صفحة {{current}} / {{total}} — {{count}} إجمالي",
+    "table": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "city": "المدينة",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء",
+      "verified": "موثق",
+      "online": "متصل",
+      "updatedAt": "تاريخ التحديث",
+      "ratingAvg": "متوسط التقييم",
+      "ratingCount": "عدد التقييمات",
+      "cancelledTripCount": "عدد الرحلات الملغاة"
+    },
+    "statuses": {
+      "approved": "مقبول",
+      "pending": "قيد المراجعة",
+      "rejected": "مرفوض",
+      "suspended": "موقوف"
+    }
+  },
+  "vehicleTypes": {
+    "title": "أنواع المركبات",
+    "searchPlaceholder": "بحث عن نوع مركبة...",
+    "addType": "إضافة نوع",
+    "table": {
+      "name": "الاسم",
+      "description": "الوصف",
+      "multiplier": "المعامل",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "الإجراءات"
+    }
+  },
+  "admins": {
+    "title": "المدراء",
+    "searchPlaceholder": "بحث عن مدير...",
+    "pageInfo": "صفحة {{current}} / {{total}} — {{count}} إجمالي",
+    "table": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء"
+    }
+  },
+  "requestDetails": {
+    "title": "طلب انضمام",
+    "refId": "رقم المرجع",
+    "registered": "تاريخ التسجيل",
+    "driverInfo": "بيانات السائق",
+    "vehicleSetup": "إعداد المركبة",
+    "requiredDocs": "المستندات المطلوبة",
+    "requiredDocsSubtitle": "ارفع وتحقق من جميع الملفات القانونية للسائق",
+    "required": "مطلوب",
+    "approve": "اعتماد السائق",
+    "reject": "رفض الطلب",
+    "rejectionReason": "ادخل سبب الرفض (سيصل للسائق):",
+    "saveChanges": "حفظ التغييرات",
+    "uploading": "جاري الرفع...",
+    "verified": "تم التوثيق",
+    "needsUpload": "بانتظار الرفع",
+    "modified": "تم التعديل - احفظ التغييرات",
+    "updateFailed": "فشل التحديث",
+    "clickToUpload": "اضغط للرفع",
+    "placeholderDate": "YYYY-MM-DD",
+    "validation": {
+      "blocked": "تم حظر الاعتماد",
+      "noVehicle": "يرجى اختيار فئة المركبة",
+      "noPlate": "رقم اللوحة مطلوب",
+      "missingDoc": "مستند مطلوب مفقود أو غير موثق: {{type}}",
+      "expiryError": "يجب أن يكون تاريخ الانتهاء بعد تاريخ الإصدار"
+    },
+    "fields": {
+      "fullName": "الاسم الكامل",
+      "nationalId": "رقم الهوية",
+      "license": "رقم الرخصه",
+      "city": "المدينة",
+      "plate": "رقم اللوحة",
+      "status": "الحالة",
+      "vehicleType": "نوع المركبة",
+      "model": "الموديل",
+      "color": "اللون",
+      "year": "سنة الصنع"
+    },
+    "docLabels": {
+      "license": "رخصة القيادة",
+      "insurance": "تأمين المركبة",
+      "mechanic": "الفحص الفني",
+      "identity": "الهوية الوطنية",
+      "other": "مستندات أخرى"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات العامة",
+    "subtitle": "إدارة إعدادات التطبيق وتسعيرة الرحلات.",
+    "search": "بحث في الإعدادات...",
+    "editValue": "تعديل القيمة",
+    "key": "مفتاح الإعداد",
+    "value": "القيمة",
+    "table": {
+      "key": "المفتاح",
+      "value": "القيمة",
+      "updatedAt": "تاريخ التحديث",
+      "actions": "إجراءات"
+    },
+    "modal": {
+      "editTitle": "تعديل الإعداد",
+      "editSubtitle": "تحديث القيمة للإعداد",
+      "valueLabel": "القيمة",
+      "valuePlaceholder": "أدخل القيمة الرقمية الجديدة",
+      "valueRequired": "القيمة مطلوبة.",
+      "numericRequired": "يجب أن تكون القيمة رقماً."
+    },
+    "toast": {
+      "updated": "تم تحديث الإعداد بنجاح.",
+      "failed": "فشل تحديث الإعداد.",
+      "loaded": "تم تحميل الإعدادات."
+    }
+  }
+}
