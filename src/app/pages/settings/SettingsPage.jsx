@@ -1,9 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { appSettingsService } from "../../services/appSettings.service";
-import { ModalShell } from "../../../components/ui/ModalShell";
-import { InlineToast } from "../../../components/ui/InlineToast";
+import { useAppSettings, useUpdateAppSetting } from "@/app/hooks/api/useAppSettings";
+import { ModalShell } from "@/components/ui/ModalShell";
+import { toast } from "sonner";
+import { useDebounce } from "@/hooks/useDebounce";
 
 /* ----------------------------- UI Components ----------------------------- */
 
@@ -88,52 +88,47 @@ function EditSettingModal({ open, setting, onClose, onSubmit, loading }) {
 
 export default function SettingsPage() {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
   
+  const [skip, setSkip] = useState(0);
+  const [limit] = useState(10);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 400);
+
   const [editOpen, setEditOpen] = useState(false);
   const [editSetting, setEditSetting] = useState(null);
-  
-  const [toast, setToast] = useState({ show: false, tone: "info", message: "" });
-  const showToast = (tone, message) => setToast({ show: true, tone, message });
-  const closeToast = () => setToast((p) => ({ ...p, show: false }));
 
   // --- React Query for Data Fetching & Caching ---
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["settings"],
-    queryFn: () => appSettingsService.list()
-  });
+  const { data, isLoading, isError, error } = useAppSettings({ skip, limit, search: debouncedSearch });
 
-  const updateMutation = useMutation({
-    mutationFn: ({ key, value }) => appSettingsService.updateSetting({ key, value }),
-    onSuccess: () => {
-      // Invalidate cache natively to refetch settings without manual code
-      queryClient.invalidateQueries({ queryKey: ["settings"] });
-      showToast("success", t("settings.toast.updated"));
+  const updateMutation = useUpdateAppSetting();
+
+  const handleUpdate = async ({ key, value }) => {
+    try {
+      await updateMutation.mutateAsync({ key, value });
+      toast.success(t("settings.toast.updated", { defaultValue: "Setting updated successfully" }));
       setEditOpen(false);
       setEditSetting(null);
-    },
-    onError: (err) => {
-      showToast("error", t("settings.toast.failed") + ": " + (err?.message || ""));
+    } catch (err) {
+      toast.error(t("settings.toast.failed", { defaultValue: "Failed to update" }) + ": " + (err?.message || ""));
     }
-  });
+  };
 
-  const settings = Array.isArray(data) ? data : data?.data || [];
+  const settings = data?.data || [];
+  const settingsCount = data?.count || 0;
 
   const handleEdit = (setting) => {
     setEditSetting(setting);
     setEditOpen(true);
   };
 
-  const filteredSettings = useMemo(() => {
-    const s = search.trim().toLowerCase();
-    if (!s) return settings;
-    return settings.filter((item) => item.key.toLowerCase().includes(s));
-  }, [settings, search]);
+  const currentPage = Math.floor(skip / limit) + 1;
+  const totalPages = Math.max(1, Math.ceil(settingsCount / limit));
+  const canPrev = skip > 0;
+  const canNext = skip + limit < settingsCount;
 
   useEffect(() => {
     if (isError) {
-      showToast("error", t("settings.toast.failed") + ": " + (error?.message || ""));
+      toast.error(t("settings.toast.failed", { defaultValue: "Failed" }) + ": " + (error?.message || ""));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
@@ -148,21 +143,14 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Toast */}
-      <div className="mt-4">
-        <InlineToast
-          show={toast.show}
-          tone={toast.tone}
-          message={toast.message}
-          onClose={closeToast}
-        />
-      </div>
-
       <div className="mt-6 rounded-3xl border border-white/10 bg-[var(--color-surface,#0b1220)] shadow-xl overflow-hidden">
         <div className="p-4 border-b border-white/10 flex items-center justify-between gap-4 bg-white/[0.01]">
           <input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setSkip(0);
+            }}
             placeholder={t("settings.search")}
             className="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/35 outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
           />
@@ -185,7 +173,7 @@ export default function SettingsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/10">
-                {filteredSettings.map((item, i) => (
+                {settings.map((item, i) => (
                   <tr key={item.key} className="hover:bg-white/[0.03] transition-colors duration-200" style={{ animationDelay: `${i * 30}ms` }}>
                     <td className="px-6 py-4 font-medium text-white">{item.key}</td>
                     <td className="px-6 py-4">
@@ -207,7 +195,7 @@ export default function SettingsPage() {
                   </tr>
                 ))}
 
-                {filteredSettings.length === 0 && !isLoading && (
+                {settings.length === 0 && !isLoading && (
                   <tr>
                     <td colSpan={4} className="px-6 py-12 text-center text-white/50">
                       {search ? t("common.nodata") : t("common.nodata")}
@@ -218,6 +206,32 @@ export default function SettingsPage() {
             </table>
           )}
         </div>
+        
+        {/* Pagination Footer */}
+        <div className="flex items-center justify-between gap-3 p-4 border-t border-white/10 bg-white/[0.01]">
+          <div className="text-xs font-semibold tracking-wider text-white/40 uppercase">
+            {settingsCount === 0
+              ? "0"
+              : `Page ${currentPage} / ${totalPages} — ${settingsCount} total`}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSkip((s) => Math.max(0, s - limit))}
+              disabled={!canPrev || isLoading}
+              className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => setSkip((s) => s + limit)}
+              disabled={!canNext || isLoading}
+              className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
 
       <EditSettingModal
@@ -227,7 +241,7 @@ export default function SettingsPage() {
           setEditOpen(false);
           setEditSetting(null);
         }}
-        onSubmit={(key, value) => updateMutation.mutate({ key, value })}
+        onSubmit={(key, value) => handleUpdate({ key, value })}
         loading={updateMutation.isPending}
       />
     </div>

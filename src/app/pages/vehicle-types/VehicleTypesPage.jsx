@@ -7,10 +7,13 @@ import {
   useUpdateVehicleType, 
   useDeleteVehicleType 
 } from "@/app/hooks/api/useVehicleTypes";
+import { toast } from "sonner";
+import { useConfirm } from "@/app/hooks/useConfirm";
 
 export default function VehicleTypesPage() {
   const { t } = useTranslation("common");
   const [editingId, setEditingId] = useState(null);
+  const { confirm, closeConfirm, ConfirmComponent } = useConfirm();
 
   const [form, setForm] = useState({
     name: "",
@@ -45,12 +48,12 @@ export default function VehicleTypesPage() {
 
   const handleCreateOrUpdate = async () => {
     if (!form.name) {
-      alert(t("roles.modal.nameRequired"));
+      toast.warning(t("roles.modal.nameRequired"));
       return;
     }
 
     if (!editingId && !form.image) {
-      alert("Image required");
+      toast.warning("Image required");
       return;
     }
 
@@ -62,7 +65,7 @@ export default function VehicleTypesPage() {
           fd.append("name", form.name);
           fd.append("description", form.description || "");
           fd.append("multiplier", String(form.multiplier));
-          fd.append("isActive", form.isActive ? "1" : "0");
+          fd.append("isActive", form.isActive ?  true: false);
           fd.append("image", form.image);
 
           await updateMutation.mutateAsync({ id: editingId, data: fd, isFormData: true });
@@ -90,8 +93,9 @@ export default function VehicleTypesPage() {
       }
 
       resetForm();
+      toast.success(editingId ? "Vehicle type updated successfully" : "Vehicle type created successfully");
     } catch (e) {
-      alert(e.message || "An error occurred");
+      toast.error(e.message || "An error occurred");
     }
   };
 
@@ -107,12 +111,25 @@ export default function VehicleTypesPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm(t("roles.confirm.message", { name: "" }))) return;
+    const typeToDelete = types.find(t => t.id === id);
+    const typeName = typeToDelete?.name || "";
+
+    const isConfirmed = await confirm({
+      title: t("roles.confirm.title", { defaultValue: "Are you sure?" }),
+      message: t("roles.confirm.message", { name: typeName }),
+      dangerLabel: "Delete"
+    });
+    
+    if (!isConfirmed) return;
+
     try {
       await deleteMutation.mutateAsync(id);
+      toast.success("Vehicle type deleted successfully");
     } catch (e) {
       console.error(e);
-      alert(e.message || "Failed to delete");
+      toast.error(e.message || "Failed to delete");
+    } finally {
+      closeConfirm();
     }
   };
 
@@ -299,6 +316,7 @@ export default function VehicleTypesPage() {
           </div>
         </div>
       </div>
+      {ConfirmComponent}
     </div>
   );
 }

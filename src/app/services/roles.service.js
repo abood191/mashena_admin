@@ -1,8 +1,8 @@
 import { api } from "./apiClient";
 
 export const rolesService = {
-  list: ({ skip = 0, limit = 10 }) =>
-    api.get("/api/roles", { skip, limit }),
+  list: ({ skip = 0, limit = 10, search = "" }) =>
+    api.get("/api/roles", { skip, limit, search }),
 
   create: ({ name }) =>
     api.post("/api/roles", { name }),

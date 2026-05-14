@@ -1,42 +1,32 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import UsersTable from "@/components/users/UsersTable";
-import { userService } from "@/app/services/user.service";
+import { useRiders } from "@/app/hooks/api/useUsers";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Search, UserSquare, Star, CheckCircle2, XCircle } from "lucide-react";
+import { toast } from "sonner";
 
 export default function RidersPage() {
   const { t } = useTranslation("common");
-  const [riders, setRiders] = useState([]);
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
-  const [count, setCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 400);
 
-  const fetchRiders = async () => {
-    setLoading(true);
-    try {
-      const res = await userService.getRiders({
-        skip,
-        limit,
-        search: debouncedSearch,
-      });
+  const { data, isFetching, error } = useRiders({
+    skip,
+    limit,
+    search: debouncedSearch,
+  });
 
-      setRiders(res.data || []);
-      setCount(res.count || 0);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const riders = data?.data || [];
+  const count = data?.count || 0;
 
   useEffect(() => {
-    fetchRiders();
-  }, [skip, debouncedSearch]);
+    if (error) {
+      toast.error(error.message || "Failed to load riders");
+    }
+  }, [error]);
 
   const columns = [
     { header: t("riders.table.name"), accessorKey: "fullName" },
@@ -100,7 +90,7 @@ export default function RidersPage() {
       </div>
 
       <div className="bg-[#0b1220] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-        <UsersTable columns={columns} data={riders} loading={loading} />
+        <UsersTable columns={columns} data={riders} loading={isFetching} />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">

@@ -1,8 +1,8 @@
 import { api } from "./apiClient";
 
 export const driverRequestsService = {
-  getAll: ({ skip = 0, limit = 10 }) =>
-    api.get("/api/driver-approval-requests", { skip, limit }),
+  getAll: ({ skip = 0, limit = 10, search = "", status = "" } = {}) =>
+    api.get("/api/driver-approval-requests", { skip, limit, search, status }),
 
   getById: (id) => api.get(`/api/driver-approval-requests/${id}`),
 
