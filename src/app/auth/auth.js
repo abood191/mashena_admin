@@ -1,39 +1,16 @@
-import { apiFetch } from "./apiClient";
+import { api } from "../services/apiClient";
+import {
+  TOKEN_KEY,
+  ROLE_KEY,
+  USER_KEY,
+  setToken,
+  getToken,
+  clearToken,
+  isAuthed,
+  logout,
+} from "./token";
 
-const TOKEN_KEY = "mashena_token";
-const ROLE_KEY = "mashena_role";
-const USER_KEY = "mashena_user";
-   
-//
-
-
-export function setToken(token) {
-  localStorage.setItem(TOKEN_KEY, token);
-}
-
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
-}
-
-export function clearToken() {
-  localStorage.removeItem(TOKEN_KEY);
-}
-//
-
-
-
-
-export function isAuthed() {
-  return Boolean(localStorage.getItem(TOKEN_KEY));
-}
-
-
-
-export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(ROLE_KEY);
-  localStorage.removeItem(USER_KEY);
-}
+export { setToken, getToken, clearToken, isAuthed, logout };
 
 // إذا شكل response عندك مختلف، عدّل هون فقط
 function extractToken(resp) {
@@ -52,10 +29,7 @@ function extractUser(resp) {
 }
 
 export async function loginAdmin({ email, password, fcmToken }) {
-  const resp = await apiFetch("/api/auth/admin/login", {
-    method: "POST",
-    body: { email, password, fcmToken },
-  });
+  const resp = await api.post("/api/auth/admin/login", { email, password, fcmToken });
 
   const token = extractToken(resp);
 

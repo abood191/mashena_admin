@@ -1,6 +1,6 @@
-import { getToken } from "../auth/auth";
+import { getToken } from "../auth/token";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 async function request(
   path,
@@ -8,28 +8,34 @@ async function request(
 ) {
   const token = getToken();
 
-  const url = new URL(BASE_URL + path);
+  // Handle absolute URLs (if path is already a full URL)
+  const isAbsolute = path.startsWith("http");
+  const url = new URL(isAbsolute ? path : BASE_URL + path);
 
   if (params) {
-    Object.entries(params).forEach(([k, v]) =>
-      url.searchParams.set(k, String(v)),
-    );
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== "") {
+        url.searchParams.set(k, String(v));
+      }
+    });
   }
 
   const headers = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  // ❗ لا تحط Content-Type إذا FormData
+  // Do not set Content-Type for FormData; fetch sets it automatically with the correct boundary
   if (!isFormData) {
     headers["Content-Type"] = "application/json";
   }
 
-  const res = await fetch(url.toString(), {
+  const fetchOptions = {
     method,
     headers,
     body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
-  });
+  };
+
+  const res = await fetch(url.toString(), fetchOptions);
 
   const text = await res.text();
 
@@ -41,8 +47,9 @@ async function request(
   }
 
   if (!res.ok) {
+    // Standardize error structure for the frontend
     const message =
-      data?.message || data?.error || `Request failed (${res.status})`;
+      data?.message || data?.error || (typeof data === "string" ? data : `Request failed (${res.status})`);
 
     const err = new Error(message);
     err.status = res.status;

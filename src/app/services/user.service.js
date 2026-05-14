@@ -1,12 +1,12 @@
-import { apiFetch } from "../auth/apiClient"; 
+import { api } from "./apiClient";
 
 export const userService = {
   getDrivers: ({ skip, limit, search }) =>
-    apiFetch(`/api/user/drivers?skip=${skip}&limit=${limit}&search=${search || ""}`),
+    api.get("/api/user/drivers", { skip, limit, search }),
 
   getRiders: ({ skip, limit, search }) =>
-    apiFetch(`/api/user/riders?skip=${skip}&limit=${limit}&search=${search || ""}`),
+    api.get("/api/user/riders", { skip, limit, search }),
 
   getAdmins: ({ skip, limit, search }) =>
-    apiFetch(`/api/user/admins?skip=${skip}&limit=${limit}&search=${search || ""}`),
+    api.get("/api/user/admins", { skip, limit, search }),
 };

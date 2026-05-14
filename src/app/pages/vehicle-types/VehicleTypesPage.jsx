@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { vehicleTypesService } from "@/app/services/vehicleTypes.service";
 import { Plus, Edit3, Trash2, CheckCircle2, XCircle, Loader2, Image as ImageIcon } from "lucide-react";
+import { 
+  useVehicleTypes, 
+  useCreateVehicleType, 
+  useUpdateVehicleType, 
+  useDeleteVehicleType 
+} from "@/app/hooks/api/useVehicleTypes";
 
 export default function VehicleTypesPage() {
   const { t } = useTranslation("common");
-  const [types, setTypes] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
   const [form, setForm] = useState({
@@ -17,19 +20,15 @@ export default function VehicleTypesPage() {
     image: null,
   });
 
-  // ---------------- Fetch ----------------
-  const fetchTypes = async () => {
-    try {
-      const res = await vehicleTypesService.getAll();
-      setTypes(res.data || []);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // ---------------- Hooks ----------------
+  const { data: typesResponse, isLoading: isFetchingTypes } = useVehicleTypes();
+  const types = typesResponse?.data || [];
 
-  useEffect(() => {
-    fetchTypes();
-  }, []);
+  const createMutation = useCreateVehicleType();
+  const updateMutation = useUpdateVehicleType();
+  const deleteMutation = useDeleteVehicleType();
+
+  const isSaving = createMutation.isPending || updateMutation.isPending;
 
   // ---------------- Handlers ----------------
 
@@ -55,8 +54,6 @@ export default function VehicleTypesPage() {
       return;
     }
 
-    setLoading(true);
-
     try {
       if (editingId) {
         if (form.image) {
@@ -68,13 +65,17 @@ export default function VehicleTypesPage() {
           fd.append("isActive", form.isActive ? "1" : "0");
           fd.append("image", form.image);
 
-          await vehicleTypesService.update(editingId, fd, true);
+          await updateMutation.mutateAsync({ id: editingId, data: fd, isFormData: true });
         } else {
-          await vehicleTypesService.update(editingId, {
-            name: form.name,
-            description: form.description,
-            multiplier: form.multiplier,
-            isActive: form.isActive,
+          await updateMutation.mutateAsync({ 
+            id: editingId, 
+            data: {
+              name: form.name,
+              description: form.description,
+              multiplier: form.multiplier,
+              isActive: form.isActive,
+            },
+            isFormData: false 
           });
         }
       } else {
@@ -85,15 +86,12 @@ export default function VehicleTypesPage() {
         fd.append("isActive", form.isActive);
         fd.append("image", form.image);
 
-        await vehicleTypesService.create(fd);
+        await createMutation.mutateAsync(fd);
       }
 
-      await fetchTypes();
       resetForm();
     } catch (e) {
-      alert(e.message);
-    } finally {
-      setLoading(false);
+      alert(e.message || "An error occurred");
     }
   };
 
@@ -111,10 +109,10 @@ export default function VehicleTypesPage() {
   const handleDelete = async (id) => {
     if (!confirm(t("roles.confirm.message", { name: "" }))) return;
     try {
-      await vehicleTypesService.remove(id);
-      fetchTypes();
+      await deleteMutation.mutateAsync(id);
     } catch (e) {
       console.error(e);
+      alert(e.message || "Failed to delete");
     }
   };
 
@@ -138,7 +136,9 @@ export default function VehicleTypesPage() {
             </div>
 
             <div className="divide-y divide-white/5">
-              {types.length === 0 ? (
+              {isFetchingTypes ? (
+                <div className="p-12 flex justify-center text-white/40"><Loader2 className="animate-spin" size={24} /></div>
+              ) : types.length === 0 ? (
                 <div className="p-12 text-center text-white/20 italic">{t("common.nodata")}</div>
               ) : (
                 types.map((type) => (
@@ -288,10 +288,10 @@ export default function VehicleTypesPage() {
                 )}
                 <button
                   onClick={handleCreateOrUpdate}
-                  disabled={loading}
+                  disabled={isSaving}
                   className="flex-[2] px-6 py-4 rounded-2xl bg-[#4880FF] text-white font-bold hover:bg-[#3d6edb] transition-all shadow-lg shadow-[#4880FF]/25 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
+                  {isSaving ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
                   {editingId ? t("common.save") : t("vehicleTypes.addType")}
                 </button>
               </div>
