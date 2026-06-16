@@ -49,6 +49,7 @@
     "requests": "Driver Requests",
     "riders": "Riders",
     "trips": "Trips",
+    "liveTracking": "Live Tracking",
     "admins": "Admins",
     "settings": "Settings",
     "logout": "Logout",

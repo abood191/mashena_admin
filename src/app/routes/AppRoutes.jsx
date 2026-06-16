@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 // Lazy-loaded components drastically improve initial bundle size loading.
 const Dashboard = React.lazy(() => import("../pages/Dashboard"));
 const PlaceholderPage = React.lazy(() => import("../pages/PlaceholderPage"));
+const TripsPage = React.lazy(() => import("../pages/trips/TripsPage"));
 const RoleManagementPage = React.lazy(() => import("../pages/RoleManagementPage"));
 const DriversPage = React.lazy(() => import("../pages/drivers/DriversPage"));
 const RidersPage = React.lazy(() => import("../pages/riders/RidersPage"));
@@ -12,6 +13,7 @@ const RequestsPage = React.lazy(() => import("../pages/request/DriverRequestsPag
 const VehicleTypesPage = React.lazy(() => import("../pages/vehicle-types/VehicleTypesPage"));
 const DriverRequestDetailsPage = React.lazy(() => import("../pages/request/RequestDetailsPage"));
 const SettingsPage = React.lazy(() => import("../pages/settings/SettingsPage"));
+const LiveTrackingPage = React.lazy(() => import("../pages/live-tracking/LiveTrackingPage"));
 
 // Global Loader applied when jumping between massive un-cached chunks
 function SuspenseFallback() {
@@ -34,7 +36,8 @@ export default function AppRoutes() {
         <Route path="/requests" element={<RequestsPage />} />
         <Route path="/vehicle-types" element={<VehicleTypesPage />} />
         <Route path="/driver-requests/:id" element={<DriverRequestDetailsPage />} />
-        <Route path="/trips" element={<PlaceholderPage title="Trips" />} />
+        <Route path="/trips" element={<TripsPage />} />
+        <Route path="/live-tracking" element={<LiveTrackingPage />} />
         <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
         <Route path="/roles" element={<RoleManagementPage />} />
         <Route path="/settings" element={<SettingsPage />} />

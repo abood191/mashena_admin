@@ -5,6 +5,7 @@ import {
   Route,
   Settings,
   ShieldCheck,
+  Map,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -38,6 +39,11 @@ export const NAV_ITEMS = [
     to: "/trips",
     labelKey: "sidebar.trips",
     icon: Route, // Trips / routes
+  },
+  {
+    to: "/live-tracking",
+    labelKey: "sidebar.liveTracking",
+    icon: Map, // Live Map tracking
   },
   {
     to: "/roles",
