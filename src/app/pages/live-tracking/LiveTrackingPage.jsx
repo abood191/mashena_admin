@@ -49,7 +49,7 @@ export default function LiveTrackingPage() {
       <div className="flex-1 flex flex-col h-full gap-4 min-w-0">
         
         {/* Operations Dashboard Top Stats Bar */}
-        <div className="bg-slate-900/40 backdrop-blur-md px-5 py-4 rounded-3xl border border-white/10 flex flex-wrap items-center justify-between gap-4 shadow-md">
+       <div className="bg-surface/80 backdrop-blur-md px-5 py-4 rounded-3xl border border-border-subtle flex flex-wrap items-center justify-between gap-4 shadow-md">
           
           {/* Logo & Headline */}
           <div className="flex items-center gap-3">
@@ -57,10 +57,10 @@ export default function LiveTrackingPage() {
               <CarFront className="h-5 w-5 text-indigo-400" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-white tracking-wide uppercase">
+              <h1 className="text-sm font-bold text-foreground tracking-wide uppercase">
                 Mashena Operations
               </h1>
-              <p className="text-[10px] text-white/40">
+              <p className="text-[10px] text-foreground/40">
                 Real-time ride dispatch tracking deck
               </p>
             </div>
@@ -69,28 +69,28 @@ export default function LiveTrackingPage() {
           {/* Core Analytics Badges Grid */}
           <div className="flex items-center gap-3">
             {/* Live Drivers Badge */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px]">
-              <span className="text-[9px] text-white/40 font-semibold uppercase">Drivers</span>
+            <div className="bg-foreground/5 border border-border-subtle rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px]">
+              <span className="text-[9px] text-foreground/40 font-semibold uppercase">Drivers</span>
               <span className="text-xs font-black text-indigo-400 mt-0.5">{activeDriverIds.length}</span>
             </div>
 
             {/* Unassigned Trips Badge */}
-            <div className={`border rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px] transition-colors ${pendingCount > 0 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-white/[0.02] border-white/5'}`}>
-              <span className="text-[9px] text-white/40 font-semibold uppercase">Pending</span>
-              <span className={`text-xs font-black mt-0.5 ${pendingCount > 0 ? 'text-yellow-400' : 'text-white'}`}>{pendingCount}</span>
+            <div className={`border rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px] transition-colors ${pendingCount > 0 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-foreground/5 border-border-subtle'}`}>
+              <span className="text-[9px] text-foreground/40 font-semibold uppercase">Pending</span>
+              <span className={`text-xs font-black mt-0.5 ${pendingCount > 0 ? 'text-yellow-400' : 'text-foreground'}`}>{pendingCount}</span>
             </div>
 
             {/* Active Transits Badge */}
-            <div className={`border rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px] transition-colors ${activeCount > 0 ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-white/[0.02] border-white/5'}`}>
-              <span className="text-[9px] text-white/40 font-semibold uppercase">Transit</span>
-              <span className={`text-xs font-black mt-0.5 ${activeCount > 0 ? 'text-emerald-400' : 'text-white'}`}>{activeCount}</span>
+            <div className={`border rounded-2xl px-3 py-1.5 flex flex-col items-center min-w-[70px] transition-colors ${activeCount > 0 ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-foreground/5 border-border-subtle'}`}>
+              <span className="text-[9px] text-foreground/40 font-semibold uppercase">Transit</span>
+              <span className={`text-xs font-black mt-0.5 ${activeCount > 0 ? 'text-emerald-400' : 'text-foreground'}`}>{activeCount}</span>
             </div>
           </div>
 
           {/* Map Selector & Socket Status */}
           <div className="flex items-center gap-3.5">
             {/* Map Style Selector */}
-            <div className="bg-black/40 border border-white/5 p-1 rounded-xl flex gap-0.5 text-[9px] font-bold">
+            <div className="bg-black/40 border border-border-subtle p-1 rounded-xl flex gap-0.5 text-[9px] font-bold">
               {MAP_STYLES.map((style) => (
                 <button
                   key={style.id}
@@ -99,7 +99,7 @@ export default function LiveTrackingPage() {
                     "px-2.5 py-1.5 rounded-lg transition-all",
                     mapStyle === style.id
                       ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30"
-                      : "text-white/50 border border-transparent hover:text-white",
+                      : "text-foreground/50 border border-transparent hover:text-foreground",
                   ].join(" ")}
                 >
                   {style.label}
@@ -129,7 +129,7 @@ export default function LiveTrackingPage() {
         </div>
 
         {/* Dynamic Map Area */}
-        <div className="flex-1 min-h-[300px]">
+        <div className="flex-10 min-h-[500px]">
           <TrackingMap
             activeDriverIds={activeDriverIds}
             mapStyle={mapStyle}
@@ -189,9 +189,9 @@ function TripOperationsPanel({
   activeDriverIds,
 }) {
   return (
-    <div className="flex flex-col h-full gap-4 text-white">
-      <div className="bg-slate-900/60 backdrop-blur-md p-4 rounded-3xl border border-white/10 shadow-lg">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+    <div className="flex flex-col h-full gap-4 text-foreground">
+      <div className="bg-surface/80 backdrop-blur-md p-4 rounded-3xl border border-border-subtle shadow-lg">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-muted">
           Tracking Room
         </h3>
 
@@ -199,7 +199,7 @@ function TripOperationsPanel({
           <div className="mt-3 space-y-3">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <span className="text-[9px] text-white/30 font-bold uppercase block">
+                <span className="text-[9px] text-foreground/30 font-bold uppercase block">
                   Selected Trip
                 </span>
                 <h4 className="text-sm font-black text-indigo-400 truncate">
@@ -212,14 +212,14 @@ function TripOperationsPanel({
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3">
-                <span className="text-[9px] text-white/30 font-bold uppercase block">Driver</span>
-                <span className="text-xs font-black text-white mt-1 block truncate">
+              <div className="bg-foreground/5 border border-border-subtle rounded-2xl p-3">
+                <span className="text-[9px] text-foreground/30 font-bold uppercase block">Driver</span>
+                <span className="text-xs font-black text-foreground mt-1 block truncate">
                   {selectedTrip.driver?.name || selectedTrip.driverId || "Unassigned"}
                 </span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3">
-                <span className="text-[9px] text-white/30 font-bold uppercase block">Telemetry</span>
+              <div className="bg-foreground/5 border border-border-subtle rounded-2xl p-3">
+                <span className="text-[9px] text-foreground/30 font-bold uppercase block">Telemetry</span>
                 <span className="text-xs font-black text-emerald-400 mt-1 block">
                   {activeDriverIds.length ? "LIVE" : "WAITING"}
                 </span>
@@ -228,33 +228,33 @@ function TripOperationsPanel({
 
             <button
               onClick={() => onSelectTrip(null)}
-              className="w-full py-2 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/70 font-bold text-xs transition-colors cursor-pointer"
+              className="w-full py-2 rounded-2xl bg-foreground/5 hover:bg-foreground/10 border border-border-subtle text-foreground/70 font-bold text-xs transition-colors cursor-pointer"
             >
               Leave Tracking Room
             </button>
           </div>
         ) : (
-          <div className="mt-3 flex flex-col items-center justify-center p-6 text-center text-white/30 border border-dashed border-white/10 rounded-2xl min-h-[130px]">
+          <div className="mt-3 flex flex-col items-center justify-center p-6 text-center text-foreground/30 border border-dashed border-border-subtle rounded-2xl min-h-[130px]">
             <Radio className="h-7 w-7 animate-pulse text-indigo-400/60" />
             <p className="text-xs mt-2 font-medium">Select a trip to join its room.</p>
           </div>
         )}
       </div>
 
-      <div className="flex-1 min-h-0 bg-slate-900/60 backdrop-blur-md p-4 rounded-3xl border border-white/10 shadow-lg flex flex-col">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+      <div className="flex-1 min-h-0 bg-surface/80 backdrop-blur-md p-4 rounded-3xl border border-border-subtle shadow-lg flex flex-col">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-3">
           Active Trips ({activeTrips.length})
         </h3>
 
         {isLoading ? (
-          <div className="flex-1 grid place-items-center text-xs text-white/40">Loading trips...</div>
+          <div className="flex-1 grid place-items-center text-xs text-foreground/40">Loading trips...</div>
         ) : error ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center text-red-300 p-4">
             <AlertTriangle className="h-7 w-7 mb-2" />
             <p className="text-xs">{error.message || "Could not load trips."}</p>
           </div>
         ) : activeTrips.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center text-white/30 border border-dashed border-white/10 rounded-2xl min-h-[100px]">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center text-foreground/30 border border-dashed border-border-subtle rounded-2xl min-h-[100px]">
             <Radio className="h-7 w-7 animate-pulse text-indigo-400/60" />
             <p className="text-xs mt-2 font-medium">No active trips.</p>
           </div>
@@ -271,13 +271,13 @@ function TripOperationsPanel({
                     "w-full border rounded-2xl p-3 text-left cursor-pointer transition-all",
                     isSelected
                       ? "bg-indigo-500/10 border-indigo-500/40 shadow-[0_0_8px_rgba(99,102,241,0.2)]"
-                      : "bg-white/[0.01] border-white/5 hover:border-white/10",
+                      : "bg-foreground/5 border-border-subtle hover:border-border-subtle",
                   ].join(" ")}
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-white truncate">{formatTripId(trip.id)}</h4>
-                      <p className="text-[9px] text-white/40 truncate mt-0.5">
+                      <h4 className="text-xs font-bold text-foreground truncate">{formatTripId(trip.id)}</h4>
+                      <p className="text-[9px] text-foreground/40 truncate mt-0.5">
                         {trip.driverId ? "Driver assigned" : "Awaiting driver"}
                       </p>
                     </div>
@@ -286,7 +286,7 @@ function TripOperationsPanel({
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-[10px] border-t border-white/5 pt-2 mt-3 text-white/40">
+                  <div className="flex items-center justify-between text-[10px] border-t border-border-subtle pt-2 mt-3 text-foreground/40">
                     <span className="inline-flex items-center gap-1.5">
                       <MapPin className="h-3 w-3 text-emerald-400" />
                       {trip.pickup ? `${trip.pickup[0].toFixed(4)}, ${trip.pickup[1].toFixed(4)}` : "Pickup unavailable"}

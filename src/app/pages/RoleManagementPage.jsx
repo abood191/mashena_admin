@@ -117,8 +117,8 @@ export default function RoleManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-white text-xl font-semibold">{t("roles.title", { defaultValue: "Roles & Permissions" })}</div>
-          <div className="mt-1 text-white/50 text-sm">{t("roles.subtitle", { defaultValue: "Manage system access and privileges" })}</div>
+          <div className="text-foreground text-xl font-semibold">{t("roles.title", { defaultValue: "Roles & Permissions" })}</div>
+          <div className="mt-1 text-muted text-sm">{t("roles.subtitle", { defaultValue: "Manage system access and privileges" })}</div>
         </div>
 
         <button
@@ -132,8 +132,8 @@ export default function RoleManagementPage() {
       {/* Layout */}
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
         {/* Left: Roles list */}
-        <div className="rounded-3xl border border-white/10 bg-[#0b1220] overflow-hidden flex flex-col min-h-[500px] shadow-2xl">
-          <div className="p-4 border-b border-white/10 space-y-3 bg-white/[0.01]">
+        <div className="rounded-3xl border border-border-subtle bg-surface overflow-hidden flex flex-col min-h-[500px] shadow-2xl">
+          <div className="p-4 border-b border-border-subtle space-y-3 bg-foreground/5">
             <input
               value={search}
               onChange={(e) => {
@@ -141,12 +141,12 @@ export default function RoleManagementPage() {
                 setSkip(0);
               }}
               placeholder={t("roles.searchRole", { defaultValue: "Search roles..." })}
-              className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none focus:border-[#4880FF]/70 focus:ring-4 focus:ring-[#4880FF]/10 transition-all shadow-inner shadow-black/20"
+              className="w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-muted outline-none focus:border-[#4880FF]/70 focus:ring-4 focus:ring-[#4880FF]/10 transition-all"
             />
 
             {/* Pagination */}
             <div className="flex items-center justify-between gap-3 pt-1">
-              <div className="text-xs font-semibold tracking-wider text-white/40 uppercase">
+              <div className="text-xs font-semibold tracking-wider text-muted uppercase">
                 {rolesCount === 0
                   ? "0"
                   : `Page ${currentPage} / ${totalPages} — ${rolesCount} total`}
@@ -156,14 +156,14 @@ export default function RoleManagementPage() {
                 <button
                   onClick={() => setSkip((s) => Math.max(0, s - limit))}
                   disabled={!canPrev || loadingRoles}
-                  className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+                  className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
                 >
                   Prev
                 </button>
                 <button
                   onClick={() => setSkip((s) => s + limit)}
                   disabled={!canNext || loadingRoles}
-                  className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+                  className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
                 >
                   Next
                 </button>
@@ -172,9 +172,9 @@ export default function RoleManagementPage() {
           </div>
 
           {/* Roles List */}
-          <div className="flex-1 overflow-y-auto divide-y divide-white/10 relative">
+          <div className="flex-1 overflow-y-auto divide-y divide-border-subtle relative">
              {loadingRoles && (
-               <div className="absolute inset-0 bg-[#0b1220]/50 backdrop-blur-sm z-10 flex items-center justify-center">
+               <div className="absolute inset-0 bg-surface/50 backdrop-blur-sm z-10 flex items-center justify-center">
                   <div className="h-6 w-6 rounded-full border-2 border-white/20 border-t-[#4880FF] animate-spin"></div>
                </div>
              )}
@@ -185,17 +185,17 @@ export default function RoleManagementPage() {
                   <button
                     key={role.id}
                     onClick={() => setSelectedRoleId(role.id)}
-                    className={["w-full text-left px-4 py-4 flex items-center gap-4 transition-all duration-200 group", active ? "bg-white/[0.05]" : "hover:bg-white/[0.03]"].join(" ")}
+                    className={["w-full text-left px-4 py-4 flex items-center gap-4 transition-all duration-200 group", active ? "bg-foreground/10" : "hover:bg-foreground/5"].join(" ")}
                   >
                     <div
-                      className={`h-12 w-12 shrink-0 rounded-2xl border grid place-items-center text-xs transition-colors duration-300 ${active ? 'bg-[#4880FF]/10 border-[#4880FF]/30' : 'bg-white/[0.03] border-white/10'}`}
+                      className={`h-12 w-12 shrink-0 rounded-2xl border grid place-items-center text-xs transition-colors duration-300 ${active ? 'bg-[#4880FF]/10 border-[#4880FF]/30' : 'bg-foreground/5 border-border-subtle'}`}
                       style={{ color: active ? ACTIVE : 'rgba(255,255,255,0.4)' }}
                     >
-                      <div className={`h-2.5 w-2.5 rounded-full ${active ? 'bg-[#4880FF] shadow-[0_0_10px_#4880FF]' : 'bg-white/20'}`} />
+                      <div className={`h-2.5 w-2.5 rounded-full ${active ? 'bg-[#4880FF] shadow-[0_0_10px_#4880FF]' : 'bg-foreground/20'}`} />
                     </div>
 
                     <div className="min-w-0 flex-1 space-y-1">
-                      <div className="text-white font-bold tracking-wide truncate">{role.name}</div>
+                      <div className="text-foreground font-bold tracking-wide truncate">{role.name}</div>
                     </div>
 
                     <div className={`flex items-center gap-2 shrink-0 transition-opacity duration-200 ${active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
@@ -206,7 +206,7 @@ export default function RoleManagementPage() {
                           setEditRole(role);
                           setEditOpen(true);
                         }}
-                        className="h-10 w-10 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-[#4880FF]/10 hover:border-[#4880FF]/30 hover:text-[#4880FF] text-white/50 grid place-items-center text-sm transition-all"
+                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[#4880FF]/10 hover:border-[#4880FF]/30 hover:text-[#4880FF] text-muted grid place-items-center text-sm transition-all"
                         title={t("roles.edit", { defaultValue: "Edit" })}
                       >
                         ✎
@@ -217,7 +217,7 @@ export default function RoleManagementPage() {
                           e.stopPropagation();
                           handleDeleteRole(role);
                         }}
-                        className="h-10 w-10 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-white/50 grid place-items-center text-sm transition-all"
+                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-muted grid place-items-center text-sm transition-all"
                         title={t("roles.delete", { defaultValue: "Delete" })}
                       >
                         🗑
@@ -228,7 +228,7 @@ export default function RoleManagementPage() {
               })}
 
               {!roles.length && !loadingRoles ? (
-                <div className="p-12 text-sm text-white/30 italic text-center font-medium">No roles found</div>
+                <div className="p-12 text-sm text-muted italic text-center font-medium">No roles found</div>
               ) : null}
           </div>
         </div>

@@ -41,7 +41,7 @@ export function DocumentsUploader({ driverProfileId, onDocsChange }) {
 
   if (isLoading) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-[#0b1220] p-8 flex justify-center items-center min-h-[200px]">
+      <div className="rounded-3xl border border-border-subtle bg-surface p-8 flex justify-center items-center min-h-[200px]">
         <Loader2 className="animate-spin text-[#4880FF]" size={32} />
       </div>
     );
@@ -62,10 +62,10 @@ export function DocumentsUploader({ driverProfileId, onDocsChange }) {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-[#0b1220] p-6 shadow-xl space-y-6">
+    <div className="rounded-3xl border border-border-subtle bg-surface p-6 shadow-xl space-y-6">
       <div>
-        <h2 className="text-white text-lg font-semibold">{t("requestDetails.requiredDocs")}</h2>
-        <p className="text-white/40 text-sm">{t("requestDetails.requiredDocsSubtitle")}</p>
+        <h2 className="text-foreground text-lg font-semibold">{t("requestDetails.requiredDocs")}</h2>
+        <p className="text-muted text-sm">{t("requestDetails.requiredDocsSubtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,7 +218,7 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
       <div className="flex items-center justify-between mb-4">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
-            <span className="text-white text-sm font-medium">{label}</span>
+            <span className="text-foreground text-sm font-medium">{label}</span>
             {required && (
               <span className="text-red-400 text-[10px] uppercase font-bold">
                 {t("requestDetails.required")}
@@ -236,10 +236,10 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
               <><AlertCircle size={12} className="text-red-400" /><span className="text-red-400 text-[10px] font-bold uppercase">{t("requestDetails.updateFailed")}</span></>
             )}
             {localData.status === "idle" && !localData.exists && (
-              <span className="text-white/20 text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.needsUpload")}</span>
+              <span className="text-muted text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.needsUpload")}</span>
             )}
             {localData.status === "idle" && localData.exists && (
-              <span className="text-white/40 text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.modified")}</span>
+              <span className="text-muted text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.modified")}</span>
             )}
           </div>
         </div>
@@ -266,7 +266,7 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
               accept="image/*,application/pdf"
               disabled={isBusy}
             />
-            <div className="w-full h-24 rounded-xl border-2 border-dashed border-white/10 group-hover:border-white/20 transition-all flex flex-col items-center justify-center bg-white/[0.02] overflow-hidden">
+            <div className="w-full h-24 rounded-xl border-2 border-dashed border-border-subtle group-hover:border-foreground/20 transition-all flex flex-col items-center justify-center bg-foreground/5 overflow-hidden">
               {preview || localData.fileUrl ? (
                 <img
                   src={preview || localData.fileUrl}
@@ -275,8 +275,8 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
                 />
               ) : (
                 <>
-                  <Upload size={16} className="text-white/20 mb-1" />
-                  <span className="text-white/20 text-[10px] font-medium">{t("requestDetails.clickToUpload")}</span>
+                  <Upload size={16} className="text-muted mb-1" />
+                  <span className="text-muted text-[10px] font-medium">{t("requestDetails.clickToUpload")}</span>
                 </>
               )}
               {file && <div className="absolute inset-0 bg-blue-500/10 rounded-xl pointer-events-none ring-2 ring-blue-500/50" />}
@@ -285,23 +285,23 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
 
           <div className="flex-[1.5] space-y-2">
             <div className="relative">
-              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
               <input
                 type="date"
                 value={localData.issuedAt}
                 onChange={(e) => setDate("issuedAt", e.target.value)}
                 disabled={isBusy}
-                className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 pl-8 pr-2 text-xs text-white focus:outline-none focus:border-[#4880FF]/50 disabled:opacity-50"
+                className="w-full bg-foreground/5 border border-border-subtle rounded-xl py-2 pl-8 pr-2 text-xs text-foreground focus:outline-none focus:border-[#4880FF]/50 disabled:opacity-50"
               />
             </div>
             <div className="relative">
-              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
               <input
                 type="date"
                 value={localData.expiresAt}
                 onChange={(e) => setDate("expiresAt", e.target.value)}
                 disabled={isBusy}
-                className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 pl-8 pr-2 text-xs text-white focus:outline-none focus:border-[#4880FF]/50 disabled:opacity-50"
+                className="w-full bg-foreground/5 border border-border-subtle rounded-xl py-2 pl-8 pr-2 text-xs text-foreground focus:outline-none focus:border-[#4880FF]/50 disabled:opacity-50"
               />
             </div>
           </div>

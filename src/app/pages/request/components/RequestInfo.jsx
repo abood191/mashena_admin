@@ -6,10 +6,10 @@ export function RequestInfo({ request }) {
   if (!request) return null;
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-[#0b1220] p-6 shadow-xl">
+    <div className="rounded-3xl border border-border-subtle bg-surface p-6 shadow-xl">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-white text-lg font-semibold">{t("requestDetails.driverInfo")}</h2>
-        <span className="px-3 py-1 rounded-full bg-white/5 text-white/70 text-xs border border-white/10 italic">
+        <h2 className="text-foreground text-lg font-semibold">{t("requestDetails.driverInfo")}</h2>
+        <span className="px-3 py-1 rounded-full bg-foreground/5 text-muted text-xs border border-border-subtle italic">
           Verified
         </span>
       </div>
@@ -28,9 +28,9 @@ export function RequestInfo({ request }) {
       </div>
 
       {request.vehiclePhotoUrl && (
-        <div className="mt-8 pt-6 border-t border-white/5">
-          <div className="text-white/40 text-xs mb-3 uppercase tracking-wider font-semibold">Vehicle Photo</div>
-          <div className="relative group w-48 h-32 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <div className="mt-8 pt-6 border-t border-border-subtle">
+          <div className="text-muted text-xs mb-3 uppercase tracking-wider font-semibold">Vehicle Photo</div>
+          <div className="relative group w-48 h-32 overflow-hidden rounded-2xl border border-border-subtle bg-foreground/5">
              <img
               src={request.vehiclePhotoUrl}
               alt="Vehicle"
@@ -46,8 +46,8 @@ export function RequestInfo({ request }) {
 function InfoItem({ label, value, statusColor }) {
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-white/40 text-xs uppercase tracking-wider font-medium">{label}</span>
-      <span className={`text-white font-medium ${statusColor || ""}`}>{value || "—"}</span>
+      <span className="text-muted text-xs uppercase tracking-wider font-medium">{label}</span>
+      <span className={`text-foreground font-medium ${statusColor || ""}`}>{value || "—"}</span>
     </div>
   );
 }
@@ -58,6 +58,6 @@ function getStatusColor(status) {
     case 'rejected': return 'text-red-400';
     case 'pending':
     case 'submitted': return 'text-yellow-400';
-    default: return 'text-white/80';
+    default: return 'text-foreground';
   }
 }

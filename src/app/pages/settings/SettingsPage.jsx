@@ -51,7 +51,7 @@ function EditSettingModal({ open, setting, onClose, onSubmit, loading }) {
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="h-10 px-4 rounded-2xl border border-white/10 bg-[var(--color-surface,#0b1220)] hover:bg-white/[0.06] text-sm text-white/80 disabled:opacity-60 transition"
+            className="h-10 px-4 rounded-2xl border border-border-subtle bg-surface hover:bg-foreground/10 text-sm text-foreground disabled:opacity-60 transition"
           >
             {t("common.cancel")}
           </button>
@@ -69,13 +69,13 @@ function EditSettingModal({ open, setting, onClose, onSubmit, loading }) {
     >
       <form id="setting-form" onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-white/70">{t("settings.modal.valueLabel")}</label>
+          <label className="text-sm text-muted">{t("settings.modal.valueLabel")}</label>
           <input
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder={t("settings.modal.valuePlaceholder")}
-            className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
+            className="mt-2 w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-muted outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
           />
           {err && <div className="mt-2 text-xs text-red-200">{err}</div>}
         </div>
@@ -138,13 +138,13 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-white text-2xl font-bold">{t("settings.title")}</div>
-          <div className="mt-1 text-white/50 text-sm">{t("settings.subtitle")}</div>
+          <div className="text-foreground text-2xl font-bold">{t("settings.title")}</div>
+          <div className="mt-1 text-muted text-sm">{t("settings.subtitle")}</div>
         </div>
       </div>
 
-      <div className="mt-6 rounded-3xl border border-white/10 bg-[var(--color-surface,#0b1220)] shadow-xl overflow-hidden">
-        <div className="p-4 border-b border-white/10 flex items-center justify-between gap-4 bg-white/[0.01]">
+      <div className="mt-6 rounded-3xl border border-border-subtle bg-surface shadow-xl overflow-hidden">
+        <div className="p-4 border-b border-border-subtle flex items-center justify-between gap-4 bg-foreground/5">
           <input
             value={search}
             onChange={(e) => {
@@ -152,7 +152,7 @@ export default function SettingsPage() {
               setSkip(0);
             }}
             placeholder={t("settings.search")}
-            className="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/35 outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
+            className="w-full max-w-sm rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
           />
         </div>
 
@@ -163,8 +163,8 @@ export default function SettingsPage() {
                  <div className="h-8 w-8 rounded-full border-4 border-white/10 border-t-[var(--color-primary)] animate-spin"></div>
              </div>
           ) : (
-            <table className="w-full text-left text-sm text-white/80">
-              <thead className="bg-white/[0.02] text-xs uppercase text-white/50 font-semibold tracking-wider">
+            <table className="w-full text-left text-sm text-foreground">
+              <thead className="bg-foreground/5 text-xs uppercase text-muted font-semibold tracking-wider">
                 <tr>
                   <th className="px-6 py-4">{t("settings.table.key")}</th>
                   <th className="px-6 py-4">{t("settings.table.value")}</th>
@@ -172,22 +172,22 @@ export default function SettingsPage() {
                   <th className="px-6 py-4">{t("settings.table.actions")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
+              <tbody className="divide-y divide-border-subtle">
                 {settings.map((item, i) => (
-                  <tr key={item.key} className="hover:bg-white/[0.03] transition-colors duration-200" style={{ animationDelay: `${i * 30}ms` }}>
-                    <td className="px-6 py-4 font-medium text-white">{item.key}</td>
+                  <tr key={item.key} className="hover:bg-foreground/5 transition-colors duration-200" style={{ animationDelay: `${i * 30}ms` }}>
+                    <td className="px-6 py-4 font-medium text-foreground">{item.key}</td>
                     <td className="px-6 py-4">
-                      <span className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-sm text-white]">
+                      <span className="rounded-xl border border-border-subtle bg-foreground/5 px-3 py-1.5 font-mono text-sm text-foreground">
                         {item.value}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-white/50">
+                    <td className="px-6 py-4 text-muted">
                        {item.updatedAt ? new Date(item.updatedAt).toLocaleString() : "-"}
                     </td>
                     <td className="px-6 py-4">
                        <button
                          onClick={() => handleEdit(item)}
-                         className="h-9 px-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] text-white/80 hover:text-white text-xs transition-all active:scale-95"
+                         className="h-9 px-4 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] text-foreground hover:text-white text-xs transition-all active:scale-95"
                        >
                          {t("settings.editValue")}
                        </button>
@@ -197,7 +197,7 @@ export default function SettingsPage() {
 
                 {settings.length === 0 && !isLoading && (
                   <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center text-white/50">
+                    <td colSpan={4} className="px-6 py-12 text-center text-muted">
                       {search ? t("common.nodata") : t("common.nodata")}
                     </td>
                   </tr>
@@ -208,8 +208,8 @@ export default function SettingsPage() {
         </div>
         
         {/* Pagination Footer */}
-        <div className="flex items-center justify-between gap-3 p-4 border-t border-white/10 bg-white/[0.01]">
-          <div className="text-xs font-semibold tracking-wider text-white/40 uppercase">
+        <div className="flex items-center justify-between gap-3 p-4 border-t border-border-subtle bg-foreground/5">
+          <div className="text-xs font-semibold tracking-wider text-muted uppercase">
             {settingsCount === 0
               ? "0"
               : `Page ${currentPage} / ${totalPages} — ${settingsCount} total`}
@@ -219,14 +219,14 @@ export default function SettingsPage() {
             <button
               onClick={() => setSkip((s) => Math.max(0, s - limit))}
               disabled={!canPrev || isLoading}
-              className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+              className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
             >
               Prev
             </button>
             <button
               onClick={() => setSkip((s) => s + limit)}
               disabled={!canNext || isLoading}
-              className="h-8 px-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white/80 disabled:opacity-30 transition-all active:scale-95"
+              className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
             >
               Next
             </button>

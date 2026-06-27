@@ -34,7 +34,7 @@ export default function DriversPage() {
     { header: t("drivers.table.phone"), accessorKey: "phoneNumber" },
     {
       header: t("drivers.table.city"),
-      cell: ({ row }) => <span className="text-white/60">{row.original.driverProfile?.city || "—"}</span>,
+      cell: ({ row }) => <span className="text-foreground">{row.original.driverProfile?.city || "—"}</span>,
     },
     {
       header: t("drivers.table.status"),
@@ -57,13 +57,13 @@ export default function DriversPage() {
       header: t("drivers.table.verified"),
       cell: ({ row }) => {
         const isVerified = row.original.driverProfile?.isVerified;
-        return isVerified ? <CheckCircle2 size={16} className="text-green-500" /> : <XCircle size={16} className="text-white/20" />;
+        return isVerified ? <CheckCircle2 size={16} className="text-green-500" /> : <XCircle size={16} className="text-foreground" />;
       },
     },
     { 
       header: t("drivers.table.createdAt"), 
       accessorKey: "createdAt",
-      cell: ({ row }) => <span className="font-mono text-white/30 text-xs">{new Date(row.original.createdAt).toLocaleDateString()}</span>
+      cell: ({ row }) => <span className="font-mono text-foreground text-xs">{new Date(row.original.createdAt).toLocaleDateString()}</span>
     },
   ];
 
@@ -78,13 +78,13 @@ export default function DriversPage() {
             <Users size={28} />
           </div>
           <div>
-            <h1 className="text-white text-2xl font-bold tracking-tight">{t("drivers.title")}</h1>
-            <p className="text-white/40 text-sm mt-0.5">Manage and monitor all registered driver accounts</p>
+            <h1 className="text-foreground text-2xl font-bold tracking-tight">{t("drivers.title")}</h1>
+            <p className="text-foreground text-sm mt-0.5">Manage and monitor all registered driver accounts</p>
           </div>
         </div>
 
         <div className="relative w-full md:w-96">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={18} />
           <input
             placeholder={t("drivers.searchPlaceholder")}
             value={search}
@@ -92,17 +92,17 @@ export default function DriversPage() {
               setSearch(e.target.value);
               setSkip(0);
             }}
-            className="w-full bg-[#0b1220] border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all shadow-inner shadow-black/20"
+            className="w-full bg-surface border border-border-subtle rounded-2xl py-3.5 pl-12 pr-4 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
           />
         </div>
       </div>
 
-      <div className="bg-[#0b1220] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
         <UsersTable columns={columns} data={drivers} loading={isFetching} />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
-        <div className="text-white/40 text-xs font-medium bg-white/5 px-4 py-2 rounded-full border border-white/5">
+        <div className="text-foreground text-xs font-medium bg-foreground/5 px-4 py-2 rounded-full border border-border-subtle">
           {t("drivers.pageInfo", { 
             current: currentPage, 
             total: totalPages, 
@@ -114,14 +114,14 @@ export default function DriversPage() {
           <button
             onClick={() => setSkip(Math.max(skip - limit, 0))}
             disabled={skip === 0}
-            className="px-6 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white/80 font-bold text-sm hover:bg-white/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl border border-border-subtle bg-foreground/5 text-foreground font-bold text-sm hover:bg-foreground/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {t("common.prev")}
           </button>
           <button
             onClick={() => setSkip(skip + limit < count ? skip + limit : skip)}
             disabled={skip + limit >= count}
-            className="px-6 py-2.5 rounded-xl bg-[#4880FF] text-white font-bold text-sm hover:bg-[#3d6edb] transition-all shadow-lg shadow-[#4880FF]/25 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-[#4880FF] text-white! font-bold text-sm hover:bg-[#3d6edb] transition-all shadow-lg shadow-[#4880FF]/25 disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {t("common.next")}
           </button>

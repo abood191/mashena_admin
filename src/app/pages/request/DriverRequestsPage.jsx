@@ -60,25 +60,25 @@ export default function DriverRequestsPage() {
       header: t("requestDetails.refId"),
       accessorKey: "driverProfileId",
       cell: ({ row }) => (
-        <span className="font-mono text-white/60 text-xs">#{row.original.driverProfileId}</span>
+        <span className="font-mono text-foreground text-xs">#{row.original.driverProfileId}</span>
       ),
     },
     {
       header: t("requestDetails.fields.plate"),
       accessorKey: "vehiclePlateNumber",
       cell: ({ row }) => (
-        <span className="font-semibold text-white tracking-wider">{row.original.vehiclePlateNumber || "—"}</span>
+        <span className="font-semibold text-foreground tracking-wider">{row.original.vehiclePlateNumber || "—"}</span>
       ),
     },
     {
       header: t("requestDetails.fields.model"),
       accessorKey: "vehicleModel",
-      cell: ({ row }) => <span className="text-white/70">{row.original.vehicleModel || "—"}</span>,
+      cell: ({ row }) => <span className="text-foreground">{row.original.vehicleModel || "—"}</span>,
     },
     {
       header: t("requestDetails.fields.year"),
       accessorKey: "vehicleYear",
-      cell: ({ row }) => <span className="text-white/50">{row.original.vehicleYear || "—"}</span>,
+      cell: ({ row }) => <span className="text-foreground">{row.original.vehicleYear || "—"}</span>,
     },
     {
       header: t("requestDetails.fields.status"),
@@ -107,31 +107,31 @@ export default function DriverRequestsPage() {
             <ClipboardList size={28} />
           </div>
           <div>
-            <h1 className="text-white text-2xl font-bold tracking-tight">{t("sidebar.requests")}</h1>
-            <p className="text-white/40 text-sm mt-0.5">Driver onboarding approval queue</p>
+            <h1 className="text-foreground text-2xl font-bold tracking-tight">{t("sidebar.requests")}</h1>
+            <p className="text-foreground text-sm mt-0.5">Driver onboarding approval queue</p>
           </div>
         </div>
 
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={18} />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by plate, model..."
-            className="w-full bg-[#0b1220] border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+            className="w-full bg-surface border border-border-subtle rounded-2xl py-3 pl-12 pr-4 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
           />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-[#0b1220] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
         <UsersTable columns={columns} data={requests} loading={isFetching} />
       </div>
 
       {/* Pagination */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
-        <div className="text-white/40 text-xs font-medium bg-white/5 px-4 py-2 rounded-full border border-white/5">
+        <div className="text-foreground text-xs font-medium bg-foreground/5 px-4 py-2 rounded-full border border-border-subtle">
           {count === 0
             ? t("common.nodata")
             : t("drivers.pageInfo", { current: currentPage, total: totalPages, count })}
@@ -140,14 +140,14 @@ export default function DriverRequestsPage() {
           <button
             onClick={() => setSkip(Math.max(skip - limit, 0))}
             disabled={!canPrev || isFetching}
-            className="px-6 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white/80 font-bold text-sm hover:bg-white/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl border border-border-subtle bg-foreground/5 text-foreground font-bold text-sm hover:bg-foreground/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {t("common.prev")}
           </button>
           <button
             onClick={() => setSkip(skip + limit)}
             disabled={!canNext || isFetching}
-            className="px-6 py-2.5 rounded-xl bg-[#4880FF] text-white font-bold text-sm hover:bg-[#3d6edb] transition-all shadow-lg shadow-[#4880FF]/25 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-[#4880FF] text-white! font-bold text-sm hover:bg-[#3d6edb] transition-all shadow-lg shadow-[#4880FF]/25 disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {t("common.next")}
           </button>
