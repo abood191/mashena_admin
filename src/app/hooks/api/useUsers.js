@@ -21,11 +21,12 @@ export const userKeys = {
  * Hook to fetch the list of drivers.
  * Uses keepPreviousData for smooth pagination.
  */
-export const useDrivers = (filters = {}) => {
+export const useDrivers = (filters = {}, options = {}) => {
   return useQuery({
     queryKey: userKeys.driverList(filters),
     queryFn: () => userService.getDrivers(filters),
     placeholderData: keepPreviousData,
+    ...options,
   });
 };
 
@@ -33,11 +34,12 @@ export const useDrivers = (filters = {}) => {
  * Hook to fetch the list of riders.
  * Uses keepPreviousData for smooth pagination.
  */
-export const useRiders = (filters = {}) => {
+export const useRiders = (filters = {}, options = {}) => {
   return useQuery({
     queryKey: userKeys.riderList(filters),
     queryFn: () => userService.getRiders(filters),
     placeholderData: keepPreviousData,
+    ...options,
   });
 };
 
@@ -45,10 +47,11 @@ export const useRiders = (filters = {}) => {
  * Hook to fetch the list of admins.
  * Uses keepPreviousData for smooth pagination.
  */
-export const useAdmins = (filters = {}) => {
+export const useAdmins = (filters = {}, options = {}) => {
   return useQuery({
     queryKey: userKeys.adminList(filters),
     queryFn: () => userService.getAdmins(filters),
     placeholderData: keepPreviousData,
+    ...options,
   });
 };

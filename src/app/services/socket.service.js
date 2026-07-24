@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { getToken } from "../auth/token";
+import { getAccessToken } from "../auth/token";
 
 const SOCKET_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -12,7 +12,7 @@ class SocketService {
   connect() {
     if (this.socket?.connected) return this.socket;
 
-    const token = getToken();
+    const token = getAccessToken();
 
     this.socket = io(SOCKET_URL, {
       autoConnect: false,
@@ -34,7 +34,7 @@ class SocketService {
       console.log("=========================");
       console.log("[SocketService] ✅ Connected");
       console.log("Socket ID:", this.socket.id);
-      console.log("Auth Token:", getToken());
+      console.log("Auth Token:", getAccessToken());
       console.log("=========================");
       console.log(
         `[SocketService] Connected to ${SOCKET_URL} with ID: ${this.socket.id}`,

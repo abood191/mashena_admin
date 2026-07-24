@@ -6,6 +6,8 @@ import {
   Settings,
   ShieldCheck,
   Map,
+  Wallet,
+  Star
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -46,10 +48,20 @@ export const NAV_ITEMS = [
     icon: Map, // Live Map tracking
   },
   {
+    to: "/wallet",
+    labelKey: "sidebar.wallet",
+    icon: Wallet,
+  },
+  {
     to: "/roles",
 
     labelKey: "sidebar.roles",
     icon: ShieldCheck, // Role & Permissions
+  },
+  {
+    to: "/ratings",
+    labelKey: "sidebar.ratings",
+    icon: Star, // Ratings
   },
   {
     to: "/settings",

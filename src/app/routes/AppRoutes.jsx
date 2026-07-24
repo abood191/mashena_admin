@@ -14,6 +14,8 @@ const VehicleTypesPage = React.lazy(() => import("../pages/vehicle-types/Vehicle
 const DriverRequestDetailsPage = React.lazy(() => import("../pages/request/RequestDetailsPage"));
 const SettingsPage = React.lazy(() => import("../pages/settings/SettingsPage"));
 const LiveTrackingPage = React.lazy(() => import("../pages/live-tracking/LiveTrackingPage"));
+const WalletPage = React.lazy(() => import("../pages/wallet/WalletPage"));
+const RatingsPage = React.lazy(() => import("../pages/ratings/RatingsPage"));
 
 // Global Loader applied when jumping between massive un-cached chunks
 function SuspenseFallback() {
@@ -38,8 +40,10 @@ export default function AppRoutes() {
         <Route path="/driver-requests/:id" element={<DriverRequestDetailsPage />} />
         <Route path="/trips" element={<TripsPage />} />
         <Route path="/live-tracking" element={<LiveTrackingPage />} />
+        <Route path="/wallet" element={<WalletPage />} />
         <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
         <Route path="/roles" element={<RoleManagementPage />} />
+        <Route path="/ratings" element={<RatingsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </Suspense>

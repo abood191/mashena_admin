@@ -123,6 +123,7 @@ function MapFlyController({ selectedTripId, activeTrips }) {
 
 // ---------------------- MEMOIZED DRIVER MARKER WITH RUNTIME INTERPOLATION ----------------------
 const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
+  const map = useMap();
   const [position, setPosition] = useState(null);
   const [bearing, setBearing] = useState(0);
   const [metadata, setMetadata] = useState(null);
@@ -134,11 +135,19 @@ const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
   const targetBearingRef = useRef(null);
   const animationFrameId = useRef(null);
   const startTimeRef = useRef(null);
-  const interpolationDuration = 2000;
+  const lastUpdateTimeRef = useRef(performance.now());
+  const durationRef = useRef(1000);
+
+  // Track zoom level for dynamic marker scaling
+  const [currentZoom, setCurrentZoom] = useState(map.getZoom());
+  useEffect(() => {
+    const handleZoom = () => setCurrentZoom(map.getZoom());
+    map.on('zoom', handleZoom);
+    return () => map.off('zoom', handleZoom);
+  }, [map]);
 
   useEffect(() => {
     const unsubscribe = driverLocationStore.subscribe(driverId, (data) => {
-       console.log("MARKER DATA", driverId, data);
       if (!data) {
         setPosition(null);
         return;
@@ -154,20 +163,41 @@ const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
 
       const nextLat = data.latitude;
       const nextLng = data.longitude;
-      const nextBearing = data.bearing || 0;
+      
+      const now = performance.now();
+      const timeSinceLastUpdate = now - lastUpdateTimeRef.current;
+      lastUpdateTimeRef.current = now;
 
       if (!targetPositionRef.current) {
+        const initialBearing = data.bearing || 0;
         prevPositionRef.current = [nextLat, nextLng];
         targetPositionRef.current = [nextLat, nextLng];
-        prevBearingRef.current = nextBearing;
-        targetBearingRef.current = nextBearing;
+        prevBearingRef.current = initialBearing;
+        targetBearingRef.current = initialBearing;
         setPosition([nextLat, nextLng]);
-        setBearing(nextBearing);
+        setBearing(initialBearing);
         return;
       }
 
       prevPositionRef.current = targetPositionRef.current;
       targetPositionRef.current = [nextLat, nextLng];
+      
+      // Dynamic duration based on update interval, clamped for safety (800ms - 3500ms)
+      durationRef.current = Math.min(Math.max(timeSinceLastUpdate, 800), 3500);
+
+      // Distance calculation to prevent jitter turning
+      const distMeters = map.distance(prevPositionRef.current, targetPositionRef.current);
+      
+      let nextBearing = data.bearing;
+      // Infer bearing from movement if missing or handle GPS noise
+      if (nextBearing == null) {
+        if (distMeters > 1.5) {
+          nextBearing = getBearing(prevPositionRef.current, targetPositionRef.current);
+        } else {
+          nextBearing = targetBearingRef.current; // Keep previous to prevent spin on jitter
+        }
+      }
+
       prevBearingRef.current = targetBearingRef.current;
       targetBearingRef.current = nextBearing;
       startTimeRef.current = performance.now();
@@ -175,7 +205,10 @@ const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
       const animateMarker = (time) => {
         if (!startTimeRef.current) return;
         const elapsed = time - startTimeRef.current;
-        const t = Math.min(elapsed / interpolationDuration, 1);
+        
+        // Easing function (easeOutCubic) for smoother deceleration
+        const rawT = Math.min(elapsed / durationRef.current, 1);
+        const t = 1 - Math.pow(1 - rawT, 3);
 
         const startLat = prevPositionRef.current[0];
         const startLng = prevPositionRef.current[1];
@@ -198,7 +231,7 @@ const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
           markerRef.current.setLatLng([lat, lng]);
         }
 
-        if (t < 1) {
+        if (rawT < 1) {
           animationFrameId.current = requestAnimationFrame(animateMarker);
         }
       };
@@ -215,16 +248,22 @@ const DriverMarker = memo(({ driverId, isSelected, onClick }) => {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [driverId]);
+  }, [driverId, map]);
 
   if (!position) return null;
 
+  // Scale marker based on zoom level
+  const scale = Math.max(0.6, Math.min(1.4, Math.pow(1.15, currentZoom - 13)));
+  const iconHtmlScaled = CAR_ICON_HTML
+    .replace('class="relative w-9 h-9', `style="transform: scale(${scale}); transform-origin: center;" class="relative w-9 h-9`)
+    .replace('rotate(0deg)', `rotate(${bearing - 90}deg)`);
+
   const divClass = `custom-driver-icon ${isSelected ? "selected-pointer" : ""}`;
   const customIcon = L.divIcon({
-    html: CAR_ICON_HTML.replace("rotate(0deg)", `rotate(${bearing - 90}deg)`),
+    html: iconHtmlScaled,
     className: divClass,
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
+    iconSize: [36 * scale, 36 * scale],
+    iconAnchor: [18 * scale, 18 * scale],
   });
 
   return (
@@ -624,35 +663,61 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
       </MapContainer>
 
       {/* Floating Collapsible Telemetry Debug Panel */}
-      <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-        <div className="bg-surface/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-border-subtle flex flex-col gap-1.5 text-xs font-semibold text-foreground/70 shadow-lg min-w-[170px]">
-          
-          {/* Header click toggles collapsing details */}
-          <div className="flex items-center justify-between cursor-pointer border-b border-border-subtle pb-1" onClick={() => setShowDebug(!showDebug)}>
-            <div className="flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${wsConnected ? "bg-emerald-400 animate-pulse" : "bg-red-500 animate-ping"}`}></span>
-              <span>Ops Telemetry Hub</span>
+      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 pointer-events-auto">
+        <div 
+          className={`bg-surface/95 backdrop-blur-xl border border-border-subtle shadow-xl transition-all duration-300 ease-in-out ${
+            showDebug ? "w-[220px] rounded-2xl" : "w-[170px] rounded-full hover:bg-surface cursor-pointer"
+          }`}
+          onClick={() => !showDebug && setShowDebug(true)}
+        >
+          {/* Header */}
+          <div 
+            className={`flex items-center justify-between ${
+              showDebug ? "px-4 py-3 border-b border-border-subtle cursor-pointer" : "px-4 py-2"
+            }`}
+            onClick={(e) => {
+              if (showDebug) {
+                e.stopPropagation();
+                setShowDebug(false);
+              }
+            }}
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${wsConnected ? "bg-emerald-400" : "bg-red-500"}`}></span>
+                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${wsConnected ? "bg-emerald-500" : "bg-red-500"}`}></span>
+              </span>
+              <span className="text-xs font-bold text-foreground/80 dark:text-foreground tracking-wide">
+                {showDebug ? "Telemetry Hub" : "Ops Hub"}
+              </span>
             </div>
-            <span className="text-[9px] text-foreground/30">{showDebug ? "▲" : "▼"}</span>
+            <span className="text-[9px] text-foreground/40 dark:text-foreground/70 font-bold uppercase transition-colors hover:text-foreground">
+              {showDebug ? "HIDE" : "VIEW"}
+            </span>
           </div>
 
-          {/* Collapsible details grid */}
-          {showDebug ? (
-            <div className="space-y-1 mt-1 text-[10px] text-foreground/50 font-mono">
-              <div className="flex justify-between"><span className="text-foreground/30">WS Status:</span><span className={wsConnected ? "text-emerald-400" : "text-red-400"}>{wsConnected ? "CONNECTED" : "DISCONNECT"}</span></div>
-              <div className="flex justify-between"><span className="text-foreground/30">Active Trips:</span><span className="text-foreground font-bold">{activeTrips.length}</span></div>
-              <div className="flex justify-between"><span className="text-foreground/30">Live Drivers:</span><span className="text-foreground font-bold">{activeDriverIds.length}</span></div>
-              <div className="flex justify-between"><span className="text-foreground/30">Cache Hits:</span><span className="text-emerald-400">{stats.hits}</span></div>
-              <div className="flex justify-between"><span className="text-foreground/30">Cache Misses:</span><span className="text-rose-400">{stats.misses}</span></div>
-              <div className="flex justify-between border-t border-border-subtle pt-1 mt-1"><span className="text-foreground/30">Throughput:</span><span className="text-indigo-400 font-bold">{stats.eps} pings/s</span></div>
+          {/* Collapsible Content */}
+          <div 
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              showDebug ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="p-4 space-y-2.5 text-[11px]">
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">WS Link</span><span className={wsConnected ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>{wsConnected ? "ONLINE" : "OFFLINE"}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Active Trips</span><span className="text-foreground font-bold">{activeTrips.length}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Live Drivers</span><span className="text-foreground font-bold">{activeDriverIds.length}</span></div>
+              
+              <div className="h-px w-full bg-border-subtle my-1"></div>
+              
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Cache Hits</span><span className="text-emerald-400 font-mono">{stats.hits}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Cache Misses</span><span className="text-red-400 font-mono">{stats.misses}</span></div>
+              
+              <div className="bg-foreground/5 rounded-lg p-2.5 mt-2 border border-border-subtle flex justify-between items-center">
+                <span className="text-foreground/50 dark:text-foreground/80 font-bold text-[9px] uppercase">Throughput</span>
+                <span className="text-indigo-400 font-bold font-mono">{stats.eps} p/s</span>
+              </div>
             </div>
-          ) : (
-            <div className="flex items-center justify-between text-[10px] text-foreground/40 pt-0.5">
-              <span>Trips: <strong className="text-foreground">{activeTrips.length}</strong></span>
-              <span>Drivers: <strong className="text-foreground">{activeDriverIds.length}</strong></span>
-            </div>
-          )}
-
+          </div>
         </div>
       </div>
 
@@ -663,7 +728,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
           {/* Header Row */}
           <div className="flex items-start justify-between border-b border-border-subtle pb-3">
             <div>
-              <span className="text-[9px] text-foreground/30 font-bold uppercase tracking-wider block leading-none">Selected Operational Route</span>
+              <span className="text-[9px] text-foreground/30 dark:text-foreground/60 font-bold uppercase tracking-wider block leading-none">Selected Operational Route</span>
               <h3 className="text-xs font-black text-indigo-400 mt-1 uppercase">
                 #{formatMapTripId(selectedHUDData.trip.id)}
               </h3>
@@ -682,7 +747,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
               
               <button 
                 onClick={() => onSelectTrip(null)}
-                className="text-[10px] bg-foreground/5 hover:bg-foreground/10 h-5 w-5 rounded-full grid place-items-center text-foreground/40 hover:text-foreground transition-colors cursor-pointer"
+                className="text-[10px] bg-foreground/5 hover:bg-foreground/10 h-5 w-5 rounded-full grid place-items-center text-foreground/40 dark:text-foreground/70 hover:text-foreground transition-colors cursor-pointer"
               >
                 ✕
               </button>
@@ -694,7 +759,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
             
             {/* ETA */}
             <div className="bg-foreground/5 border border-border-subtle rounded-2xl p-3 flex flex-col justify-center">
-              <span className="text-[9px] text-foreground/30 font-bold uppercase block text-center leading-none">ETA</span>
+              <span className="text-[9px] text-foreground/30 dark:text-foreground/60 font-bold uppercase block text-center leading-none">ETA</span>
               <span className="text-sm font-black text-indigo-400 mt-1.5 block text-center leading-none">
                 {selectedHUDData.metrics.etaMins} MINS
               </span>
@@ -702,7 +767,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
 
             {/* Remaining Distance */}
             <div className="bg-foreground/5 border border-border-subtle rounded-2xl p-3 flex flex-col justify-center">
-              <span className="text-[9px] text-foreground/30 font-bold uppercase block text-center leading-none">Remaining</span>
+              <span className="text-[9px] text-foreground/30 dark:text-foreground/60 font-bold uppercase block text-center leading-none">Remaining</span>
               <span className="text-sm font-black text-foreground mt-1.5 block text-center leading-none">
                 {selectedHUDData.metrics.distanceKm} km
               </span>
@@ -710,7 +775,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
 
             {/* Speed */}
             <div className="bg-foreground/5 border border-border-subtle rounded-2xl p-3 flex flex-col justify-center">
-              <span className="text-[9px] text-foreground/30 font-bold uppercase block text-center leading-none">Telemetry</span>
+              <span className="text-[9px] text-foreground/30 dark:text-foreground/60 font-bold uppercase block text-center leading-none">Telemetry</span>
               <span className="text-sm font-black text-emerald-400 mt-1.5 block text-center leading-none">
                 {selectedHUDData.loc ? `${Math.round(selectedHUDData.loc.speed * 3.6)} km/h` : "0 km/h"}
               </span>
@@ -720,7 +785,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
 
           {/* Linear Progress Bar */}
           <div className="space-y-1">
-            <div className="flex justify-between text-[9px] text-foreground/30 font-bold uppercase">
+            <div className="flex justify-between text-[9px] text-foreground/30 dark:text-foreground/60 font-bold uppercase">
               <span>Transit Progress</span>
               <span>{selectedHUDData.progress}%</span>
             </div>
@@ -739,7 +804,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
                 <span className="h-7 w-7 rounded-xl bg-indigo-500/10 border border-indigo-500/20 grid place-items-center">👤</span>
                 <div>
                   <span className="font-bold text-foreground block leading-none">{selectedHUDData.loc.name}</span>
-                  <span className="text-[9px] text-foreground/30 font-semibold block mt-0.5 leading-none">{selectedHUDData.loc.phone}</span>
+                  <span className="text-[9px] text-foreground/30 dark:text-foreground/60 font-semibold block mt-0.5 leading-none">{selectedHUDData.loc.phone}</span>
                 </div>
               </div>
               <span className="text-[9px] text-emerald-400 font-bold tracking-widest flex items-center gap-1.5">

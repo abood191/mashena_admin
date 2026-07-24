@@ -53,7 +53,8 @@
     "admins": "Admins",
     "settings": "Settings",
     "logout": "Logout",
-    "roles": "Role Management"
+    "roles": "Role Management",
+    "wallet": "Wallet"
   },
 
   "common": {

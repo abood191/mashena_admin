@@ -182,10 +182,10 @@ export default function RoleManagementPage() {
               {roles.map((role) => {
                 const active = role.id === selectedRoleId;
                 return (
-                  <button
+                  <div
                     key={role.id}
                     onClick={() => setSelectedRoleId(role.id)}
-                    className={["w-full text-left px-4 py-4 flex items-center gap-4 transition-all duration-200 group", active ? "bg-foreground/10" : "hover:bg-foreground/5"].join(" ")}
+                    className={["w-full cursor-pointer text-left px-4 py-4 flex items-center gap-4 transition-all duration-200 group", active ? "bg-foreground/10" : "hover:bg-foreground/5"].join(" ")}
                   >
                     <div
                       className={`h-12 w-12 shrink-0 rounded-2xl border grid place-items-center text-xs transition-colors duration-300 ${active ? 'bg-[#4880FF]/10 border-[#4880FF]/30' : 'bg-foreground/5 border-border-subtle'}`}
@@ -223,7 +223,7 @@ export default function RoleManagementPage() {
                         🗑
                       </button>
                     </div>
-                  </button>
+                  </div>
                 );
               })}
 

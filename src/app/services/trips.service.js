@@ -64,6 +64,27 @@ function routeFrom(value) {
     );
 }
 
+/**
+ * Extract route from the new routeGeometry field returned by the backend.
+ * routeGeometry: { points: [{ lat, lng }, ...], distanceMeters, durationSeconds }
+ */
+function routeFromGeometry(rawTrip) {
+  const geom = rawTrip?.routeGeometry;
+  if (!geom || !Array.isArray(geom.points) || geom.points.length < 2) return null;
+
+  const points = geom.points
+    .map((p) => coordinateFrom(p))
+    .filter((p) => p && Number.isFinite(p[0]) && Number.isFinite(p[1]));
+
+  if (points.length < 2) return null;
+
+  return {
+    coordinates: points,
+    distanceKm: geom.distanceMeters != null ? geom.distanceMeters / 1000 : 0,
+    durationSec: geom.durationSeconds ?? 0,
+  };
+}
+
 export function normalizeTrip(rawTrip) {
   if (!rawTrip) return null;
 
@@ -97,10 +118,16 @@ export function normalizeTrip(rawTrip) {
     coordinateFrom(rawTrip.dropoff) ||
     coordinateFrom(rawTrip.dropoffLocation) ||
     coordinateFrom(rawTrip.endLocation);
-    
-  const route = routeFrom(
+
+  // Priority: routeGeometry from backend > legacy route field > empty
+  const backendRoute = routeFromGeometry(rawTrip);
+  const legacyRoute = routeFrom(
     rawTrip.route || rawTrip.routeCoordinates || rawTrip.path,
   );
+
+  const route = backendRoute?.coordinates?.length >= 2
+    ? backendRoute.coordinates
+    : legacyRoute;
 
   return {
     ...rawTrip,
@@ -110,6 +137,8 @@ export function normalizeTrip(rawTrip) {
     pickup,
     destination,
     route,
+    distanceKm: backendRoute?.distanceKm ?? rawTrip.distanceKm ?? 0,
+    durationSec: backendRoute?.durationSec ?? rawTrip.durationSec ?? 0,
     pickupIndex: Number.isInteger(rawTrip.pickupIndex)
       ? rawTrip.pickupIndex
       : 0,
@@ -136,7 +165,7 @@ export const tripsService = {
       ACTIVE_TRIP_STATUSES.has(String(trip.status).toLowerCase()),
     );
     
-    // Enrich with routes if missing
+    // Enrich with OSRM routes ONLY if backend didn't provide routeGeometry
     await Promise.all(activeTrips.map(async (trip) => {
       if (trip.pickup && trip.destination && (!trip.route || trip.route.length < 2)) {
          try {
@@ -157,31 +186,28 @@ export const tripsService = {
   },
 
   getTripById: async (tripId) => {
-    // Workaround: Since GET /api/trips/:id does not exist, fetch from lists and filter
-    let trip = null;
-    
     try {
-      const tripsResponse = await api.get("/api/trips/online", { skip: 0, limit: 100 });
-      const onlineTrips = normalizeTrips(tripsResponse);
-      trip = onlineTrips.find(t => t.id === Number(tripId));
+      // Use the new dedicated GET /api/trips/:id endpoint
+      const response = await api.get(`/api/trips/${tripId}`);
+      const trip = normalizeTrip(unwrapItem(response));
       
-      if (!trip) {
-        const allResponse = await api.get("/api/trips", { skip: 0, limit: 100 });
-        const allTrips = normalizeTrips(allResponse);
-        trip = allTrips.find(t => t.id === Number(tripId));
+      if (trip && trip.pickup && trip.destination && (!trip.route || trip.route.length < 2)) {
+        try {
+          const routeData = await getRoadRoute([trip.pickup, trip.destination]);
+          if (routeData && routeData.coordinates) {
+            trip.route = routeData.coordinates;
+            trip.distanceKm = routeData.distanceKm;
+            trip.durationSec = routeData.durationSec;
+          }
+        } catch (e) {
+          console.warn("OSRM fallback failed for trip", tripId, e);
+        }
       }
+      
+      return trip;
     } catch (e) {
-      console.warn("Failed to fetch trip by ID via lists:", e);
+      console.warn("Failed to fetch trip by ID:", e);
+      return null;
     }
-
-    if (trip && trip.pickup && trip.destination && (!trip.route || trip.route.length < 2)) {
-       try {
-         const routeData = await getRoadRoute([trip.pickup, trip.destination]);
-         if (routeData && routeData.coordinates) {
-           trip.route = routeData.coordinates;
-         }
-       } catch (e) {}
-    }
-    return trip || null;
   }
 };
