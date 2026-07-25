@@ -7,7 +7,8 @@ import {
   ShieldCheck,
   Map,
   Wallet,
-  Star
+  Star,
+  Tag
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -62,6 +63,11 @@ export const NAV_ITEMS = [
     to: "/ratings",
     labelKey: "sidebar.ratings",
     icon: Star, // Ratings
+  },
+  {
+    to: "/rating-tags",
+    labelKey: "sidebar.ratingTags",
+    icon: Tag, // Rating Tags
   },
   {
     to: "/settings",

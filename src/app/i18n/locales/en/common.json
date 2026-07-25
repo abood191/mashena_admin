@@ -54,7 +54,9 @@
     "settings": "Settings",
     "logout": "Logout",
     "roles": "Role Management",
-    "wallet": "Wallet"
+    "wallet": "Wallet",
+    "ratings": "Ratings",
+    "ratingTags": "Rating Tags"
   },
 
   "common": {
@@ -69,7 +71,88 @@
     "search": "Search",
     "no":"no",
     "yes":"yes",
-    "nodata": "No data available"
+    "nodata": "No data available",
+    "loading": "Loading...",
+    "noResults": "No users found",
+    "searchUser": "Search User..."
+  },
+
+  "ratings": {
+    "title": "Ratings",
+    "subtitle": "Manage and filter all system ratings",
+    "filters": "Filters",
+    "tripId": "Trip ID",
+    "allScores": "All Scores",
+    "stars": "{{count}} Stars",
+    "oneStar": "1 Star",
+    "pageInfo": "Page {{current}} of {{total}} (Total: {{count}})",
+    "table": {
+      "tripId": "Trip ID",
+      "fromUser": "From User",
+      "toUser": "To User",
+      "score": "Score",
+      "commentAndTags": "Comment & Tags",
+      "date": "Date"
+    }
+  },
+
+  "ratingTags": {
+    "title": "Rating Tags",
+    "subtitle": "Manage rating tags for drivers and riders",
+    "filters": "Filters",
+    "addTag": "Add Tag",
+    "allTargets": "All Targets",
+    "allSentiments": "All Sentiments",
+    "allStatuses": "All Statuses",
+    "active": "Active",
+    "inactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "pageInfo": "Page {{current}} of {{total}} (Total: {{count}})",
+    "targetTypes": {
+      "DRIVER": "Driver",
+      "RIDER": "Rider"
+    },
+    "sentiments": {
+      "POSITIVE": "Positive",
+      "NEGATIVE": "Negative"
+    },
+    "table": {
+      "code": "Code",
+      "name": "Name",
+      "targetType": "Target",
+      "sentiment": "Sentiment",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "modal": {
+      "createTitle": "Add Rating Tag",
+      "editTitle": "Edit Rating Tag",
+      "code": "Code",
+      "nameEn": "Name (English)",
+      "nameAr": "Name (Arabic)",
+      "targetType": "Target Type",
+      "sentiment": "Sentiment",
+      "create": "Create Tag",
+      "save": "Save Changes"
+    },
+    "confirm": {
+      "title": "Delete Rating Tag",
+      "message": "Are you sure you want to delete \"{{code}}\"? Existing ratings will be preserved."
+    },
+    "toast": {
+      "loadFailed": "Failed to load rating tags",
+      "codeRequired": "Code is required",
+      "created": "Rating tag created successfully",
+      "createFailed": "Failed to create rating tag",
+      "updated": "Rating tag updated successfully",
+      "updateFailed": "Failed to update rating tag",
+      "deleted": "Rating tag deleted successfully",
+      "deleteFailed": "Failed to delete rating tag",
+      "activated": "Rating tag activated",
+      "deactivated": "Rating tag deactivated",
+      "toggleFailed": "Failed to toggle status"
+    }
   },
 
   "roles": {

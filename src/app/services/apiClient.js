@@ -62,6 +62,7 @@ async function request(
 
   const headers = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    "Accept-Language": localStorage.getItem("lang") || "en",
   };
 
   if (!isFormData) {

@@ -54,7 +54,9 @@
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "roles": "إدارة الصلاحيات",
-    "wallet": "المحفظة"
+    "wallet": "المحفظة",
+    "ratings": "التقييمات",
+    "ratingTags": "تاغات التقييم"
   },
 
   "common": {
@@ -69,7 +71,88 @@
     "search": "بحث",
     "no": "لا",
     "yes": "نعم",
-    "nodata": "لا توجد بيانات متاحة"
+    "nodata": "لا توجد بيانات متاحة",
+    "loading": "جاري التحميل...",
+    "noResults": "لم يتم العثور على مستخدمين",
+    "searchUser": "ابحث عن مستخدم..."
+  },
+
+  "ratings": {
+    "title": "التقييمات",
+    "subtitle": "إدارة وتصفية جميع تقييمات النظام",
+    "filters": "الفلاتر",
+    "tripId": "رقم الرحلة",
+    "allScores": "جميع التقييمات",
+    "stars": "{{count}} نجوم",
+    "oneStar": "نجمة واحدة",
+    "pageInfo": "صفحة {{current}} من {{total}} (الإجمالي: {{count}})",
+    "table": {
+      "tripId": "رقم الرحلة",
+      "fromUser": "من المستخدم",
+      "toUser": "إلى المستخدم",
+      "score": "التقييم",
+      "commentAndTags": "التعليق والتاغات",
+      "date": "التاريخ"
+    }
+  },
+
+  "ratingTags": {
+    "title": "تاغات التقييم",
+    "subtitle": "إدارة تاغات التقييم للسائقين والركاب",
+    "filters": "الفلاتر",
+    "addTag": "إضافة تاغ",
+    "allTargets": "جميع الأهداف",
+    "allSentiments": "جميع المشاعر",
+    "allStatuses": "جميع الحالات",
+    "active": "مفعّل",
+    "inactive": "معطّل",
+    "activate": "تفعيل",
+    "deactivate": "تعطيل",
+    "pageInfo": "صفحة {{current}} من {{total}} (الإجمالي: {{count}})",
+    "targetTypes": {
+      "DRIVER": "سائق",
+      "RIDER": "راكب"
+    },
+    "sentiments": {
+      "POSITIVE": "إيجابي",
+      "NEGATIVE": "سلبي"
+    },
+    "table": {
+      "code": "الكود",
+      "name": "الاسم",
+      "targetType": "الهدف",
+      "sentiment": "المشاعر",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "modal": {
+      "createTitle": "إضافة تاغ تقييم",
+      "editTitle": "تعديل تاغ التقييم",
+      "code": "الكود",
+      "nameEn": "الاسم (إنجليزي)",
+      "nameAr": "الاسم (عربي)",
+      "targetType": "نوع الهدف",
+      "sentiment": "المشاعر",
+      "create": "إنشاء تاغ",
+      "save": "حفظ التغييرات"
+    },
+    "confirm": {
+      "title": "حذف تاغ التقييم",
+      "message": "هل أنت متأكد أنك تريد حذف \"{{code}}\"؟ سيتم الحفاظ على التقييمات الحالية."
+    },
+    "toast": {
+      "loadFailed": "فشل تحميل تاغات التقييم",
+      "codeRequired": "الكود مطلوب",
+      "created": "تم إنشاء تاغ التقييم بنجاح",
+      "createFailed": "فشل إنشاء تاغ التقييم",
+      "updated": "تم تحديث تاغ التقييم بنجاح",
+      "updateFailed": "فشل تحديث تاغ التقييم",
+      "deleted": "تم حذف تاغ التقييم بنجاح",
+      "deleteFailed": "فشل حذف تاغ التقييم",
+      "activated": "تم تفعيل تاغ التقييم",
+      "deactivated": "تم تعطيل تاغ التقييم",
+      "toggleFailed": "فشل تغيير الحالة"
+    }
   },
 
   "roles": {
