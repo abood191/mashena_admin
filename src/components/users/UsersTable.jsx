@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-table";
 import { t } from "i18next";
 
-export default function UsersTable({ columns, data,loading }) {
+export default function UsersTable({ columns, data, loading, onRowClick }) {
   const table = useReactTable({
     data,
     columns,
@@ -54,7 +54,8 @@ export default function UsersTable({ columns, data,loading }) {
     table.getRowModel().rows.map((row) => (
       <tr
         key={row.id}
-        className="border-t border-border-subtle hover:bg-foreground/5"
+        onClick={() => onRowClick && onRowClick(row.original)}
+        className={`border-t border-border-subtle hover:bg-foreground/5 transition-colors ${onRowClick ? "cursor-pointer" : ""}`}
       >
         {row.getVisibleCells().map((cell) => (
           <td key={cell.id} className="px-6 py-4 text-start text-foreground whitespace-nowrap">

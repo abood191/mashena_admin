@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UsersTable from "@/components/users/UsersTable";
 import { useAdmins } from "@/app/hooks/api/useUsers";
 import { useDebounce } from "@/hooks/useDebounce";
 import Input from "@/components/ui/Input";
 import { toast } from "sonner";
-import { Search, ShieldAlert, Loader2 } from "lucide-react";
+import { Search, ShieldAlert, Loader2, Plus } from "lucide-react";
+import CreateEmployeeModal from "./components/CreateEmployeeModal";
+import PermissionGuard from "../../auth/rbac/PermissionGuard";
 
 export default function AdminsPage() {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
   const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const debouncedSearch = useDebounce(search, 400);
 
   const { data, isFetching, error } = useAdmins({
@@ -64,7 +69,8 @@ export default function AdminsPage() {
           </div>
         </div>
 
-        <div className="relative w-full md:w-96">
+        <div className="flex flex-col md:flex-row gap-4 items-center w-full md:w-auto">
+          <div className="relative w-full md:w-80">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={18} />
           <input
             placeholder={t("admins.searchPlaceholder")}
@@ -76,11 +82,27 @@ export default function AdminsPage() {
             }}
             className="w-full bg-surface border border-border-subtle rounded-2xl py-3.5 pl-12 pr-4 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
           />
+          </div>
+          
+          <PermissionGuard requiredAny={["create_admin", "manage_users"]}>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center gap-2 px-5 py-3.5 bg-[#4880FF] hover:bg-[#3d6edb] text-white font-bold rounded-2xl transition-all shadow-lg shadow-[#4880FF]/25 whitespace-nowrap"
+            >
+              <Plus size={18} />
+              {t("admins.create", "Create Admin")}
+            </button>
+          </PermissionGuard>
         </div>
       </div>
 
       <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
-        <UsersTable columns={columns} data={admins} loading={isFetching} />
+        <UsersTable 
+          columns={columns} 
+          data={admins} 
+          loading={isFetching} 
+          onRowClick={(user) => navigate(`/profile/admins/${user.id}`)}
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
@@ -109,6 +131,10 @@ export default function AdminsPage() {
           </button>
         </div>
       </div>
+
+      {isModalOpen && (
+        <CreateEmployeeModal onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 }

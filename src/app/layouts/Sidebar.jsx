@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { NAV_ITEMS } from "../config/nav";
 import { useAuth } from "../auth/authContext";
+import { useRBAC } from "../auth/rbac/useRBAC";
 import { useTranslation } from "react-i18next";
 
 const ACTIVE = "#4880FF";
@@ -12,6 +13,7 @@ export default function Sidebar({
   onCloseMobile,
 }) {
   const { logout } = useAuth();
+  const { hasAnyPermission } = useRBAC();
   const nav = useNavigate();
   const { t } = useTranslation();
 
@@ -66,7 +68,7 @@ export default function Sidebar({
 
         {/* Nav */}
         <nav className="px-3 py-4 space-y-1">
-          {NAV_ITEMS.map((item) => ( 
+          {NAV_ITEMS.filter(item => !item.permissions || hasAnyPermission(item.permissions)).map((item) => ( 
             <NavLink
               key={item.to}
               to={item.to}

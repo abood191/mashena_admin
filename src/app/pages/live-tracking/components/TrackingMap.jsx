@@ -87,6 +87,17 @@ const DEST_ICON_HTML = `
   </div>
 `;
 
+const STOP_ICON_HTML = `
+  <div class="relative w-7 h-7 flex items-center justify-center">
+    <span class="absolute inline-flex h-5 w-5 rounded-full bg-amber-400/30 animate-pulse"></span>
+    <div class="w-5 h-5 rounded-full bg-amber-500 border-2 border-slate-950 flex items-center justify-center shadow-lg transition-transform hover:scale-125 duration-100">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 text-slate-950">
+        <circle cx="12" cy="12" r="6" />
+      </svg>
+    </div>
+  </div>
+`;
+
 // Helper component to center map dynamically on first render
 function MapController({ center, zoom }) {
   const map = useMap();
@@ -352,6 +363,13 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
     iconAnchor: [14, 14],
   });
 
+  const stopIcon = L.divIcon({
+    html: STOP_ICON_HTML,
+    className: "stop-custom-icon",
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+  });
+
   // Calculate dynamic segments along the route based on snapping
   const getTripSegments = (trip) => {
     let currentIndex = 0;
@@ -554,6 +572,23 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
                 </Marker>
               )}
 
+              {trip.stops && trip.stops.length > 0 && trip.stops.map((stop, index) => (
+                <Marker
+                  key={`stop-${stop.id || index}`}
+                  position={[stop.lat, stop.lng]}
+                  icon={stopIcon}
+                  eventHandlers={{ click: () => onSelectTrip(trip.id) }}
+                >
+                  <Popup className="custom-leaflet-popup">
+                    <div className="p-1 text-foreground text-xs">
+                      <span className="font-bold text-amber-400 block">Stop {stop.order || index + 1}</span>
+                      {stop.address && <span className="text-[10px] text-foreground/70 block mt-1 truncate max-w-[200px]">{stop.address}</span>}
+                      <span className="text-[10px] text-foreground/50 block mt-0.5">#{formatMapTripId(trip.id)}</span>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
               {/* Advanced Segmented Route Polylines */}
               {trip.route && trip.route.length >= 2 && (
                 <React.Fragment>
@@ -723,7 +758,7 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
 
       {/* Dynamic Selected Trip Details HUD */}
       {selectedHUDData && (
-        <div className="absolute bottom-6 left-6 right-6 lg:left-1/2 lg:-translate-x-1/2 lg:w-[480px] z-20 bg-surface/90 backdrop-blur-md border border-border-subtle rounded-3xl p-5 shadow-2xl animate-in slide-in-from-bottom duration-300">
+        <div className="absolute bottom-6 left-6 w-[calc(100%-3rem)] sm:w-[400px] z-20 bg-surface/95 backdrop-blur-md border border-border-subtle rounded-3xl p-4 shadow-2xl animate-in slide-in-from-left duration-300">
           
           {/* Header Row */}
           <div className="flex items-start justify-between border-b border-border-subtle pb-3">

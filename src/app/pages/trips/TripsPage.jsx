@@ -117,6 +117,23 @@ export default function TripsPage() {
                     </div>
                   </div>
 
+                  {trip.stops && trip.stops.length > 0 && trip.stops.map((stop, index) => (
+                    <div key={`stop-${stop.id || index}`} className="flex gap-2.5">
+                      <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
+                        <div className="h-4 w-4 rounded-full bg-amber-500/10 border border-amber-500/30 grid place-items-center">
+                          <MapPin className="h-2.5 w-2.5 text-amber-400" />
+                        </div>
+                        <div className="w-0.5 h-6 bg-dashed border-l border-white/10" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[9px] text-white/40 font-semibold uppercase">Stop {stop.order || index + 1}</span>
+                        <p className="text-white/80 font-medium truncate mt-0.5" title={stop.address}>
+                          {stop.address || `${stop.lat.toFixed(5)}, ${stop.lng.toFixed(5)}`}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+
                   <div className="flex gap-2.5">
                     <div className="flex flex-col items-center shrink-0 pt-0.5">
                       <div className="h-4 w-4 rounded-full bg-rose-500/10 border border-rose-500/30 grid place-items-center">

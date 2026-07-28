@@ -55,3 +55,47 @@ export const useAdmins = (filters = {}, options = {}) => {
     ...options,
   });
 };
+
+/**
+ * Hook to create a new employee (Admin)
+ */
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+export const useCreateEmployee = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => userService.createEmployee(data),
+    onSuccess: () => {
+      // Invalidate the admins list so the new employee shows up immediately
+      queryClient.invalidateQueries({ queryKey: userKeys.admins() });
+    },
+  });
+};
+
+/**
+ * Hooks to fetch individual users by ID
+ */
+export const useDriver = (id) => {
+  return useQuery({
+    queryKey: [...userKeys.drivers(), "detail", id],
+    queryFn: () => userService.getDriverById(id),
+    enabled: !!id,
+  });
+};
+
+export const useRider = (id) => {
+  return useQuery({
+    queryKey: [...userKeys.riders(), "detail", id],
+    queryFn: () => userService.getRiderById(id),
+    enabled: !!id,
+  });
+};
+
+export const useAdmin = (id) => {
+  return useQuery({
+    queryKey: [...userKeys.admins(), "detail", id],
+    queryFn: () => userService.getAdminById(id),
+    enabled: !!id,
+  });
+};

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UsersTable from "@/components/users/UsersTable";
 import { useDrivers } from "@/app/hooks/api/useUsers";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 
 export default function DriversPage() {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
   const [search, setSearch] = useState("");
@@ -98,7 +100,12 @@ export default function DriversPage() {
       </div>
 
       <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
-        <UsersTable columns={columns} data={drivers} loading={isFetching} />
+        <UsersTable 
+          columns={columns} 
+          data={drivers} 
+          loading={isFetching} 
+          onRowClick={(user) => navigate(`/profile/drivers/${user.id}`)}
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">

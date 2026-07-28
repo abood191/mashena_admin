@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UsersTable from "@/components/users/UsersTable";
 import { useRiders } from "@/app/hooks/api/useUsers";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 
 export default function RidersPage() {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
   const [search, setSearch] = useState("");
@@ -90,7 +92,12 @@ export default function RidersPage() {
       </div>
 
       <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
-        <UsersTable columns={columns} data={riders} loading={isFetching} />
+        <UsersTable 
+          columns={columns} 
+          data={riders} 
+          loading={isFetching} 
+          onRowClick={(user) => navigate(`/profile/riders/${user.id}`)}
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">

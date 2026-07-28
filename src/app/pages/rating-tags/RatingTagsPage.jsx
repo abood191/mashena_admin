@@ -124,24 +124,38 @@ export default function RatingTagsPage() {
 
   const openEdit = async (tag) => {
     try {
+      // Instantly open with table data while fetching full details
+      const locsFallback = tag.localizations || [];
+      const enLocFallback = locsFallback.find(l => l.languageCode === "en")?.name || "";
+      const arLocFallback = locsFallback.find(l => l.languageCode === "ar")?.name || "";
+
+      setEditingTag(tag);
+      setForm({
+        code: tag.code || "",
+        targetType: tag.targetType || "DRIVER",
+        sentiment: tag.sentiment || "POSITIVE",
+        nameEn: enLocFallback,
+        nameAr: arLocFallback,
+      });
+      setEditOpen(true);
+
       setFetchingId(tag.id);
       const res = await ratingTagsService.getById(tag.id);
-      // Depending on apiClient, the data might be in res or res.data
-      const fullTag = res.data || res;
+      // Depending on apiClient, the data might be in res.data, or it might just be res
+      const fullTag = res?.data?.id ? res.data : (res?.id ? res : (res?.data || res));
       
-      const locs = fullTag.localizations || [];
-      const enLoc = locs.find(l => l.languageCode === "en")?.name || "";
-      const arLoc = locs.find(l => l.languageCode === "ar")?.name || "";
+      const locs = fullTag.localizations || fullTag.translations || tag.localizations || [];
+      const enLoc = locs.find(l => l.languageCode === "en")?.name || enLocFallback;
+      const arLoc = locs.find(l => l.languageCode === "ar")?.name || arLocFallback;
 
       setEditingTag(fullTag);
       setForm({
-        code: fullTag.code,
-        targetType: fullTag.targetType,
-        sentiment: fullTag.sentiment,
+        code: fullTag.code || tag.code || "",
+        targetType: fullTag.targetType || tag.targetType || "DRIVER",
+        sentiment: fullTag.sentiment || tag.sentiment || "POSITIVE",
         nameEn: enLoc,
         nameAr: arLoc,
       });
-      setEditOpen(true);
     } catch (e) {
       toast.error(e.message || t("ratingTags.toast.loadFailed", "Failed to load rating tags"));
     } finally {
@@ -155,7 +169,12 @@ export default function RatingTagsPage() {
   };
 
   const handleCreate = async () => {
-    if (!form.code.trim()) { toast.warning(t("ratingTags.toast.codeRequired", "Code is required")); return; }
+    if (!form.code?.trim()) { toast.warning(t("ratingTags.toast.codeRequired", "Code is required")); return; }
+    if (!form.nameEn?.trim()) { toast.warning(t("ratingTags.toast.nameEnRequired", "English name is required")); return; }
+    if (!form.nameAr?.trim()) { toast.warning(t("ratingTags.toast.nameArRequired", "Arabic name is required")); return; }
+    if (!form.targetType) { toast.warning(t("ratingTags.toast.targetTypeRequired", "Target type is required")); return; }
+    if (!form.sentiment) { toast.warning(t("ratingTags.toast.sentimentRequired", "Sentiment is required")); return; }
+
     try {
       await createMut.mutateAsync({
         code: form.code.trim(),
@@ -174,6 +193,12 @@ export default function RatingTagsPage() {
 
   const handleUpdate = async () => {
     if (!editingTag) return;
+
+    if (!form.nameEn?.trim()) { toast.warning(t("ratingTags.toast.nameEnRequired", "English name is required")); return; }
+    if (!form.nameAr?.trim()) { toast.warning(t("ratingTags.toast.nameArRequired", "Arabic name is required")); return; }
+    if (!form.targetType) { toast.warning(t("ratingTags.toast.targetTypeRequired", "Target type is required")); return; }
+    if (!form.sentiment) { toast.warning(t("ratingTags.toast.sentimentRequired", "Sentiment is required")); return; }
+
     try {
       await updateMut.mutateAsync({
         id: editingTag.id,

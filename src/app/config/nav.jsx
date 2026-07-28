@@ -15,38 +15,42 @@ export const NAV_ITEMS = [
   {
     to: "/",
     labelKey: "sidebar.dashboard",
-    icon: LayoutDashboard, // Dashboard
+    icon: LayoutDashboard,
   },
   {
     to: "/requests",
-    labelKey: "sidebar.requests",// requests
+    labelKey: "sidebar.requests",
     icon: LayoutDashboard,
   },
   {
     to: "/drivers",
     labelKey: "sidebar.drivers",
-    icon: Car, // Drivers
+    icon: Car,
   },
-  { to: "/vehicle-types", labelKey: "sidebar.vehicleTypes", icon: Car }, // Vehicle Types
+  {
+    to: "/vehicle-types",
+    labelKey: "sidebar.vehicleTypes",
+    icon: Car,
+  },
   {
     to: "/riders",
     labelKey: "sidebar.riders",
-    icon: Users, // Riders
+    icon: Users,
   },
   {
     to: "/admins",
     labelKey: "sidebar.admins",
-    icon: Users, // Admins
+    icon: Users,
   },
   {
     to: "/trips",
     labelKey: "sidebar.trips",
-    icon: Route, // Trips / routes
+    icon: Route,
   },
   {
     to: "/live-tracking",
     labelKey: "sidebar.liveTracking",
-    icon: Map, // Live Map tracking
+    icon: Map,
   },
   {
     to: "/wallet",
@@ -55,23 +59,22 @@ export const NAV_ITEMS = [
   },
   {
     to: "/roles",
-
     labelKey: "sidebar.roles",
-    icon: ShieldCheck, // Role & Permissions
+    icon: ShieldCheck,
   },
   {
     to: "/ratings",
     labelKey: "sidebar.ratings",
-    icon: Star, // Ratings
+    icon: Star,
   },
   {
     to: "/rating-tags",
     labelKey: "sidebar.ratingTags",
-    icon: Tag, // Rating Tags
+    icon: Tag,
   },
   {
     to: "/settings",
     labelKey: "sidebar.settings",
-    icon: Settings, // Settings
+    icon: Settings,
   },
 ];
