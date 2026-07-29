@@ -21,4 +21,5 @@ COPY --chown=www:www-data ./ .
 
 # Expose port and start app
 EXPOSE 5174
-ENTRYPOINT ["npm", "run", "dev"]
+#ENTRYPOINT ["npm", "run", "dev"]
+ENTRYPOINT ["npm", "run", "dev", "--", "--host"]
