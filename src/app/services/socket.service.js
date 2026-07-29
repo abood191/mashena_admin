@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { getAccessToken } from "../auth/token";
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const SOCKET_URL = import.meta.env.VITE_API_URL || "https://api-mashena.wasta-jobs.com";
 
 class SocketService {
   constructor() {
