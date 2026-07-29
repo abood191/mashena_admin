@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/trip-share';
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://api-mashena.wasta-jobs.com/trip-share';
 
 export function useTripSocket(token) {
   const [isConnected, setIsConnected] = useState(false);

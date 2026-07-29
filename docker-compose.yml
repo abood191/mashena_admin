@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  website-share:
+    build:
+      context: ./
+      dockerfile: ./.docker/production/website/Dockerfile
+    container_name: kenan_share_dev
+    restart: unless-stopped
+    ports:
+      - 8802:3000
+    networks:
+      - kenan_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  kenan_network:
