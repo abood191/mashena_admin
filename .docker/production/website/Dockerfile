@@ -17,8 +17,8 @@ RUN npm install @mui/system @mui/material @emotion/react @emotion/styled
 COPY --chown=www:www-data ./ .
 
 # Build the project
-RUN npm run build
+#RUN npm run build
 
 # Expose port and start app
 EXPOSE 3000
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "dev"]
