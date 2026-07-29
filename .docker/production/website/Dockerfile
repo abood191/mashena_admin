@@ -20,5 +20,5 @@ COPY --chown=www:www-data ./ .
 #RUN npm run build
 
 # Expose port and start app
-EXPOSE 3000
+EXPOSE 5173
 ENTRYPOINT ["npm", "run", "dev"]
