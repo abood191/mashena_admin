@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import { loginAdmin } from "../auth/auth";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/AuthContext";
 import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {

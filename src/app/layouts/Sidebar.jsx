@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { NAV_ITEMS } from "../config/nav";
-import { useAuth } from "../auth/authContext";
+import { useAuth } from "../auth/AuthContext";
 import { useRBAC } from "../auth/rbac/useRBAC";
 import { useTranslation } from "react-i18next";
 

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useAuth } from "../authContext";
+import { useAuth } from "../AuthContext";
 import { rolesService } from "../../services/roles.service";
 import { USER_KEY } from "../token";
 
