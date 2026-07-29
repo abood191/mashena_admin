@@ -8,7 +8,7 @@ services:
     container_name: kenan_share_dev
     restart: unless-stopped
     ports:
-      - 8802:3000
+      - 8802:5174
     networks:
       - kenan_network
     extra_hosts:
