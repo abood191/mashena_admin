@@ -11,6 +11,8 @@ export const useRatings = (filters = {}, options = {}) => {
     queryKey: ratingKeys.list(filters),
     queryFn: () => ratingsService.getRatings(filters),
     placeholderData: keepPreviousData,
+    staleTime: 30_000,
     ...options,
   });
 };
+

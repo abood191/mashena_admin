@@ -56,7 +56,8 @@
     "roles": "إدارة الصلاحيات",
     "wallet": "المحفظة",
     "ratings": "التقييمات",
-    "ratingTags": "تاغات التقييم"
+    "ratingTags": "تاغات التقييم",
+    "coupons": "الكوبونات"
   },
 
   "common": {
@@ -344,6 +345,91 @@
       "updated": "تم تحديث الإعداد بنجاح.",
       "failed": "فشل تحديث الإعداد.",
       "loaded": "تم تحميل الإعدادات."
+    }
+  },
+
+  "coupons": {
+    "title": "الكوبونات",
+    "subtitle": "إدارة كوبونات الخصم ومتابعة استخدامها",
+    "addCoupon": "إضافة كوبون",
+    "filters": "الفلاتر",
+    "allStatuses": "كل الحالات",
+    "allTypes": "كل الأنواع",
+    "allActivity": "كل النشاط",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "globalHistory": "سجل الاستخدام الكلي",
+    "couponHistory": "سجل الاستخدام",
+    "pageInfo": "صفحة {{current}} من {{total}} (الإجمالي: {{count}})",
+    "usedOf": "{{used}} / {{limit}} مستخدم",
+    "noExpiry": "لا تاريخ انتهاء",
+    "discountTypes": {
+      "PERCENTAGE": "نسبة مئوية",
+      "FIXED": "مبلغ ثابت"
+    },
+    "statuses": {
+      "ACTIVE": "نشط",
+      "USED": "مستخدم",
+      "EXPIRED": "منتهي",
+      "REVOKED": "ملغى"
+    },
+    "table": {
+      "code": "الكود",
+      "name": "الاسم",
+      "discount": "الخصم",
+      "usage": "الاستخدام",
+      "validity": "الصلاحية",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "historyTable": {
+      "coupon": "الكوبون",
+      "user": "المستخدم",
+      "discountAmount": "الخصم",
+      "usedAt": "تاريخ الاستخدام"
+    },
+    "modal": {
+      "createTitle": "إنشاء كوبون",
+      "editTitle": "تعديل الكوبون",
+      "code": "كود الكوبون",
+      "codePlaceholder": "مثال: SUMMER20",
+      "name": "الاسم",
+      "namePlaceholder": "مثال: تخفيضات الصيف",
+      "description": "الوصف",
+      "descriptionPlaceholder": "وصف اختياري...",
+      "discountType": "نوع الخصم",
+      "discountValue": "قيمة الخصم",
+      "discountValuePlaceholder": "مثال: 20",
+      "maxDiscount": "الحد الأقصى للخصم",
+      "maxDiscountPlaceholder": "مثال: 50",
+      "activationDurationDays": "مدة التفعيل (بالأيام)",
+      "activationDurationDaysPlaceholder": "مثال: 30",
+      "allowedUsages": "عدد الاستخدامات المسموح بها للمستخدم",
+      "allowedUsagesPlaceholder": "مثال: 1",
+      "globalUsageLimit": "الحد الكلي للاستخدام",
+      "globalUsageLimitPlaceholder": "مثال: 100",
+      "startsAt": "تاريخ البداية",
+      "expiresAt": "تاريخ الانتهاء",
+      "isActive": "نشط",
+      "create": "إنشاء الكوبون",
+      "save": "حفظ التغييرات"
+    },
+    "confirm": {
+      "title": "حذف الكوبون",
+      "message": "هل أنت متأكد من حذف الكوبون \"{{code}}\"? لا يمكن التراجع عن هذا الإجراء."
+    },
+    "toast": {
+      "loadFailed": "فشل تحميل الكوبونات",
+      "created": "تم إنشاء الكوبون بنجاح",
+      "createFailed": "فشل إنشاء الكوبون",
+      "updated": "تم تحديث الكوبون بنجاح",
+      "updateFailed": "فشل تحديث الكوبون",
+      "deleted": "تم حذف الكوبون بنجاح",
+      "deleteFailed": "فشل حذف الكوبون",
+      "codeRequired": "كود الكوبون مطلوب",
+      "nameRequired": "اسم الكوبون مطلوب",
+      "discountValueRequired": "قيمة الخصم مطلوبة",
+      "datesRequired": "تاريخا البداية والانتهاء مطلوبان"
     }
   }
 }

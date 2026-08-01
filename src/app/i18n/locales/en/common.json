@@ -56,7 +56,8 @@
     "roles": "Role Management",
     "wallet": "Wallet",
     "ratings": "Ratings",
-    "ratingTags": "Rating Tags"
+    "ratingTags": "Rating Tags",
+    "coupons": "Coupons"
   },
 
   "common": {
@@ -345,6 +346,91 @@
       "updated": "Setting updated successfully.",
       "failed": "Failed to update setting.",
       "loaded": "Settings loaded."
+    }
+  },
+
+  "coupons": {
+    "title": "Coupons",
+    "subtitle": "Manage discount coupons and track their usage",
+    "addCoupon": "Add Coupon",
+    "filters": "Filters",
+    "allStatuses": "All Statuses",
+    "allTypes": "All Types",
+    "allActivity": "All Activity",
+    "active": "Active",
+    "inactive": "Inactive",
+    "globalHistory": "Global History",
+    "couponHistory": "Usage History",
+    "pageInfo": "Page {{current}} of {{total}} (Total: {{count}})",
+    "usedOf": "{{used}} / {{limit}} used",
+    "noExpiry": "No Expiry",
+    "discountTypes": {
+      "PERCENTAGE": "Percentage",
+      "FIXED": "Fixed Amount"
+    },
+    "statuses": {
+      "ACTIVE": "Active",
+      "USED": "Used",
+      "EXPIRED": "Expired",
+      "REVOKED": "Revoked"
+    },
+    "table": {
+      "code": "Code",
+      "name": "Name",
+      "discount": "Discount",
+      "usage": "Usage",
+      "validity": "Validity",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "historyTable": {
+      "coupon": "Coupon",
+      "user": "User",
+      "discountAmount": "Discount",
+      "usedAt": "Used At"
+    },
+    "modal": {
+      "createTitle": "Create Coupon",
+      "editTitle": "Edit Coupon",
+      "code": "Coupon Code",
+      "codePlaceholder": "e.g. SUMMER20",
+      "name": "Name",
+      "namePlaceholder": "e.g. Summer Sale",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional description...",
+      "discountType": "Discount Type",
+      "discountValue": "Discount Value",
+      "discountValuePlaceholder": "e.g. 20",
+      "maxDiscount": "Max Discount Amount",
+      "maxDiscountPlaceholder": "e.g. 50",
+      "activationDurationDays": "Activation Duration (Days)",
+      "activationDurationDaysPlaceholder": "e.g. 30",
+      "allowedUsages": "Allowed Usages Per User",
+      "allowedUsagesPlaceholder": "e.g. 1",
+      "globalUsageLimit": "Global Usage Limit",
+      "globalUsageLimitPlaceholder": "e.g. 100",
+      "startsAt": "Start Date",
+      "expiresAt": "Expiry Date",
+      "isActive": "Active",
+      "create": "Create Coupon",
+      "save": "Save Changes"
+    },
+    "confirm": {
+      "title": "Delete Coupon",
+      "message": "Are you sure you want to delete coupon \"{{code}}\"? This action cannot be undone."
+    },
+    "toast": {
+      "loadFailed": "Failed to load coupons",
+      "created": "Coupon created successfully",
+      "createFailed": "Failed to create coupon",
+      "updated": "Coupon updated successfully",
+      "updateFailed": "Failed to update coupon",
+      "deleted": "Coupon deleted successfully",
+      "deleteFailed": "Failed to delete coupon",
+      "codeRequired": "Coupon code is required",
+      "nameRequired": "Coupon name is required",
+      "discountValueRequired": "Discount value is required",
+      "datesRequired": "Start and expiry dates are required"
     }
   }
 }

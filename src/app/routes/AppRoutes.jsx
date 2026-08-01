@@ -17,6 +17,7 @@ const LiveTrackingPage = React.lazy(() => import("../pages/live-tracking/LiveTra
 const WalletPage = React.lazy(() => import("../pages/wallet/WalletPage"));
 const RatingsPage = React.lazy(() => import("../pages/ratings/RatingsPage"));
 const RatingTagsPage = React.lazy(() => import("../pages/rating-tags/RatingTagsPage"));
+const CouponsPage = React.lazy(() => import("../pages/coupons/CouponsPage"));
 
 const UnauthorizedPage = React.lazy(() => import("../pages/errors/UnauthorizedPage"));
 const UserProfilePage = React.lazy(() => import("../pages/profile/UserProfilePage"));
@@ -49,6 +50,7 @@ export default function AppRoutes() {
         <Route path="/roles" element={<RoleManagementPage />} />
         <Route path="/ratings" element={<RatingsPage />} />
         <Route path="/rating-tags" element={<RatingTagsPage />} />
+        <Route path="/coupons" element={<CouponsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile/:type/:id" element={<UserProfilePage />} />
         <Route path="/403" element={<UnauthorizedPage />} />

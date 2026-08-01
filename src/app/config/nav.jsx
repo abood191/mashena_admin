@@ -8,7 +8,8 @@ import {
   Map,
   Wallet,
   Star,
-  Tag
+  Tag,
+  Ticket
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -71,6 +72,11 @@ export const NAV_ITEMS = [
     to: "/rating-tags",
     labelKey: "sidebar.ratingTags",
     icon: Tag,
+  },
+  {
+    to: "/coupons",
+    labelKey: "sidebar.coupons",
+    icon: Ticket,
   },
   {
     to: "/settings",
