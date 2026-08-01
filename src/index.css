@@ -20,6 +20,23 @@
     color-scheme: light;
   }
 
+  /* Force native select option menus to respect light/dark themes */
+  html.dark select,
+  html.dark option,
+  .dark select,
+  .dark option {
+    background-color: #0b1220 !important;
+    color: #ffffff !important;
+    color-scheme: dark !important;
+  }
+
+  html:not(.dark) select,
+  html:not(.dark) option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    color-scheme: light !important;
+  }
+
   .dark {
     --surface-color: #0b1220;
     --bg-color: #070b14;

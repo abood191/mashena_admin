@@ -79,10 +79,10 @@ function Textarea({ ...props }) {
   );
 }
 
-function SelectInput({ children, ...props }) {
+function SelectInput({ children, className = "", ...props }) {
   return (
     <select
-      className="w-full rounded-2xl border border-border-subtle bg-surface px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 transition-all appearance-none cursor-pointer"
+      className={`w-full rounded-2xl border border-border-subtle bg-surface px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 transition-all appearance-none cursor-pointer [&>option]:bg-white [&>option]:text-[#0f172a] dark:[&>option]:bg-[#0b1220] dark:[&>option]:text-white ${className}`}
       {...props}
     >
       {children}
