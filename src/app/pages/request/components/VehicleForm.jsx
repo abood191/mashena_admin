@@ -42,7 +42,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
             placeholder="e.g. ABC-1234"
             value={form.plateNumber}
             onChange={handleChange}
-            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
+            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
           />
         </div>
 
@@ -54,7 +54,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
             placeholder="e.g. Toyota Camry"
             value={form.model}
             onChange={handleChange}
-            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
+            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
           />
         </div>
 
@@ -66,7 +66,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
             placeholder="e.g. Midnight Black"
             value={form.color}
             onChange={handleChange}
-            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
+            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
           />
         </div>
 
@@ -79,7 +79,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
             placeholder="2024"
             value={form.year}
             onChange={handleChange}
-            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
+            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 text-sm"
           />
         </div>
       </div>

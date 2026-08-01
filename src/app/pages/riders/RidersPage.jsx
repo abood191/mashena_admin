@@ -86,7 +86,7 @@ export default function RidersPage() {
               setSearch(e.target.value);
               setSkip(0);
             }}
-            className="w-full bg-surface border border-border-subtle rounded-2xl py-3.5 pl-12 pr-4 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+            className="w-full bg-surface border border-border-subtle rounded-2xl py-3.5 pl-12 pr-4 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
           />
         </div>
       </div>

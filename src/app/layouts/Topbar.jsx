@@ -40,7 +40,7 @@ export default function Topbar({ onOpenMobile }) {
             className="
               w-full rounded-2xl border border-border-subtle
               bg-background px-4 py-2.5 pr-12
-              text-sm text-foreground placeholder:text-muted
+              text-sm text-foreground placeholder:text-foreground
               outline-none focus:border-[#4880FF]/70
               focus:ring-4 focus:ring-[#4880FF]/10
             "

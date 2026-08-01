@@ -4,6 +4,7 @@ import { useAppSettings, useUpdateAppSetting } from "@/app/hooks/api/useAppSetti
 import { ModalShell } from "@/components/ui/ModalShell";
 import { toast } from "sonner";
 import { useDebounce } from "@/hooks/useDebounce";
+import { Search } from "lucide-react";
 
 /* ----------------------------- UI Components ----------------------------- */
 
@@ -75,7 +76,7 @@ function EditSettingModal({ open, setting, onClose, onSubmit, loading }) {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder={t("settings.modal.valuePlaceholder")}
-            className="mt-2 w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-muted outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
+            className="mt-2 w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
           />
           {err && <div className="mt-2 text-xs text-red-200">{err}</div>}
         </div>
@@ -114,7 +115,7 @@ export default function SettingsPage() {
   };
 
   const settings = data?.data || [];
-  const settingsCount = data?.count || 0;
+  const settingsCount = data?.count ?? 0;
 
   const handleEdit = (setting) => {
     setEditSetting(setting);
@@ -145,15 +146,18 @@ export default function SettingsPage() {
 
       <div className="mt-6 rounded-3xl border border-border-subtle bg-surface shadow-xl overflow-hidden">
         <div className="p-4 border-b border-border-subtle flex items-center justify-between gap-4 bg-foreground/5">
-          <input
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setSkip(0);
-            }}
-            placeholder={t("settings.search")}
-            className="w-full max-w-sm rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
-          />
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/30 pointer-events-none" size={16} />
+            <input
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setSkip(0);
+              }}
+              placeholder={t("settings.search")}
+              className="w-full rounded-2xl border border-border-subtle bg-foreground/5 py-2.5 pl-11 pr-4 text-sm text-foreground placeholder:text-foreground/40 outline-none focus:border-[var(--color-primary)]/70 focus:ring-4 focus:ring-[var(--color-primary)]/10 transition"
+            />
+          </div>
         </div>
 
         {/* Table */}
@@ -187,7 +191,7 @@ export default function SettingsPage() {
                     <td className="px-6 py-4">
                        <button
                          onClick={() => handleEdit(item)}
-                         className="h-9 px-4 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] text-foreground hover:text-white text-xs transition-all active:scale-95"
+                         className="h-9 px-4 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[#4880FF] hover:border-[#4880FF] text-foreground hover:text-white text-xs font-semibold transition-all active:scale-95"
                        >
                          {t("settings.editValue")}
                        </button>
@@ -208,27 +212,27 @@ export default function SettingsPage() {
         </div>
         
         {/* Pagination Footer */}
-        <div className="flex items-center justify-between gap-3 p-4 border-t border-border-subtle bg-foreground/5">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 border-t border-border-subtle bg-foreground/5">
           <div className="text-xs font-semibold tracking-wider text-muted uppercase">
             {settingsCount === 0
               ? "0"
-              : `Page ${currentPage} / ${totalPages} — ${settingsCount} total`}
+              : `Page ${currentPage} of ${totalPages} (Total: ${settingsCount})`}
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSkip((s) => Math.max(0, s - limit))}
               disabled={!canPrev || isLoading}
-              className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
+              className="h-9 px-4 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-bold text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
             >
-              Prev
+              {t("common.prev")}
             </button>
             <button
               onClick={() => setSkip((s) => s + limit)}
               disabled={!canNext || isLoading}
-              className="h-8 px-3 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-xs font-semibold text-foreground disabled:opacity-30 transition-all active:scale-95"
+              className="h-9 px-4 rounded-xl bg-[#4880FF] hover:bg-[#3d6edb] text-xs font-bold text-white shadow-lg shadow-[#4880FF]/25 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
             >
-              Next
+              {t("common.next")}
             </button>
           </div>
         </div>

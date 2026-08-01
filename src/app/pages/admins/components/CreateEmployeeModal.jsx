@@ -71,7 +71,7 @@ export default function CreateEmployeeModal({ onClose }) {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
               placeholder="e.g. John Doe"
             />
           </div>
@@ -84,7 +84,7 @@ export default function CreateEmployeeModal({ onClose }) {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
               placeholder="e.g. employee@company.com"
             />
           </div>
@@ -96,7 +96,7 @@ export default function CreateEmployeeModal({ onClose }) {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
-              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
               placeholder="e.g. 1333333333"
             />
           </div>
@@ -109,7 +109,7 @@ export default function CreateEmployeeModal({ onClose }) {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+              className="w-full bg-background border border-border-subtle rounded-xl px-4 py-3 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
               placeholder="Minimum 6 characters"
               minLength={6}
             />

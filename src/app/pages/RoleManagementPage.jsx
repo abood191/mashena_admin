@@ -141,7 +141,7 @@ export default function RoleManagementPage() {
                 setSkip(0);
               }}
               placeholder={t("roles.searchRole", { defaultValue: "Search roles..." })}
-              className="w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-muted outline-none focus:border-[#4880FF]/70 focus:ring-4 focus:ring-[#4880FF]/10 transition-all"
+              className="w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground outline-none focus:border-[#4880FF]/70 focus:ring-4 focus:ring-[#4880FF]/10 transition-all"
             />
 
             {/* Pagination */}

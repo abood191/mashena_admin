@@ -108,7 +108,7 @@ export default function UserAutocomplete({ value, onChange, placeholder }) {
           }
         }}
         onFocus={() => setIsOpen(true)}
-        className="w-full bg-surface border border-border-subtle rounded-2xl py-3 pl-12 pr-10 text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
+        className="w-full bg-surface border border-border-subtle rounded-2xl py-3 pl-12 pr-10 text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all"
       />
 
       {selectedUser ? (
