@@ -70,7 +70,7 @@ function EditSettingModal({ open, setting, onClose, onSubmit, loading }) {
     >
       <form id="setting-form" onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-muted">{t("settings.modal.valueLabel")}</label>
+          <label className="text-sm text-foreground">{t("settings.modal.valueLabel")}</label>
           <input
             type="text"
             value={value}
@@ -140,7 +140,7 @@ export default function SettingsPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="text-foreground text-2xl font-bold">{t("settings.title")}</div>
-          <div className="mt-1 text-muted text-sm">{t("settings.subtitle")}</div>
+          <div className="mt-1 text-foreground text-sm">{t("settings.subtitle")}</div>
         </div>
       </div>
 
@@ -168,7 +168,7 @@ export default function SettingsPage() {
              </div>
           ) : (
             <table className="w-full text-left text-sm text-foreground">
-              <thead className="bg-foreground/5 text-xs uppercase text-muted font-semibold tracking-wider">
+              <thead className="bg-foreground/5 text-xs uppercase text-foreground font-semibold tracking-wider">
                 <tr>
                   <th className="px-6 py-4">{t("settings.table.key")}</th>
                   <th className="px-6 py-4">{t("settings.table.value")}</th>
@@ -185,7 +185,7 @@ export default function SettingsPage() {
                         {item.value}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-muted">
+                    <td className="px-6 py-4 text-foreground">
                        {item.updatedAt ? new Date(item.updatedAt).toLocaleString() : "-"}
                     </td>
                     <td className="px-6 py-4">
@@ -201,7 +201,7 @@ export default function SettingsPage() {
 
                 {settings.length === 0 && !isLoading && (
                   <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center text-muted">
+                    <td colSpan={4} className="px-6 py-12 text-center text-foreground">
                       {search ? t("common.nodata") : t("common.nodata")}
                     </td>
                   </tr>
@@ -213,7 +213,7 @@ export default function SettingsPage() {
         
         {/* Pagination Footer */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 border-t border-border-subtle bg-foreground/5">
-          <div className="text-xs font-semibold tracking-wider text-muted uppercase">
+          <div className="text-xs font-semibold tracking-wider text-foreground uppercase">
             {settingsCount === 0
               ? "0"
               : `Page ${currentPage} of ${totalPages} (Total: ${settingsCount})`}

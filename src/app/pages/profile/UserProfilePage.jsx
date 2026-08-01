@@ -57,7 +57,7 @@ export default function UserProfilePage() {
         </button>
         <div>
           <h1 className="text-2xl font-bold text-foreground capitalize">{type.slice(0, -1)} Profile</h1>
-          <p className="text-muted text-sm">Detailed information and statistics</p>
+          <p className="text-foreground text-sm">Detailed information and statistics</p>
         </div>
       </div>
 
@@ -70,7 +70,7 @@ export default function UserProfilePage() {
               <User size={40} />
             </div>
             <h2 className="text-xl font-bold text-foreground">{user.fullName || "N/A"}</h2>
-            <p className="text-muted text-sm mb-4">
+            <p className="text-foreground text-sm mb-4">
               <span className="inline-block px-3 py-1 bg-green-500/10 text-green-500 rounded-lg text-xs font-bold uppercase tracking-wider">
                 Active
               </span>
@@ -78,15 +78,15 @@ export default function UserProfilePage() {
             
             <div className="w-full pt-4 border-t border-border-subtle space-y-3">
               <div className="flex items-center gap-3 text-foreground text-sm">
-                <Mail size={16} className="text-muted" />
+                <Mail size={16} className="text-foreground" />
                 <span className="truncate">{user.email || "No email"}</span>
               </div>
               <div className="flex items-center gap-3 text-foreground text-sm">
-                <Phone size={16} className="text-muted" />
+                <Phone size={16} className="text-foreground" />
                 <span>{user.phoneNumber || "No phone"}</span>
               </div>
               <div className="flex items-center gap-3 text-foreground text-sm">
-                <Calendar size={16} className="text-muted" />
+                <Calendar size={16} className="text-foreground" />
                 <span>Joined {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}</span>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function UserProfilePage() {
               </div>
               <div className="p-4 bg-foreground/5 rounded-xl border border-border-subtle">
                 <p className="text-sm font-medium text-foreground mb-1">Current Role ID: {user.roleId || "Unknown"}</p>
-                <p className="text-xs text-muted">Role editing feature will be available soon.</p>
+                <p className="text-xs text-foreground">Role editing feature will be available soon.</p>
               </div>
             </div>
           )}
@@ -115,7 +115,7 @@ export default function UserProfilePage() {
             <div className="bg-surface rounded-3xl border border-border-subtle p-6 shadow-sm flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-2">
                 <Activity size={18} className="text-orange-500" />
-                <span className="text-sm font-bold text-muted">Total Activity</span>
+                <span className="text-sm font-bold text-foreground">Total Activity</span>
               </div>
               <span className="text-3xl font-bold text-foreground">--</span>
             </div>
@@ -123,7 +123,7 @@ export default function UserProfilePage() {
             <div className="bg-surface rounded-3xl border border-border-subtle p-6 shadow-sm flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-2">
                 <Star size={18} className="text-yellow-500" />
-                <span className="text-sm font-bold text-muted">Rating</span>
+                <span className="text-sm font-bold text-foreground">Rating</span>
               </div>
               <span className="text-3xl font-bold text-foreground">--</span>
             </div>
@@ -131,7 +131,7 @@ export default function UserProfilePage() {
 
           <div className="bg-surface rounded-3xl border border-border-subtle p-6 shadow-sm min-h-[300px]">
              <h3 className="font-bold text-foreground mb-4">Recent History</h3>
-             <div className="flex items-center justify-center h-full text-muted text-sm italic py-12">
+             <div className="flex items-center justify-center h-full text-foreground text-sm italic py-12">
                No recent activity found.
              </div>
           </div>

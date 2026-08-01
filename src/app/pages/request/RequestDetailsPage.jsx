@@ -89,13 +89,13 @@ function RequestDetailsContent({ request, vehicleTypes, navigate, t }) {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-3 rounded-2xl bg-foreground/5 border border-border-subtle text-muted hover:text-foreground transition-all shadow-sm"
+            className="p-3 rounded-2xl bg-foreground/5 border border-border-subtle text-foreground hover:text-foreground transition-all shadow-sm"
           >
             <ChevronLeft size={20} />
           </button>
           <div>
             <h1 className="text-foreground text-2xl font-bold tracking-tight">{t("requestDetails.title")}</h1>
-            <p className="text-muted text-sm flex items-center gap-2">
+            <p className="text-foreground text-sm flex items-center gap-2">
               {t("requestDetails.refId")}: #{request.id} -{" "}
               {t("requestDetails.registered")} {new Date(request.createdAt).toLocaleDateString()}
             </p>
@@ -115,7 +115,7 @@ function RequestDetailsContent({ request, vehicleTypes, navigate, t }) {
             disabled={!!validationError || isMutating}
             className={`px-8 py-3 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-[#4880FF]/25 text-sm ${
               validationError
-                ? "bg-foreground/5 border border-border-subtle text-muted cursor-not-allowed"
+                ? "bg-foreground/5 border border-border-subtle text-foreground cursor-not-allowed"
                 : "bg-[#4880FF] text-white hover:bg-[#3d6edb] active:scale-95"
             }`}
           >
@@ -186,10 +186,10 @@ export default function DriverRequestDetailsPage() {
         <div className="bg-red-500/10 border border-red-500/20 rounded-3xl p-10 flex flex-col items-center text-center max-w-md">
           <AlertTriangle className="text-red-500 mb-4" size={48} />
           <h1 className="text-foreground text-xl font-bold mb-2">Request Not Found</h1>
-          <p className="text-muted mb-6">{fetchError?.message || t("common.nodata")}</p>
+          <p className="text-foreground mb-6">{fetchError?.message || t("common.nodata")}</p>
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-muted hover:text-foreground transition-colors"
+            className="flex items-center gap-2 text-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft size={16} /> {t("common.prev")}
           </button>

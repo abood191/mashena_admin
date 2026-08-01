@@ -19,9 +19,9 @@ export default function AppShell({ children }) {
         <div className="flex-1 min-w-0">
           <Topbar onOpenMobile={() => setMobileOpen(true)} />
 
-          <main className="p-4 lg:p-6">
+          <main className="p-3 sm:p-4 lg:p-6">
             {/* Content container */}
-            <div className="rounded-3xl border border-border-subtle bg-surface p-4 lg:p-6 transition-colors duration-300">
+            <div className="rounded-3xl border border-border-subtle bg-surface p-3 sm:p-4 lg:p-6 transition-colors duration-300">
               {children}
             </div>
           </main>

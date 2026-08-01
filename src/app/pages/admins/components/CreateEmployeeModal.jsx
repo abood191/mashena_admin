@@ -57,7 +57,7 @@ export default function CreateEmployeeModal({ onClose }) {
           <h2 className="text-xl font-bold text-foreground">Create Employee</h2>
           <button
             onClick={onClose}
-            className="p-2 text-muted hover:text-foreground hover:bg-foreground/5 rounded-full transition-colors"
+            className="p-2 text-foreground hover:text-foreground hover:bg-foreground/5 rounded-full transition-colors"
           >
             <X size={20} />
           </button>

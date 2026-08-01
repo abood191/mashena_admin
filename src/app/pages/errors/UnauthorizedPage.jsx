@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
       <h1 className="text-4xl font-bold text-foreground mb-4">
         403 Unauthorized
       </h1>
-      <p className="text-muted text-lg max-w-md mb-8">
+      <p className="text-foreground text-lg max-w-md mb-8">
         You don't have permission to access this page. If you believe this is a mistake, please contact your system administrator.
       </p>
       <Link 

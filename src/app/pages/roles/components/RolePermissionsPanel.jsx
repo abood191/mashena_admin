@@ -70,13 +70,13 @@ export function RolePermissionsPanel({ selectedRole }) {
           {t("roles.manageFor", { defaultValue: "Manage Permissions For" })}{" "}
           <span style={{ color: ACTIVE }}>{selectedRole?.name || "-"}</span>
         </div>
-        <div className="mt-1 text-muted text-sm">{t("roles.panelHint", { defaultValue: "Select permissions from the available list." })}</div>
+        <div className="mt-1 text-foreground text-sm">{t("roles.panelHint", { defaultValue: "Select permissions from the available list." })}</div>
       </div>
 
       <div className="p-5 flex-1 overflow-y-auto space-y-6 relative">
         {isLoading && (
           <div className="absolute inset-0 bg-surface/50 backdrop-blur-sm z-10 flex items-center justify-center">
-            <div className="text-sm text-muted flex items-center gap-2">
+            <div className="text-sm text-foreground flex items-center gap-2">
               <div className="h-4 w-4 rounded-full border-2 border-white/20 border-t-[#4880FF] animate-spin"></div>
               Loading permissions...
             </div>
@@ -88,7 +88,7 @@ export function RolePermissionsPanel({ selectedRole }) {
           <div className="text-sm text-foreground font-semibold">{t("roles.assigned", { defaultValue: "Assigned Permissions" })}</div>
           <div className="mt-3 flex flex-wrap gap-2">
             {assigned.length === 0 ? (
-              <div className="text-sm text-muted italic">{t("roles.noPermissions", { defaultValue: "No permissions assigned yet." })}</div>
+              <div className="text-sm text-foreground italic">{t("roles.noPermissions", { defaultValue: "No permissions assigned yet." })}</div>
             ) : (
               assigned.map((p) => (
                 <span
@@ -131,7 +131,7 @@ export function RolePermissionsPanel({ selectedRole }) {
             ))}
 
             {available.length === 0 && !isLoading && (
-              <div className="text-sm text-muted italic px-2">{t("roles.allAssigned", { defaultValue: "All available permissions have been assigned." })}</div>
+              <div className="text-sm text-foreground italic px-2">{t("roles.allAssigned", { defaultValue: "All available permissions have been assigned." })}</div>
             )}
           </div>
         </div>

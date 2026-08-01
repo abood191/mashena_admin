@@ -9,7 +9,7 @@ export function ModalShell({ open, title, subtitle, onClose, children, footer })
           <div className="p-6 border-b border-border-subtle">
             <div className="text-foreground text-lg font-semibold">{title}</div>
             {subtitle ? (
-              <div className="mt-1 text-sm text-muted">{subtitle}</div>
+              <div className="mt-1 text-sm text-foreground">{subtitle}</div>
             ) : null}
           </div>
 

@@ -6,7 +6,7 @@
   --color-surface: var(--surface-color);
   --color-background: var(--bg-color);
   --color-foreground: var(--text-main);
-  --color-muted: var(--text-muted);
+  --color-muted: var(--text-foreground);
   --color-border-subtle: var(--border-color);
 }
 
@@ -15,7 +15,7 @@
     --surface-color: #ffffff;
     --bg-color: #f1f5f9;
     --text-main: #0f172a;
-    --text-muted: #64748b;
+    --text-foreground: #64748b;
     --border-color: #e2e8f0;
     color-scheme: light;
   }
@@ -24,7 +24,7 @@
     --surface-color: #0b1220;
     --bg-color: #070b14;
     --text-main: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.5);
+    --text-foreground: rgba(255, 255, 255, 0.5);
     --border-color: rgba(255, 255, 255, 0.1);
     color-scheme: dark;
   }

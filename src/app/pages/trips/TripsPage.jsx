@@ -30,7 +30,7 @@ export default function TripsPage() {
     <div className="p-1 space-y-6 animate-in fade-in duration-300">
       
       {/* Page Header */}
-      <div className="bg-slate-900/40 backdrop-blur-md px-6 py-5 rounded-3xl border border-white/10 flex flex-wrap items-center justify-between gap-4 shadow-md">
+      <div className="bg-slate-900 backdrop-blur-md px-6 py-5 rounded-3xl border border-white/10 flex flex-wrap items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 grid place-items-center text-lg shadow-inner">
             <Map className="h-5 w-5 text-indigo-400" />
@@ -70,7 +70,7 @@ export default function TripsPage() {
           </p>
         </div>
       ) : activeTrips.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center text-white/30 border border-dashed border-white/10 rounded-3xl bg-slate-950/40 min-h-[300px]">
+        <div className="flex flex-col items-center justify-center p-12 text-center text-white/30 border border-dashed border-white/10 rounded-3xl bg-slate-950/90 min-h-[300px]">
           <Radio className="h-10 w-10 animate-pulse mb-3 text-indigo-400/70" />
           <h3 className="text-sm font-bold text-white uppercase tracking-wide">Operational Deck Idle</h3>
           <p className="text-xs text-white/40 mt-1 max-w-[340px] leading-relaxed">

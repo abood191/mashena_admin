@@ -9,7 +9,7 @@ export function RequestInfo({ request }) {
     <div className="rounded-3xl border border-border-subtle bg-surface p-6 shadow-xl">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-foreground text-lg font-semibold">{t("requestDetails.driverInfo")}</h2>
-        <span className="px-3 py-1 rounded-full bg-foreground/5 text-muted text-xs border border-border-subtle italic">
+        <span className="px-3 py-1 rounded-full bg-foreground/5 text-foreground text-xs border border-border-subtle italic">
           Verified
         </span>
       </div>
@@ -29,7 +29,7 @@ export function RequestInfo({ request }) {
 
       {request.vehiclePhotoUrl && (
         <div className="mt-8 pt-6 border-t border-border-subtle">
-          <div className="text-muted text-xs mb-3 uppercase tracking-wider font-semibold">Vehicle Photo</div>
+          <div className="text-foreground text-xs mb-3 uppercase tracking-wider font-semibold">Vehicle Photo</div>
           <div className="relative group w-48 h-32 overflow-hidden rounded-2xl border border-border-subtle bg-foreground/5">
              <img
               src={request.vehiclePhotoUrl}
@@ -46,7 +46,7 @@ export function RequestInfo({ request }) {
 function InfoItem({ label, value, statusColor }) {
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-muted text-xs uppercase tracking-wider font-medium">{label}</span>
+      <span className="text-foreground text-xs uppercase tracking-wider font-medium">{label}</span>
       <span className={`text-foreground font-medium ${statusColor || ""}`}>{value || "—"}</span>
     </div>
   );

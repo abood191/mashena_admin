@@ -93,7 +93,7 @@ export default function UserAutocomplete({ value, onChange, placeholder }) {
 
   return (
     <div className="relative w-full" ref={wrapperRef}>
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={18} />
+      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={18} />
       
       <input
         type="text"
@@ -114,7 +114,7 @@ export default function UserAutocomplete({ value, onChange, placeholder }) {
       {selectedUser ? (
         <button
           onClick={handleClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted hover:text-foreground rounded-full hover:bg-foreground/10 transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-foreground hover:text-foreground rounded-full hover:bg-foreground/10 transition-colors"
         >
           <X size={16} />
         </button>
@@ -127,9 +127,9 @@ export default function UserAutocomplete({ value, onChange, placeholder }) {
       {isOpen && (search.length > 0 || users.length > 0) && !selectedUser && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border-subtle rounded-2xl shadow-xl overflow-hidden z-50 max-h-60 overflow-y-auto">
           {loading && users.length === 0 ? (
-            <div className="p-4 text-center text-muted text-sm">{t("common.loading", "Loading...")}</div>
+            <div className="p-4 text-center text-foreground text-sm">{t("common.loading", "Loading...")}</div>
           ) : users.length === 0 ? (
-            <div className="p-4 text-center text-muted text-sm">{t("common.noResults", "No users found")}</div>
+            <div className="p-4 text-center text-foreground text-sm">{t("common.noResults", "No users found")}</div>
           ) : (
             <div className="flex flex-col py-1">
               {users.map((user) => (
@@ -143,7 +143,7 @@ export default function UserAutocomplete({ value, onChange, placeholder }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-semibold text-foreground truncate">{user.fullName || "Unknown"}</div>
-                    <div className="text-xs text-muted truncate">{user.email || user.phoneNumber || ""}</div>
+                    <div className="text-xs text-foreground truncate">{user.email || user.phoneNumber || ""}</div>
                   </div>
                 </button>
               ))}

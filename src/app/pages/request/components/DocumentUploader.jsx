@@ -65,7 +65,7 @@ export function DocumentsUploader({ driverProfileId, onDocsChange }) {
     <div className="rounded-3xl border border-border-subtle bg-surface p-6 shadow-xl space-y-6">
       <div>
         <h2 className="text-foreground text-lg font-semibold">{t("requestDetails.requiredDocs")}</h2>
-        <p className="text-muted text-sm">{t("requestDetails.requiredDocsSubtitle")}</p>
+        <p className="text-foreground text-sm">{t("requestDetails.requiredDocsSubtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -236,10 +236,10 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
               <><AlertCircle size={12} className="text-red-400" /><span className="text-red-400 text-[10px] font-bold uppercase">{t("requestDetails.updateFailed")}</span></>
             )}
             {localData.status === "idle" && !localData.exists && (
-              <span className="text-muted text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.needsUpload")}</span>
+              <span className="text-foreground text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.needsUpload")}</span>
             )}
             {localData.status === "idle" && localData.exists && (
-              <span className="text-muted text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.modified")}</span>
+              <span className="text-foreground text-[10px] font-bold uppercase tracking-tight">{t("requestDetails.modified")}</span>
             )}
           </div>
         </div>
@@ -275,8 +275,8 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
                 />
               ) : (
                 <>
-                  <Upload size={16} className="text-muted mb-1" />
-                  <span className="text-muted text-[10px] font-medium">{t("requestDetails.clickToUpload")}</span>
+                  <Upload size={16} className="text-foreground mb-1" />
+                  <span className="text-foreground text-[10px] font-medium">{t("requestDetails.clickToUpload")}</span>
                 </>
               )}
               {file && <div className="absolute inset-0 bg-blue-500/10 rounded-xl pointer-events-none ring-2 ring-blue-500/50" />}
@@ -285,7 +285,7 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
 
           <div className="flex-[1.5] space-y-2">
             <div className="relative">
-              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground" />
               <input
                 type="date"
                 value={localData.issuedAt}
@@ -295,7 +295,7 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
               />
             </div>
             <div className="relative">
-              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+              <Calendar size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground" />
               <input
                 type="date"
                 value={localData.expiresAt}

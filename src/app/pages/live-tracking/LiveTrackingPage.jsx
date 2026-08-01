@@ -191,7 +191,7 @@ function TripOperationsPanel({
   return (
     <div className="flex flex-col h-full gap-4 text-foreground">
       <div className="bg-surface/80 backdrop-blur-md p-4 rounded-3xl border border-border-subtle shadow-lg">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-muted">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
           Tracking Room
         </h3>
 
@@ -242,7 +242,7 @@ function TripOperationsPanel({
       </div>
 
       <div className="flex-1 min-h-0 bg-surface/80 backdrop-blur-md p-4 rounded-3xl border border-border-subtle shadow-lg flex flex-col">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-3">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-3">
           Active Trips ({activeTrips.length})
         </h3>
 

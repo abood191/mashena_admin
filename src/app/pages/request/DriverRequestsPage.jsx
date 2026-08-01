@@ -114,7 +114,7 @@ export default function DriverRequestsPage() {
 
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground" size={18} />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}

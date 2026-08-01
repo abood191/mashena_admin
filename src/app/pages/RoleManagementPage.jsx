@@ -118,7 +118,7 @@ export default function RoleManagementPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="text-foreground text-xl font-semibold">{t("roles.title", { defaultValue: "Roles & Permissions" })}</div>
-          <div className="mt-1 text-muted text-sm">{t("roles.subtitle", { defaultValue: "Manage system access and privileges" })}</div>
+          <div className="mt-1 text-foreground text-sm">{t("roles.subtitle", { defaultValue: "Manage system access and privileges" })}</div>
         </div>
 
         <button
@@ -146,7 +146,7 @@ export default function RoleManagementPage() {
 
             {/* Pagination */}
             <div className="flex items-center justify-between gap-3 pt-1">
-              <div className="text-xs font-semibold tracking-wider text-muted uppercase">
+              <div className="text-xs font-semibold tracking-wider text-foreground uppercase">
                 {rolesCount === 0
                   ? "0"
                   : `Page ${currentPage} / ${totalPages} — ${rolesCount} total`}
@@ -206,7 +206,7 @@ export default function RoleManagementPage() {
                           setEditRole(role);
                           setEditOpen(true);
                         }}
-                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[#4880FF]/10 hover:border-[#4880FF]/30 hover:text-[#4880FF] text-muted grid place-items-center text-sm transition-all"
+                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-[#4880FF]/10 hover:border-[#4880FF]/30 hover:text-[#4880FF] text-foreground grid place-items-center text-sm transition-all"
                         title={t("roles.edit", { defaultValue: "Edit" })}
                       >
                         ✎
@@ -217,7 +217,7 @@ export default function RoleManagementPage() {
                           e.stopPropagation();
                           handleDeleteRole(role);
                         }}
-                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-muted grid place-items-center text-sm transition-all"
+                        className="h-10 w-10 rounded-xl border border-border-subtle bg-foreground/5 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-foreground grid place-items-center text-sm transition-all"
                         title={t("roles.delete", { defaultValue: "Delete" })}
                       >
                         🗑
@@ -228,7 +228,7 @@ export default function RoleManagementPage() {
               })}
 
               {!roles.length && !loadingRoles ? (
-                <div className="p-12 text-sm text-muted italic text-center font-medium">No roles found</div>
+                <div className="p-12 text-sm text-foreground italic text-center font-medium">No roles found</div>
               ) : null}
           </div>
         </div>

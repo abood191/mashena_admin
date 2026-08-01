@@ -45,7 +45,7 @@ export default function UsersTable({ columns, data, loading, onRowClick }) {
     <tr>
       <td
         colSpan={columns.length}
-        className="px-4 py-6 text-center text-muted"
+        className="px-4 py-6 text-center text-foreground"
       >
         {t("common.nodata")}
       </td>

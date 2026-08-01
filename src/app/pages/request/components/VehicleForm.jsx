@@ -18,7 +18,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Vehicle Type */}
         <div className="space-y-2">
-          <label className="text-muted text-sm font-medium ml-1">{t("requestDetails.fields.vehicleType")}</label>
+          <label className="text-foreground text-sm font-medium ml-1">{t("requestDetails.fields.vehicleType")}</label>
           <select
             name="vehicleTypeId"
             value={form.vehicleTypeId}
@@ -36,7 +36,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
 
         {/* Plate Number */}
         <div className="space-y-2">
-          <label className="text-muted text-sm font-medium ml-1">{t("requestDetails.fields.plate")}</label>
+          <label className="text-foreground text-sm font-medium ml-1">{t("requestDetails.fields.plate")}</label>
           <input
             name="plateNumber"
             placeholder="e.g. ABC-1234"
@@ -48,7 +48,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
 
         {/* Model */}
         <div className="space-y-2">
-          <label className="text-muted text-sm font-medium ml-1">{t("requestDetails.fields.model")}</label>
+          <label className="text-foreground text-sm font-medium ml-1">{t("requestDetails.fields.model")}</label>
           <input
             name="model"
             placeholder="e.g. Toyota Camry"
@@ -60,7 +60,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
 
         {/* Color */}
         <div className="space-y-2">
-          <label className="text-muted text-sm font-medium ml-1">{t("requestDetails.fields.color")}</label>
+          <label className="text-foreground text-sm font-medium ml-1">{t("requestDetails.fields.color")}</label>
           <input
             name="color"
             placeholder="e.g. Midnight Black"
@@ -72,7 +72,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
 
         {/* Year */}
         <div className="space-y-2">
-          <label className="text-muted text-sm font-medium ml-1">{t("requestDetails.fields.year")}</label>
+          <label className="text-foreground text-sm font-medium ml-1">{t("requestDetails.fields.year")}</label>
           <input
             type="number"
             name="year"
