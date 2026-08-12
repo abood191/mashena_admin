@@ -22,8 +22,16 @@ export const useDriverRequests = ({ skip = 0, limit = 10, search = "", status = 
     queryFn: () => driverRequestsService.getAll({ skip, limit, search, status }),
     placeholderData: keepPreviousData,
     select: (res) => {
-      const data = Array.isArray(res) ? res : res?.data || [];
-      const count = res?.count ?? data.length;
+      const data = Array.isArray(res)
+        ? res
+        : Array.isArray(res?.data)
+        ? res.data
+        : res?.data?.data || [];
+      const count =
+        res?.count ??
+        res?.meta?.total ??
+        res?.total ??
+        (Array.isArray(data) ? data.length : 0);
       return { data, count };
     },
   });
@@ -39,22 +47,20 @@ export const useDriverRequest = (id) => {
     queryFn: () => driverRequestsService.getById(id),
     enabled: !!id,
     staleTime: 1000 * 30,
-    select: (res) => (res?.data ? res.data : res),
+    select: (res) => (res?.data !== undefined ? res.data : res),
   });
 };
 
 /**
  * Hook to approve a driver request.
- * Invalidates both the specific detail and the list so the status updates everywhere.
+ * Invalidates both the specific detail and all driver request queries so status updates everywhere.
  */
 export const useApproveDriverRequest = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, payload }) => driverRequestsService.approve(id, payload),
     onSuccess: (_, variables) => {
-      // Precise invalidation — only the detail that changed + the list
-      queryClient.invalidateQueries({ queryKey: driverRequestKeys.detail(variables.id) });
-      queryClient.invalidateQueries({ queryKey: driverRequestKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: driverRequestKeys.all });
     },
   });
 };
@@ -67,8 +73,7 @@ export const useRejectDriverRequest = () => {
   return useMutation({
     mutationFn: ({ id, rejectionReason }) => driverRequestsService.reject(id, { rejectionReason }),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: driverRequestKeys.detail(variables.id) });
-      queryClient.invalidateQueries({ queryKey: driverRequestKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: driverRequestKeys.all });
     },
   });
 };

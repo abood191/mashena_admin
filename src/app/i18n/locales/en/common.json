@@ -275,7 +275,8 @@
     }
   },
   "requestDetails": {
-    "title": "Onboarding Request",
+    "title": "Driver Onboarding Requests",
+    "subtitle": "Review, approve, and manage driver registration requests",
     "refId": "Reference ID",
     "registered": "Registered At",
     "driverInfo": "Driver Information",
@@ -286,6 +287,15 @@
     "approve": "Final Approval",
     "reject": "Reject Request",
     "rejectionReason": "Enter rejection reason (sent to driver):",
+    "review": "Review",
+    "allStatuses": "All Statuses",
+    "statuses": {
+      "submitted": "Submitted",
+      "under_review": "Under Review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "blocked": "Blocked"
+    },
     "saveChanges": "Save Changes",
     "uploading": "Uploading...",
     "verified": "Verified",

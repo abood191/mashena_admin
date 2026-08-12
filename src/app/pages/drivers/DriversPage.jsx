@@ -63,7 +63,7 @@ export default function DriversPage() {
       },
     },
     { 
-      header: t("drivers.table.createdAt"), 
+      header: t("drivers.table.createdAt"),   
       accessorKey: "createdAt",
       cell: ({ row }) => <span className="font-mono text-foreground text-xs">{new Date(row.original.createdAt).toLocaleDateString()}</span>
     },

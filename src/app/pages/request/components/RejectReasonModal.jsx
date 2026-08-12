@@ -41,7 +41,7 @@ export function RejectReasonModal({ open, onClose, onConfirm, loading }) {
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="h-10 px-4 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-sm text-white/80 disabled:opacity-60 transition"
+            className="h-10 px-4 rounded-2xl border border-border-subtle bg-surface hover:bg-foreground/10 text-sm text-foreground disabled:opacity-60 transition"
           >
             {t("common.cancel", { defaultValue: "Cancel" })}
           </button>
@@ -60,7 +60,7 @@ export function RejectReasonModal({ open, onClose, onConfirm, loading }) {
     >
       <form id="reject-form" onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm font-semibold text-white/70">
+          <label className="text-sm font-semibold text-foreground/70">
             {t("requestDetails.rejectionReason", { defaultValue: "Rejection Reason" })}
           </label>
           <textarea
@@ -71,7 +71,7 @@ export function RejectReasonModal({ open, onClose, onConfirm, loading }) {
             }}
             rows={4}
             placeholder={t("requestDetails.rejectionReasonPlaceholder", { defaultValue: "Explain why this request is being rejected..." })}
-            className="mt-2 w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 transition-all resize-none shadow-inner shadow-black/20"
+            className="mt-2 w-full rounded-2xl border border-border-subtle bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/30 outline-none focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 transition-all resize-none shadow-inner"
           />
           {error && <div className="mt-2 text-xs font-medium text-red-400">{error}</div>}
         </div>

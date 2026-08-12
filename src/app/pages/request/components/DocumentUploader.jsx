@@ -212,7 +212,7 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
           ? "border-green-500/20 bg-green-500/[0.02]"
           : localData.status === "error"
             ? "border-red-500/20 bg-red-500/[0.02]"
-            : "border-white/10 bg-white/[0.02]"
+            : "border-border-subtle bg-foreground/[0.02]"
       }`}
     >
       <div className="flex items-center justify-between mb-4">

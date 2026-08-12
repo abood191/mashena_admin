@@ -274,7 +274,8 @@
     }
   },
   "requestDetails": {
-    "title": "طلب انضمام",
+    "title": "طلبات الانضمام",
+    "subtitle": "إدارة وقبول طلبات انضمام السائقين والمستندات",
     "refId": "رقم المرجع",
     "registered": "تاريخ التسجيل",
     "driverInfo": "بيانات السائق",
@@ -285,6 +286,15 @@
     "approve": "اعتماد السائق",
     "reject": "رفض الطلب",
     "rejectionReason": "ادخل سبب الرفض (سيصل للسائق):",
+    "review": "مراجعة",
+    "allStatuses": "كل الحالات",
+    "statuses": {
+      "submitted": "تم التقديم",
+      "under_review": "قيد المراجعة",
+      "approved": "مقبول",
+      "rejected": "مرفوض",
+      "blocked": "محظور"
+    },
     "saveChanges": "حفظ التغييرات",
     "uploading": "جاري الرفع...",
     "verified": "تم التوثيق",

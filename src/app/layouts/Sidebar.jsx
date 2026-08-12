@@ -3,6 +3,7 @@ import { NAV_ITEMS } from "../config/nav";
 import { useAuth } from "../auth/AuthContext";
 import { useRBAC } from "../auth/rbac/useRBAC";
 import { useTranslation } from "react-i18next";
+import { preloadRoute } from "../routes/AppRoutes";
 
 const ACTIVE = "#4880FF";
 
@@ -74,7 +75,15 @@ export default function Sidebar({
               <NavLink
                 key={item.to}
                 to={item.to}
-                onClick={onCloseMobile}
+                onClick={(e) => {
+                  if (e.altKey || e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    nav(item.to);
+                  }
+                  onCloseMobile();
+                }}
+                onMouseEnter={() => preloadRoute(item.to)}
+                onFocus={() => preloadRoute(item.to)}
                 className={({ isActive }) =>
                   [
                     "group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm",

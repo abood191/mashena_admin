@@ -1,94 +1,66 @@
-/**
+  /**
  * ============================================================
- *  Secure Token Store – Best Practice Hybrid Model
+ *  Token Store – AccessToken in LocalStorage & RefreshToken in Memory
  * ============================================================
  *
- *  ┌──────────────┬─────────────────┬───────────────────────┐
- *  │  Token       │  Storage        │  Reason               │
- *  ├──────────────┼─────────────────┼───────────────────────┤
- *  │ accessToken  │ In-Memory only  │ Never touches disk,   │
- *  │  (15 min)    │                 │ max XSS protection    │
- *  ├──────────────┼─────────────────┼───────────────────────┤
- *  │ refreshToken │ localStorage    │ Persists across page  │
- *  │  (1 month)   │                 │ reloads; rotated on   │
- *  │              │                 │ every use (accepted   │
- *  │              │                 │ SPA tradeoff without  │
- *  │              │                 │ httpOnly cookies)     │
- *  ├──────────────┼─────────────────┼───────────────────────┤
- *  │ user / role  │ localStorage    │ UI display only,      │
- *  │              │                 │ non-sensitive         │
- *  └──────────────┴─────────────────┴───────────────────────┘
- *
- *  On page reload:
- *   1. AuthProvider reads refreshToken from localStorage
- *   2. Calls /api/auth/refresh → gets fresh accessToken (memory)
- *      + rotated refreshToken (localStorage)
- *   3. User stays logged in seamlessly
- *   4. If refresh fails → clearSession() → redirect /login
+ *  - accessToken: Persisted in localStorage so F5 page reloads stay logged in
+ *  - refreshToken: Kept strictly in-memory (_refreshToken)
  * ============================================================
  */
 
-// ── Storage Keys ──────────────────────────────────────────────
-export const REFRESH_TOKEN_KEY = "mashena_refresh";
+export const ACCESS_TOKEN_KEY  = "mashena_access";
 export const ROLE_KEY          = "mashena_role";
 export const USER_KEY          = "mashena_user";
 
-// ── In-Memory Access Token ────────────────────────────────────
-let _accessToken = null;
+let _refreshToken = null;
 
+// ── Access Token (Persisted in localStorage) ──────────────────
 export function setAccessToken(token) {
-  _accessToken = token;
-}
-
-export function getAccessToken() {
-  return _accessToken;
-}
-
-export function clearAccessToken() {
-  _accessToken = null;
-}
-
-// ── Persisted Refresh Token ───────────────────────────────────
-export function setRefreshToken(token) {
   if (token) {
-    localStorage.setItem(REFRESH_TOKEN_KEY, token);
+    localStorage.setItem(ACCESS_TOKEN_KEY, token);
   }
 }
 
+export function getAccessToken() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+export function clearAccessToken() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+}
+
+// ── Refresh Token (In-Memory Only) ────────────────────────────
+export function setRefreshToken(token) {
+  _refreshToken = token || null;
+}
+
 export function getRefreshToken() {
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
+  return _refreshToken;
 }
 
 export function clearRefreshToken() {
-  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  _refreshToken = null;
 }
 
 // ── Auth State ────────────────────────────────────────────────
-/** True only when accessToken is live in memory */
 export function isAuthed() {
-  return Boolean(_accessToken);
+  return Boolean(getAccessToken());
 }
 
-/** True when a refresh token exists in localStorage (session can be restored) */
 export function hasStoredSession() {
-  return Boolean(localStorage.getItem(REFRESH_TOKEN_KEY));
+  return Boolean(getAccessToken());
 }
 
 // ── Full Session Wipe ─────────────────────────────────────────
-/** Called on logout OR when refresh token is expired/invalid */
 export function clearSession() {
-  _accessToken = null;
-  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  _refreshToken = null;
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(ROLE_KEY);
   localStorage.removeItem(USER_KEY);
 }
 
-// ── Legacy aliases (backward compat) ─────────────────────────
-/** @deprecated use getAccessToken */
-export const getToken    = getAccessToken;
-/** @deprecated use setAccessToken */
-export const setToken    = setAccessToken;
-/** @deprecated use clearAccessToken */
-export const clearToken  = clearAccessToken;
-/** @deprecated use clearSession */
-export const logout      = clearSession;
+// ── Legacy Aliases ───────────────────────────────────────────
+export const getToken   = getAccessToken;
+export const setToken   = setAccessToken;
+export const clearToken = clearAccessToken;
+export const logout     = clearSession;

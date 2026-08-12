@@ -47,7 +47,6 @@ async function request(
   { _retry = false } = {},
 ) {
   const token = getAccessToken();
-  console.log("tokendddddddddddddddddd", token)
 
   const isAbsolute = path.startsWith("http");
   const url = new URL(isAbsolute ? path : BASE_URL + path);

@@ -18,7 +18,6 @@ import {
 
 export { isAuthed, hasStoredSession, clearSession, getAccessToken };
 
-
 const BASE_URL = import.meta.env.VITE_API_URL || "https://api-mashena.wasta-jobs.com";
 
 // ── Token Extractors ──────────────────────────────────────────
@@ -67,17 +66,14 @@ export async function loginAdmin({ email, password, fcmToken }) {
   const refreshToken = extractRefreshToken(data);
 
   if (!accessToken) {
-    console.error("Login response:", data);
     throw new Error("Login succeeded but access token not found in response.");
   }
 
-  // accessToken → memory only
+  // Persist tokens
   setAccessToken(accessToken);
-
-  // refreshToken → localStorage (persists page reloads)
   if (refreshToken) setRefreshToken(refreshToken);
 
-  // Non-sensitive display data → localStorage
+  // Non-sensitive display data
   localStorage.setItem(ROLE_KEY, "admin");
   const user = extractUser(data);
   if (user) localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -85,16 +81,7 @@ export async function loginAdmin({ email, password, fcmToken }) {
   return { accessToken, refreshToken, user };
 }
 
-// ── Silent Refresh ────────────────────────────────────────────
-/**
- * Exchanges the stored refreshToken for a fresh accessToken.
- * Called:
- *   1. On app start (AuthProvider) if a refresh token exists in localStorage
- *   2. Automatically by apiClient on every 401
- *
- * Uses raw fetch (not apiClient) to avoid infinite 401 loops.
- * On failure → clears session and throws (caller handles redirect).
- */
+// ── Refresh Tokens ────────────────────────────────────────────
 export async function refreshTokens() {
   const currentRefresh = getRefreshToken();
 
@@ -110,12 +97,11 @@ export async function refreshTokens() {
   });
 
   if (!res.ok) {
-    
     // Refresh token expired or revoked → full wipe
     clearSession();
     throw new Error("Session expired. Please log in again.");
   }
- console.log("res + token refresheffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd", res)
+
   const data = await res.json();
 
   const newAccess  = extractAccessToken(data);
@@ -126,7 +112,7 @@ export async function refreshTokens() {
     throw new Error("Refresh response missing access token.");
   }
 
-  // Rotate both tokens
+  // Rotate and save both tokens
   setAccessToken(newAccess);
   if (newRefresh) setRefreshToken(newRefresh);
 

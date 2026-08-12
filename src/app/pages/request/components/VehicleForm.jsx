@@ -23,7 +23,7 @@ export function VehicleForm({ form, setForm, vehicleTypes }) {
             name="vehicleTypeId"
             value={form.vehicleTypeId}
             onChange={handleChange}
-            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3.5 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 transition-all cursor-pointer appearance-none text-sm"
+            className="w-full bg-foreground/5 border border-border-subtle rounded-2xl p-3.5 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/50 transition-all cursor-pointer appearance-none text-sm [&>option]:bg-white [&>option]:text-[#0f172a] dark:[&>option]:bg-[#0b1220] dark:[&>option]:text-white"
           >
             <option value="" className="bg-surface">{t("requestDetails.fields.vehicleType")}</option>
             {vehicleTypes.map((t) => (
