@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../context/ThemeContext";
-import { Menu, Search, Bell, Globe, Moon, Sun, User, X } from "lucide-react";
+import { Menu, Search, Bell, Globe, Moon, Sun, User, X, Loader2 } from "lucide-react";
 
 const ACTIVE = "#4880FF";
 
-export default function Topbar({ onOpenMobile }) {
+export default function Topbar({ onOpenMobile, isLoading }) {
   const { i18n, t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -54,6 +54,14 @@ export default function Topbar({ onOpenMobile }) {
         >
           {mobileSearchOpen ? <X size={18} /> : <Search size={18} />}
         </button>
+
+        {/* Global Loading Badge Indicator */}
+        {isLoading && (
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#4880FF]/10 text-[#4880FF] border border-[#4880FF]/30 text-xs font-bold animate-pulse shrink-0">
+            <Loader2 size={14} className="animate-spin" />
+            <span className="hidden sm:inline">Loading...</span>
+          </div>
+        )}
       </div>
 
       {/* Mobile expandable search bar */}

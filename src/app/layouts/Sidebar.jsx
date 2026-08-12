@@ -1,4 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useIsFetching } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 import { NAV_ITEMS } from "../config/nav";
 import { useAuth } from "../auth/AuthContext";
 import { useRBAC } from "../auth/rbac/useRBAC";
@@ -16,7 +19,18 @@ export default function Sidebar({
   const { logout } = useAuth();
   const { hasAnyPermission } = useRBAC();
   const nav = useNavigate();
+  const location = useLocation();
+  const isFetching = useIsFetching();
   const { t } = useTranslation();
+
+  const [clickedPath, setClickedPath] = useState(null);
+
+  useEffect(() => {
+    if (isFetching === 0) {
+      const timer = setTimeout(() => setClickedPath(null), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, isFetching]);
 
   return (
     <>
@@ -71,51 +85,65 @@ export default function Sidebar({
 
           {/* Nav */}
           <nav className="px-3 py-4 space-y-1">
-            {NAV_ITEMS.filter(item => !item.permissions || hasAnyPermission(item.permissions)).map((item) => ( 
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={(e) => {
-                  if (e.altKey || e.ctrlKey || e.metaKey) {
-                    e.preventDefault();
-                    nav(item.to);
+            {NAV_ITEMS.filter(item => !item.permissions || hasAnyPermission(item.permissions)).map((item) => {
+              const isCurrentRoute = location.pathname === item.to || (item.to !== "/" && location.pathname.startsWith(item.to));
+              const isItemLoading = clickedPath === item.to || (isCurrentRoute && isFetching > 0);
+
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={(e) => {
+                    setClickedPath(item.to);
+                    if (e.altKey || e.ctrlKey || e.metaKey) {
+                      e.preventDefault();
+                      nav(item.to);
+                    }
+                    onCloseMobile();
+                  }}
+                  onMouseEnter={() => preloadRoute(item.to)}
+                  onFocus={() => preloadRoute(item.to)}
+                  className={({ isActive }) =>
+                    [
+                      "group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm transition-all duration-200",
+                      "border",
+                      isActive
+                        ? "bg-foreground/10 text-foreground border-border-subtle"
+                        : "border-transparent text-gray-500 hover:text-foreground hover:bg-foreground/5",
+                    ].join(" ")
                   }
-                  onCloseMobile();
-                }}
-                onMouseEnter={() => preloadRoute(item.to)}
-                onFocus={() => preloadRoute(item.to)}
-                className={({ isActive }) =>
-                  [
-                    "group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm",
-                    "border",
+                  style={({ isActive }) =>
                     isActive
-                      ? "bg-foreground/10 text-foreground border-border-subtle"
-                      : "border-transparent text-gray-500 hover:text-foreground hover:bg-foreground/5",
-                  ].join(" ")
-                }
-                style={({ isActive }) =>
-                  isActive
-                    ? {
-                        borderColor: `${ACTIVE}55`,
-                        boxShadow: `inset 0 0 0 1px ${ACTIVE}25`,
-                      }
-                    : undefined
-                }
-              >
-                <span
-                  className="h-9 w-9 rounded-xl border border-border-subtle bg-foreground/5 grid place-items-center text-xs group-hover:scale-115 transition-transform shrink-0"
-                  style={{ color: ACTIVE }}
+                      ? {
+                          borderColor: `${ACTIVE}55`,
+                          boxShadow: `inset 0 0 0 1px ${ACTIVE}25`,
+                        }
+                      : undefined
+                  }
                 >
-                { item.icon && <item.icon className="h-4 w-4" /> }
-                </span>
+                  <span
+                    className="h-9 w-9 rounded-xl border border-border-subtle bg-foreground/5 grid place-items-center text-xs group-hover:scale-115 transition-transform shrink-0 relative"
+                    style={{ color: ACTIVE }}
+                  >
+                    {isItemLoading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" style={{ color: ACTIVE }} />
+                    ) : (
+                      item.icon && <item.icon className="h-4 w-4" />
+                    )}
+                  </span>
 
-                {!collapsed && (
-                  <span className="flex-1 truncate">{t(item.labelKey)}</span>
-                )}
+                  {!collapsed && (
+                    <span className="flex-1 truncate font-medium">{t(item.labelKey)}</span>
+                  )}
 
-                <span className="h-2 w-2 rounded-full" style={{ background: "transparent" }} />
-              </NavLink>
-            ))}
+                  {isItemLoading ? (
+                    <span className="h-2 w-2 rounded-full bg-[#4880FF] animate-ping shrink-0" />
+                  ) : (
+                    <span className="h-2 w-2 rounded-full" style={{ background: "transparent" }} />
+                  )}
+                </NavLink>
+              );
+            })}
           </nav>
         </div>
 
@@ -138,3 +166,4 @@ export default function Sidebar({
     </>
   );
 }
+
