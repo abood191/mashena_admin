@@ -23,14 +23,14 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await loginAdmin({
+      const { accessToken, refreshToken } = await loginAdmin({
         email,
         password,
         fcmToken: "web-fcm-placeholder",
       });
 
-      // Tokens are in HttpOnly cookies – just flip authed state
-      login();
+      // Pass both tokens to the context – stored securely In-Memory
+      login({ accessToken, refreshToken });
 
       nav("/", { replace: true });
     } catch (err) {
