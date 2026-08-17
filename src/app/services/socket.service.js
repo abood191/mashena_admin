@@ -1,7 +1,15 @@
 import { io } from "socket.io-client";
-import { getAccessToken } from "../auth/token";
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || "https://api-mashena.wasta-jobs.com";
+// In development: connect to localhost so the Vite proxy forwards the
+// Socket.IO connection (/socket.io/*) to the real backend.
+// This way the browser sends localhost cookies which the proxy passes along.
+//
+// In production: VITE_SOCKET_URL or VITE_API_URL points to the real backend.
+// Both domains share wasta-jobs.com so SameSite=Lax cookies work natively.
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL
+  || import.meta.env.VITE_API_URL
+  || window.location.origin;   // ← dev: use localhost → goes through Vite proxy
+
 
 class SocketService {
   constructor() {
@@ -12,8 +20,6 @@ class SocketService {
   connect() {
     if (this.socket?.connected) return this.socket;
 
-    const token = getAccessToken();
-
     this.socket = io(SOCKET_URL, {
       autoConnect: false,
       reconnection: true,
@@ -21,9 +27,7 @@ class SocketService {
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
       timeout: 20000,
-      auth: {
-        token: token ? `Bearer ${token}` : "",
-      },
+      withCredentials: true,          // ← send HttpOnly cookies on handshake
     });
 
     // Setup global connection debug listeners
@@ -34,7 +38,7 @@ class SocketService {
       console.log("=========================");
       console.log("[SocketService] ✅ Connected");
       console.log("Socket ID:", this.socket.id);
-      console.log("Auth Token:", getAccessToken());
+      console.log("Auth: via HttpOnly cookie");
       console.log("=========================");
       console.log(
         `[SocketService] Connected to ${SOCKET_URL} with ID: ${this.socket.id}`,

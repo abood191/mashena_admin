@@ -442,5 +442,41 @@
       "discountValueRequired": "Discount value is required",
       "datesRequired": "Start and expiry dates are required"
     }
+  },
+  "liveTracking": {
+    "title": "Mashena Operations",
+    "subtitle": "Real-time ride dispatch tracking deck",
+    "trackingRoom": "Tracking Room",
+    "selectedTrip": "Selected Trip",
+    "driver": "Driver",
+    "telemetry": "Telemetry",
+    "telemetryLive": "LIVE",
+    "telemetryWaiting": "WAITING",
+    "leaveRoom": "Leave Tracking Room",
+    "selectTripHint": "Select a trip to join its room.",
+    "activeTrips": "Active Trips",
+    "loadingTrips": "Loading trips...",
+    "noActiveTrips": "No active trips.",
+    "driverAssigned": "Driver assigned",
+    "awaitingDriver": "Awaiting driver",
+    "pickupUnavailable": "Pickup unavailable",
+    "cancelTrip": "Cancel Trip",
+    "confirmCancel": "⚠ Confirm Cancel?",
+    "noKeep": "No, Keep",
+    "yesCancel": "Yes, Cancel",
+    "cancelling": "Cancelling...",
+    "cancelFailed": "Failed to cancel trip",
+    "statusArrived": "ARRIVED",
+    "connected": "CONNECTED",
+    "disconnected": "DISCONNECT",
+    "drivers": "Drivers",
+    "pending": "Pending",
+    "transit": "Transit",
+    "mapStyles": {
+      "googleRoad": "Google Road",
+      "googleSat": "Google Sat",
+      "cartoDark": "Carto Dark",
+      "cartoLight": "Carto Light"
+    }
   }
-}
+}

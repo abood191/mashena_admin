@@ -6,28 +6,33 @@
  *  Flow on 401:
  *  1. If NOT currently refreshing → trigger refresh, hold request in queue
  *  2. If ALREADY refreshing       → add request to queue, wait for new token
- *  3. On refresh SUCCESS          → replay all queued requests with new token
+ *  3. On refresh SUCCESS          → replay all queued requests (cookies refreshed)
  *  4. On refresh FAILURE          → reject all queued requests, force logout
  *
  *  This guarantees the refresh endpoint is called EXACTLY ONCE
  *  even when multiple parallel requests fail simultaneously.
+ *
+ *  NOTE: Tokens are HttpOnly cookies — the browser sends them automatically.
+ *        No manual Authorization header is needed.
  * ============================================================
  */
 
-import { getAccessToken, refreshTokens, clearSession } from "../auth/auth";
+import { refreshTokens, clearSession } from "../auth/auth";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://api-mashena.wasta-jobs.com";
+// In development: requests go to Vite proxy (/api → backend).
+// In production: VITE_API_URL must point to the real backend.
+const BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // ── Refresh State (Race Condition Guard) ──────────────────────
 let isRefreshing = false;
 let failedQueue = []; // { resolve, reject }[]
 
-function processQueue(error, newToken = null) {
+function processQueue(error) {
   failedQueue.forEach(({ resolve, reject }) => {
     if (error) {
       reject(error);
     } else {
-      resolve(newToken);
+      resolve();
     }
   });
   failedQueue = [];
@@ -46,10 +51,9 @@ async function request(
   { method = "GET", body, params, isFormData = false } = {},
   { _retry = false } = {},
 ) {
-  const token = getAccessToken();
-
   const isAbsolute = path.startsWith("http");
-  const url = new URL(isAbsolute ? path : BASE_URL + path);
+  const base = BASE_URL || window.location.origin;
+  const url = new URL(isAbsolute ? path : base + path);
 
   if (params) {
     Object.entries(params).forEach(([k, v]) => {
@@ -60,7 +64,6 @@ async function request(
   }
 
   const headers = {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     "Accept-Language": localStorage.getItem("lang") || "en",
   };
 
@@ -71,6 +74,7 @@ async function request(
   const fetchOptions = {
     method,
     headers,
+    credentials: "include",                     // ← always send HttpOnly cookies
     body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
   };
 
@@ -82,10 +86,9 @@ async function request(
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
         failedQueue.push({ resolve, reject });
-      }).then((newToken) => {
-        // Replay with fresh token
-        headers["Authorization"] = `Bearer ${newToken}`;
-        return fetch(url.toString(), { ...fetchOptions, headers });
+      }).then(() => {
+        // Replay with refreshed cookies (browser sends them automatically)
+        return fetch(url.toString(), fetchOptions);
       }).then(async (retryRes) => {
         const text = await retryRes.text();
         let data = null;
@@ -105,13 +108,12 @@ async function request(
     isRefreshing = true;
 
     try {
-      const { accessToken: newToken } = await refreshTokens();
+      await refreshTokens();              // server sets new access_token cookie
       isRefreshing = false;
-      processQueue(null, newToken); // unblock all waiting requests
+      processQueue(null);                 // unblock all waiting requests
 
-      // Replay the original request with the new token
-      headers["Authorization"] = `Bearer ${newToken}`;
-      const retryRes = await fetch(url.toString(), { ...fetchOptions, headers });
+      // Replay the original request — browser now sends the new cookie
+      const retryRes = await fetch(url.toString(), fetchOptions);
 
       const text = await retryRes.text();
       let data = null;
@@ -128,7 +130,7 @@ async function request(
       return data;
     } catch (refreshError) {
       isRefreshing = false;
-      processQueue(refreshError, null); // reject all waiting requests
+      processQueue(refreshError);         // reject all waiting requests
       forceLogout();
       throw refreshError;
     }

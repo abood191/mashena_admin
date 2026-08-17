@@ -5,8 +5,6 @@ import {
   useCallback,
 } from "react";
 import {
-  setAccessToken,
-  setRefreshToken,
   clearSession,
   hasStoredSession,
 } from "./token";
@@ -17,9 +15,9 @@ export function AuthProvider({ children }) {
   const [authed, setAuthed] = useState(() => hasStoredSession());
 
   // ── login – called after successful loginAdmin() ──────────
-  const login = useCallback(({ accessToken, refreshToken }) => {
-    setAccessToken(accessToken);
-    if (refreshToken) setRefreshToken(refreshToken);
+  // Tokens are already in HttpOnly cookies set by the server.
+  // We just flip the authed flag here.
+  const login = useCallback(() => {
     setAuthed(true);
   }, []);
 

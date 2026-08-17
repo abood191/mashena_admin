@@ -1,45 +1,35 @@
 /**
  * ============================================================
- *  Auth Service
+ *  Auth Service – HttpOnly Cookie-based tokens
+ * ============================================================
+ *
+ *  - Login: tokens are set by server as HttpOnly cookies automatically.
+ *    We only save user & role info to localStorage.
+ *
+ *  - Refresh: send POST with credentials:'include' so browser
+ *    automatically sends the refresh_token cookie.
+ *
+ *  - Logout: call server to clear cookies, then wipe local state.
  * ============================================================
  */
 
 import {
   ROLE_KEY,
   USER_KEY,
-  setAccessToken,
-  getAccessToken,
-  setRefreshToken,
-  getRefreshToken,
   clearSession,
   isAuthed,
   hasStoredSession,
 } from "./token";
 
-export { isAuthed, hasStoredSession, clearSession, getAccessToken };
+export { isAuthed, hasStoredSession, clearSession };
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://api-mashena.wasta-jobs.com";
+// getAccessToken is kept as a no-op for any legacy imports
+export function getAccessToken() { return null; }
 
-// ── Token Extractors ──────────────────────────────────────────
-function extractAccessToken(resp) {
-  return (
-    resp?.accessToken  ||
-    resp?.token        ||
-    resp?.data?.accessToken ||
-    resp?.data?.token  ||
-    resp?.access_token ||
-    null
-  );
-}
-
-function extractRefreshToken(resp) {
-  return (
-    resp?.refreshToken      ||
-    resp?.data?.refreshToken ||
-    resp?.refresh_token     ||
-    null
-  );
-}
+// In development: requests go to Vite proxy (/api → backend).
+// In production: VITE_API_URL must point to the real backend.
+const _CONFIGURED_URL = import.meta.env.VITE_API_URL || "";
+const getBase = () => _CONFIGURED_URL || window.location.origin;
 
 function extractUser(resp) {
   return resp?.user || resp?.data?.user || null;
@@ -47,9 +37,10 @@ function extractUser(resp) {
 
 // ── Login ─────────────────────────────────────────────────────
 export async function loginAdmin({ email, password, fcmToken }) {
-  const res = await fetch(`${BASE_URL}/api/auth/admin/login`, {
+  const res = await fetch(`${getBase()}/api/auth/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",                     // ← receive HttpOnly cookies
     body: JSON.stringify({ email, password, fcmToken }),
   });
 
@@ -62,59 +53,33 @@ export async function loginAdmin({ email, password, fcmToken }) {
     throw err;
   }
 
-  const accessToken  = extractAccessToken(data);
-  const refreshToken = extractRefreshToken(data);
-
-  if (!accessToken) {
-    throw new Error("Login succeeded but access token not found in response.");
+  // Tokens are now in HttpOnly cookies — just save display data
+  const user = extractUser(data);
+  if (!user) {
+    throw new Error("Login succeeded but user data not found in response.");
   }
 
-  // Persist tokens
-  setAccessToken(accessToken);
-  if (refreshToken) setRefreshToken(refreshToken);
-
-  // Non-sensitive display data
   localStorage.setItem(ROLE_KEY, "admin");
-  const user = extractUser(data);
-  if (user) localStorage.setItem(USER_KEY, JSON.stringify(user));
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 
-  return { accessToken, refreshToken, user };
+  return { user };
 }
 
 // ── Refresh Tokens ────────────────────────────────────────────
 export async function refreshTokens() {
-  const currentRefresh = getRefreshToken();
-
-  if (!currentRefresh) {
-    clearSession();
-    throw new Error("No refresh token available. Please log in.");
-  }
-
-  const res = await fetch(`${BASE_URL}/api/auth/refresh`, {
+  // Browser automatically sends the refresh_token HttpOnly cookie
+  const res = await fetch(`${getBase()}/api/auth/refresh`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refreshToken: currentRefresh }),
+    credentials: "include",                     // ← send & receive HttpOnly cookies
   });
 
   if (!res.ok) {
-    // Refresh token expired or revoked → full wipe
     clearSession();
     throw new Error("Session expired. Please log in again.");
   }
 
-  const data = await res.json();
-
-  const newAccess  = extractAccessToken(data);
-  const newRefresh = extractRefreshToken(data);
-
-  if (!newAccess) {
-    clearSession();
-    throw new Error("Refresh response missing access token.");
-  }
-
-  // Rotate and save both tokens
-  setAccessToken(newAccess);
-  if (newRefresh) setRefreshToken(newRefresh);
-
-  return { accessToken: newAccess, refreshToken: newRefresh };
+  // New access_token cookie is set automatically by the server response
+  // Return a truthy marker so the apiClient knows refresh succeeded
+  return { accessToken: true };
 }

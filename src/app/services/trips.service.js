@@ -156,6 +156,11 @@ export const tripsService = {
   getTrips: async (params = { skip: 0, limit: 100 }) =>
     normalizeTrips(await api.get("/api/trips", params)),
 
+  cancelTrip: async (tripId) => {
+    const response = await api.post(`/api/trips/${tripId}/cancel-by-admin`);
+    return response;
+  },
+
   getActiveTrips: async () => {
     // Using the new online endpoint with required pagination parameters
     const tripsResponse = await api.get("/api/trips/online", { skip: 0, limit: 100 });

@@ -441,5 +441,41 @@
       "discountValueRequired": "قيمة الخصم مطلوبة",
       "datesRequired": "تاريخا البداية والانتهاء مطلوبان"
     }
+  },
+  "liveTracking": {
+    "title": "عمليات مشينا",
+    "subtitle": "لوحة تتبع الرحلات المباشرة",
+    "trackingRoom": "غرفة التتبع",
+    "selectedTrip": "الرحلة المحددة",
+    "driver": "السائق",
+    "telemetry": "الاتصال المباشر",
+    "telemetryLive": "مباشر",
+    "telemetryWaiting": "انتظار",
+    "leaveRoom": "مغادرة غرفة التتبع",
+    "selectTripHint": "اختر رحلة للانضمام إلى غرفتها.",
+    "activeTrips": "الرحلات النشطة",
+    "loadingTrips": "جاري تحميل الرحلات...",
+    "noActiveTrips": "لا توجد رحلات نشطة.",
+    "driverAssigned": "سائق معين",
+    "awaitingDriver": "بانتظار السائق",
+    "pickupUnavailable": "موقع الانطلاق غير متوفر",
+    "cancelTrip": "إلغاء الرحلة",
+    "confirmCancel": "⚠ تأكيد الإلغاء؟",
+    "noKeep": "لا، تراجع",
+    "yesCancel": "نعم، إلغاء",
+    "cancelling": "جاري الإلغاء...",
+    "cancelFailed": "فشل إلغاء الرحلة",
+    "statusArrived": "وصل",
+    "connected": "متصل",
+    "disconnected": "غير متصل",
+    "drivers": "السائقون",
+    "pending": "معلق",
+    "transit": "في الطريق",
+    "mapStyles": {
+      "googleRoad": "خرائط جوجل",
+      "googleSat": "صور جوجل",
+      "cartoDark": "خريطة داكنة",
+      "cartoLight": "خريطة فاتحة"
+    }
   }
 }
