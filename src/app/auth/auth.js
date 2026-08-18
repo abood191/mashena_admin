@@ -118,6 +118,3 @@ export async function refreshTokens() {
 
   return { accessToken: newAccess, refreshToken: newRefresh };
 }
-  // Return a truthy marker so the apiClient knows refresh succeeded
-  return { accessToken: true };
-}

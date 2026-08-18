@@ -173,6 +173,3 @@ export const api = {
 
   del: (path) => request(path, { method: "DELETE" }),
 };
-
-  del: (path) => request(path, { method: "DELETE" }),
-};

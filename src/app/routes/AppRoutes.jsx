@@ -13,6 +13,7 @@ export const routeComponents = {
   "/drivers": lazyWithPreload(() => import("../pages/drivers/DriversPage")),
   "/riders": lazyWithPreload(() => import("../pages/riders/RidersPage")),
   "/admins": lazyWithPreload(() => import("../pages/admins/AdminsPage")),
+  "/accredited": lazyWithPreload(() => import("../pages/accredited/AccreditedPage")),
   "/requests": lazyWithPreload(() => import("../pages/request/DriverRequestsPage")),
   "/driver-requests": lazyWithPreload(() => import("../pages/request/DriverRequestsPage")),
   "/vehicle-types": lazyWithPreload(() => import("../pages/vehicle-types/VehicleTypesPage")),
@@ -42,6 +43,7 @@ const Dashboard = routeComponents["/"];
 const DriversPage = routeComponents["/drivers"];
 const RidersPage = routeComponents["/riders"];
 const AdminsPage = routeComponents["/admins"];
+const AccreditedPage = routeComponents["/accredited"];
 const RequestsPage = routeComponents["/requests"];
 const VehicleTypesPage = routeComponents["/vehicle-types"];
 const DriverRequestDetailsPage = routeComponents["/details"];
@@ -81,6 +83,7 @@ export default function AppRoutes() {
         <Route path="/drivers" element={<DriversPage />} />
         <Route path="/riders" element={<RidersPage />} />
         <Route path="/admins" element={<AdminsPage />} />
+        <Route path="/accredited" element={<AccreditedPage />} />
         <Route path="/requests" element={<RequestsPage />} />
         <Route path="/driver-requests" element={<RequestsPage />} />
         <Route path="/vehicle-types" element={<VehicleTypesPage />} />

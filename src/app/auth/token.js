@@ -12,7 +12,7 @@ export const ACCESS_TOKEN_KEY  = "mashena_access";
 export const ROLE_KEY          = "mashena_role";
 export const USER_KEY          = "mashena_user";
 
-let _refreshToken = null;
+export const REFRESH_TOKEN_KEY = "mashena_refresh";
 
 // ── Access Token (Persisted in localStorage) ──────────────────
 export function setAccessToken(token) {
@@ -29,17 +29,19 @@ export function clearAccessToken() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
 }
 
-// ── Refresh Token (In-Memory Only) ────────────────────────────
+// ── Refresh Token (Persisted in localStorage) ──────────────────
 export function setRefreshToken(token) {
-  _refreshToken = token || null;
+  if (token) {
+    localStorage.setItem(REFRESH_TOKEN_KEY, token);
+  }
 }
 
 export function getRefreshToken() {
-  return _refreshToken;
+  return localStorage.getItem(REFRESH_TOKEN_KEY);
 }
 
 export function clearRefreshToken() {
-  _refreshToken = null;
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
 }
 
 // ── Auth State ────────────────────────────────────────────────
@@ -53,8 +55,8 @@ export function hasStoredSession() {
 
 // ── Full Session Wipe ─────────────────────────────────────────
 export function clearSession() {
-  _refreshToken = null;
   localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(ROLE_KEY);
   localStorage.removeItem(USER_KEY);
 }

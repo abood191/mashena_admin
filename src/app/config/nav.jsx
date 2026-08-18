@@ -44,6 +44,11 @@ export const NAV_ITEMS = [
     icon: Users,
   },
   {
+    to: "/accredited",
+    labelKey: "sidebar.accredited",
+    icon: ShieldCheck,
+  },
+  {
     to: "/trips",
     labelKey: "sidebar.trips",
     icon: Route,

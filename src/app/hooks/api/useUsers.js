@@ -15,6 +15,9 @@ export const userKeys = {
   
   admins: () => [...userKeys.all, "admins"],
   adminList: (filters) => [...userKeys.admins(), { filters }],
+
+  accredited: () => [...userKeys.all, "accredited"],
+  accreditedList: (filters) => [...userKeys.accredited(), { filters }],
 };
 
 /**
@@ -57,6 +60,19 @@ export const useAdmins = (filters = {}, options = {}) => {
 };
 
 /**
+ * Hook to fetch the list of accredited users.
+ * Uses keepPreviousData for smooth pagination.
+ */
+export const useAccredited = (filters = {}, options = {}) => {
+  return useQuery({
+    queryKey: userKeys.accreditedList(filters),
+    queryFn: () => userService.getAccredited(filters),
+    placeholderData: keepPreviousData,
+    ...options,
+  });
+};
+
+/**
  * Hook to create a new employee (Admin)
  */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -69,6 +85,21 @@ export const useCreateEmployee = () => {
     onSuccess: () => {
       // Invalidate the admins list so the new employee shows up immediately
       queryClient.invalidateQueries({ queryKey: userKeys.admins() });
+    },
+  });
+};
+
+/**
+ * Hook to create a new accredited user
+ */
+export const useCreateAccredited = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => userService.createAccredited(data),
+    onSuccess: () => {
+      // Invalidate the accredited list so the new user shows up immediately
+      queryClient.invalidateQueries({ queryKey: userKeys.accredited() });
     },
   });
 };
@@ -96,6 +127,14 @@ export const useAdmin = (id) => {
   return useQuery({
     queryKey: [...userKeys.admins(), "detail", id],
     queryFn: () => userService.getAdminById(id),
+    enabled: !!id,
+  });
+};
+
+export const useAccreditedUser = (id) => {
+  return useQuery({
+    queryKey: [...userKeys.accredited(), "detail", id],
+    queryFn: () => userService.getAccreditedById(id),
     enabled: !!id,
   });
 };

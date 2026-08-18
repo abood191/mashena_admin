@@ -24,12 +24,3 @@ export default defineConfig({
     },
   },
 })
-
-          'vendor-leaflet': ['leaflet', 'react-leaflet'],
-          'vendor-icons': ['lucide-react'],
-        },
-      },
-    },
-  },
-})
-
