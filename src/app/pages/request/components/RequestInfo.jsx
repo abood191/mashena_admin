@@ -16,14 +16,18 @@ export function RequestInfo({ request }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <InfoItem label={t("requestDetails.fields.fullName")} value={request.fullName || "Loading..."} />
+          <InfoItem label={t("requestDetails.fields.fullName", "Full Name")} value={request.driverName || "Loading..."} />
+          <InfoItem label={t("requestDetails.fields.email", "Email")} value={request.driverEmail} />
+          <InfoItem label={t("requestDetails.fields.phone", "Phone Number")} value={request.driverPhoneNumber} />
           <InfoItem label={t("requestDetails.fields.nationalId")} value={request.nationalIdNumber} />
           <InfoItem label={t("requestDetails.fields.license")} value={request.driverLicenseNumber} />
         </div>
         <div className="space-y-4">
-          <InfoItem label={t("requestDetails.fields.city")} value={request.city || "Not specified"} />
-          <InfoItem label={t("requestDetails.fields.plate")} value={request.vehiclePlateNumber} />
           <InfoItem label={t("requestDetails.fields.status")} value={t(`drivers.statuses.${request.status?.toLowerCase()}`) || request.status} statusColor={getStatusColor(request.status)} />
+          <InfoItem label={t("requestDetails.fields.city", "City")} value={request.city || "Not specified"} />
+          <InfoItem label={t("requestDetails.fields.plate")} value={request.vehiclePlateNumber} />
+          <InfoItem label={t("requestDetails.fields.mechanic", "Mechanic Card")} value={request.mechanicCardNumber} />
+          <InfoItem label={t("requestDetails.fields.insurance", "Insurance Policy")} value={request.insurancePolicyNumber} />
         </div>
       </div>
 
@@ -47,7 +51,7 @@ function InfoItem({ label, value, statusColor }) {
   return (
     <div className="flex flex-col gap-1">
       <span className="text-foreground text-xs uppercase tracking-wider font-medium">{label}</span>
-      <span className={`text-foreground font-medium ${statusColor || ""}`}>{value || "—"}</span>
+      <span className={`text-foreground font-medium break-all ${statusColor || ""}`}>{value || "—"}</span>
     </div>
   );
 }

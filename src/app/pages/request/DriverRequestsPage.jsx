@@ -94,6 +94,21 @@ export default function DriverRequestsPage() {
       ),
     },
     {
+      header: t("requestDetails.fields.fullName", "Driver Name"),
+      accessorKey: "driverName",
+      cell: ({ row }) => <span className="font-semibold text-foreground text-sm">{row.original.driverName || "—"}</span>,
+    },
+    {
+      header: t("requestDetails.fields.email", "Email"),
+      accessorKey: "driverEmail",
+      cell: ({ row }) => <span className="text-foreground text-sm">{row.original.driverEmail || "—"}</span>,
+    },
+    {
+      header: t("requestDetails.fields.phone", "Phone"),
+      accessorKey: "driverPhoneNumber",
+      cell: ({ row }) => <span className="text-foreground/80 font-mono text-sm">{row.original.driverPhoneNumber || "—"}</span>,
+    },
+    {
       header: t("requestDetails.fields.plate"),
       accessorKey: "vehiclePlateNumber",
       cell: ({ row }) => (

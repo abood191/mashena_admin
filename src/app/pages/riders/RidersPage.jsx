@@ -35,13 +35,20 @@ export default function RidersPage() {
     { header: t("riders.table.email"), accessorKey: "email" },
     { header: t("riders.table.phone"), accessorKey: "phoneNumber" },
     {
+      id: "verified",
       header: t("riders.table.verified"),
       cell: ({ row }) => {
-        const isVerified = row.original.isVerified; // Adjust based on API structure
-        return isVerified ? <CheckCircle2 size={16} className="text-green-500" /> : <XCircle size={16} className="text-foreground" />;
+        const isVerified = row.original.riderProfile?.isVerified; // Adjust based on API structure
+        return (
+          <div className="flex items-center gap-2">
+            {isVerified ? <CheckCircle2 size={16} className="text-green-500" /> : <XCircle size={16} className="text-foreground" />}
+            <span className="text-xs opacity-50">{String(isVerified)}</span>
+          </div>
+        );
       },
     },
     {
+      id: "ratingAvg",
       header: t("riders.table.ratingAvg"),
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
@@ -51,6 +58,7 @@ export default function RidersPage() {
       ),
     },
     { 
+      id: "cancelledTripCount",
       header: t("riders.table.cancelledTripCount"), 
       cell: ({ row }) => <span className="text-red-400/80 font-medium">{row.original.riderProfile?.canceledTripsCount || 0}</span>
     },
