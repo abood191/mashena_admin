@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../context/ThemeContext";
-import { Menu, Search, Bell, Globe, Moon, Sun, User, X, Loader2 } from "lucide-react";
+import { Menu, Search, Globe, Moon, Sun, User, X, Loader2 } from "lucide-react";
+import NotificationDropdown from "./NotificationDropdown";
 
 const ACTIVE = "#4880FF";
 
@@ -84,15 +85,7 @@ export default function Topbar({ onOpenMobile, isLoading }) {
       {/* Right side: Actions */}
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         {/* Notifications */}
-        <button
-          className="relative h-10 w-10 shrink-0 rounded-2xl border border-border-subtle bg-foreground/5 hover:bg-foreground/10 text-foreground flex items-center justify-center transition-all"
-          title="Notifications"
-        >
-          <Bell size={18} />
-          <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full text-[10px] font-bold grid place-items-center bg-[#4880FF] text-white">
-            3
-          </span>
-        </button>
+        <NotificationDropdown />
 
         {/* 🌐 Language switch */}
         <button

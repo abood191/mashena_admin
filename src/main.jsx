@@ -9,6 +9,7 @@ import { ThemeProvider } from "./app/context/ThemeContext";
 import "./app/i18n/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { PushNotificationProvider } from "./app/context/PushNotificationContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,8 +27,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <RBACProvider>
           <ThemeProvider>
             <BrowserRouter>
-              <App />
-              <Toaster theme="dark" position="top-center" richColors />
+              <PushNotificationProvider>
+                <App />
+                <Toaster theme="dark" position="top-center" richColors />
+              </PushNotificationProvider>
             </BrowserRouter>
           </ThemeProvider>
         </RBACProvider>

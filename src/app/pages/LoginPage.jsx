@@ -23,10 +23,23 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      // Try to get the real FCM token before logging in
+      const vapidKey = "BIHz3LBDlBw4S6eMCiudYbNUVQGVqIU58bKhkxNuMYeAthvzD_j5dzpeLnLXvNRnozngzSPWP0PmNZxwEv7Ma0Q";
+      let actualFcmToken = "web-fcm-placeholder";
+      if (vapidKey) {
+        try {
+          const { requestForToken } = await import("../../lib/firebase");
+          const token = await requestForToken(vapidKey);
+          if (token) actualFcmToken = token;
+        } catch (err) {
+          console.warn("Failed to get FCM token during login", err);
+        }
+      }
+
       const { accessToken, refreshToken } = await loginAdmin({
         email,
         password,
-        fcmToken: "web-fcm-placeholder",
+        fcmToken: actualFcmToken,
       });
 
       // Pass both tokens to the context – stored securely In-Memory
