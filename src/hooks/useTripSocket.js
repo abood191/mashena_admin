@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://api-mashena.wasta-jobs.com';
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://api-mashena.wasta-jobs.com/trip-share';
 
 export function useTripSocket(token) {
   const [isConnected, setIsConnected] = useState(false);
@@ -18,6 +18,9 @@ export function useTripSocket(token) {
     const socket = io(SOCKET_URL, {
       reconnectionAttempts: 5,
       transports: ['websocket', 'polling'], // Try websocket first, fallback to polling
+      auth: {
+        token: token // Sending token in handshake auth
+      }
     });
 
     socket.on('connect', () => {
