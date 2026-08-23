@@ -14,6 +14,7 @@ export function useTripSocket(token) {
     if (!token) return;
 
     console.log('[TripSocket] Attempting connection to:', SOCKET_URL, 'with token:', token);
+    console.log('[TripSocket] Connection version: v2 (with auth token and namespace)');
 
     const socket = io(SOCKET_URL, {
       reconnectionAttempts: 5,
