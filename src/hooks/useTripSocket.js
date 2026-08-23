@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://api-mashena.wasta-jobs.com/trip-share';
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://api-mashena.wasta-jobs.com';
 
 export function useTripSocket(token) {
   const [isConnected, setIsConnected] = useState(false);
@@ -13,15 +13,23 @@ export function useTripSocket(token) {
   useEffect(() => {
     if (!token) return;
 
+    console.log('[TripSocket] Attempting connection to:', SOCKET_URL, 'with token:', token);
+
     const socket = io(SOCKET_URL, {
       reconnectionAttempts: 5,
+      transports: ['websocket', 'polling'], // Try websocket first, fallback to polling
     });
 
     socket.on('connect', () => {
+      console.log('[TripSocket] Connected successfully with ID:', socket.id);
       setIsConnected(true);
       setError(null);
       // Join the trip tracking room
       socket.emit('trip-share:join', { token });
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('[TripSocket] Connection Error:', err.message);
     });
 
     socket.on('disconnect', () => {
