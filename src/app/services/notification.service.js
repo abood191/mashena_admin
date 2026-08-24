@@ -8,5 +8,6 @@ export const notificationService = {
   // Notifications management
   getNotifications: ({ skip = 0, limit = 20 } = {}) => api.get("/api/notifications", { skip, limit }),
   markAsRead: (id) => api.patch(`/api/notifications/${id}/read`),
-  markAllAsRead: () => api.patch("/api/notifications/read-all")
+  markAllAsRead: () => api.patch("/api/notifications/read-all"),
+  sendAdminNotification: (payload) => api.post("/api/notifications/admin/send", payload)
 };

@@ -129,6 +129,20 @@ export function normalizeTrip(rawTrip) {
     ? backendRoute.coordinates
     : legacyRoute;
 
+  let actualRoute = null;
+  const rawActual = rawTrip.actualRouteGeometry;
+  if (Array.isArray(rawActual)) {
+    const pts = rawActual
+      .map(p => coordinateFrom(p))
+      .filter((p) => p && Number.isFinite(p[0]) && Number.isFinite(p[1]));
+    if (pts.length >= 2) actualRoute = pts;
+  } else if (rawActual && Array.isArray(rawActual.points)) {
+    const pts = rawActual.points
+      .map(p => coordinateFrom(p))
+      .filter((p) => p && Number.isFinite(p[0]) && Number.isFinite(p[1]));
+    if (pts.length >= 2) actualRoute = pts;
+  }
+
   return {
     ...rawTrip,
     id,
@@ -137,6 +151,7 @@ export function normalizeTrip(rawTrip) {
     pickup,
     destination,
     route,
+    actualRoute,
     distanceKm: backendRoute?.distanceKm ?? rawTrip.distanceKm ?? 0,
     durationSec: backendRoute?.durationSec ?? rawTrip.durationSec ?? 0,
     pickupIndex: Number.isInteger(rawTrip.pickupIndex)
@@ -153,8 +168,13 @@ function normalizeTrips(response) {
 }
 
 export const tripsService = {
-  getTrips: async (params = { skip: 0, limit: 100 }) =>
-    normalizeTrips(await api.get("/api/trips", params)),
+  getTrips: async (params = { skip: 0, limit: 100 }) => {
+    const response = await api.get("/api/trips", params);
+    return {
+      data: normalizeTrips(response),
+      count: response?.count || response?.total || 0,
+    };
+  },
 
   cancelTrip: async (tripId) => {
     const response = await api.post(`/api/trips/${tripId}/cancel-by-admin`);

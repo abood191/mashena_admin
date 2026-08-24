@@ -9,7 +9,10 @@ import {
   Wallet,
   Star,
   Tag,
-  Ticket
+  Ticket,
+  History,
+  Bell,
+  Send
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -17,6 +20,7 @@ export const NAV_ITEMS = [
     to: "/",
     labelKey: "sidebar.dashboard",
     icon: LayoutDashboard,
+    exact: true,
   },
   {
     to: "/requests",
@@ -54,6 +58,11 @@ export const NAV_ITEMS = [
     icon: Route,
   },
   {
+    to: "/trip-history",
+    labelKey: "sidebar.tripHistory",
+    icon: History,
+  },
+  {
     to: "/live-tracking",
     labelKey: "sidebar.liveTracking",
     icon: Map,
@@ -87,5 +96,16 @@ export const NAV_ITEMS = [
     to: "/settings",
     labelKey: "sidebar.settings",
     icon: Settings,
+  },
+  {
+    to: "/notifications",
+    labelKey: "sidebar.notificationsList",
+    icon: Bell,
+    exact: true,
+  },
+  {
+    to: "/notifications/send",
+    labelKey: "sidebar.sendNotification",
+    icon: Send,
   },
 ];

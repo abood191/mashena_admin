@@ -12,6 +12,8 @@ export function PushNotificationProvider({ children }) {
   const [fcmToken, setFcmToken] = useState(null);
 
   useEffect(() => {
+    let unsubscribeMessage;
+
     if (authed) {
       const vapidKey = "BIHz3LBDlBw4S6eMCiudYbNUVQGVqIU58bKhkxNuMYeAthvzD_j5dzpeLnLXvNRnozngzSPWP0PmNZxwEv7Ma0Q";
       
@@ -40,7 +42,7 @@ export function PushNotificationProvider({ children }) {
         });
 
         // Listen for foreground messages
-        setupOnMessageListener((payload) => {
+        unsubscribeMessage = setupOnMessageListener((payload) => {
           console.log("Foreground notification received:", payload);
           toast.info(payload.notification?.title || "New Notification", {
             description: payload.notification?.body,
@@ -50,6 +52,12 @@ export function PushNotificationProvider({ children }) {
         console.warn("FCM Notifications disabled: Missing VAPID Key. Please update PushNotificationContext.jsx");
       }
     }
+
+    return () => {
+      if (unsubscribeMessage) {
+        unsubscribeMessage();
+      }
+    };
   }, [authed]);
 
   return (

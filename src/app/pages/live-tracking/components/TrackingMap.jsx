@@ -722,11 +722,11 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${wsConnected ? "bg-emerald-400" : "bg-red-500"}`}></span>
                 <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${wsConnected ? "bg-emerald-500" : "bg-red-500"}`}></span>
               </span>
-              <span className="text-xs font-bold text-foreground/80 dark:text-foreground tracking-wide">
+              <span className="text-xs font-bold text-foreground/80 dark:text-black tracking-wide">
                 {showDebug ? "Telemetry Hub" : "Ops Hub"}
               </span>
             </div>
-            <span className="text-[9px] text-foreground/40 dark:text-foreground/70 font-bold uppercase transition-colors hover:text-foreground">
+            <span className="text-[9px] text-foreground/40 dark:text-black/70 font-bold uppercase transition-colors hover:text-foreground">
               {showDebug ? "HIDE" : "VIEW"}
             </span>
           </div>
@@ -738,17 +738,17 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
             }`}
           >
             <div className="p-4 space-y-2.5 text-[11px]">
-              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">WS Link</span><span className={wsConnected ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>{wsConnected ? "ONLINE" : "OFFLINE"}</span></div>
-              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Active Trips</span><span className="text-foreground font-bold">{activeTrips.length}</span></div>
-              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Live Drivers</span><span className="text-foreground font-bold">{activeDriverIds.length}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-black/80 font-medium">WS Link</span><span className={wsConnected ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>{wsConnected ? "ONLINE" : "OFFLINE"}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-black/80 font-medium">Active Trips</span><span className="text-black font-bold">{activeTrips.length}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-black/80 font-medium">Live Drivers</span><span className="text-black font-bold">{activeDriverIds.length}</span></div>
               
               <div className="h-px w-full bg-border-subtle my-1"></div>
               
-              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Cache Hits</span><span className="text-emerald-400 font-mono">{stats.hits}</span></div>
-              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-foreground/80 font-medium">Cache Misses</span><span className="text-red-400 font-mono">{stats.misses}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-black/80 font-medium">Cache Hits</span><span className="text-emerald-400 font-mono">{stats.hits}</span></div>
+              <div className="flex justify-between items-center"><span className="text-foreground/50 dark:text-black/80 font-medium">Cache Misses</span><span className="text-red-400 font-mono">{stats.misses}</span></div>
               
               <div className="bg-foreground/5 rounded-lg p-2.5 mt-2 border border-border-subtle flex justify-between items-center">
-                <span className="text-foreground/50 dark:text-foreground/80 font-bold text-[9px] uppercase">Throughput</span>
+                <span className="text-foreground/50 dark:text-black/80 font-bold text-[9px] uppercase">Throughput</span>
                 <span className="text-indigo-400 font-bold font-mono">{stats.eps} p/s</span>
               </div>
             </div>

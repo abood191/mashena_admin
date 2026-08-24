@@ -86,13 +86,16 @@ export default function Sidebar({
           {/* Nav */}
           <nav className="px-3 py-4 space-y-1">
             {NAV_ITEMS.filter(item => !item.permissions || hasAnyPermission(item.permissions)).map((item) => {
-              const isCurrentRoute = location.pathname === item.to || (item.to !== "/" && location.pathname.startsWith(item.to));
+              const isCurrentRoute = item.exact 
+                ? location.pathname === item.to 
+                : location.pathname === item.to || (item.to !== "/" && location.pathname.startsWith(item.to));
               const isItemLoading = clickedPath === item.to || (isCurrentRoute && isFetching > 0);
 
               return (
                 <NavLink
                   key={item.to}
                   to={item.to}
+                  end={item.exact}
                   onClick={(e) => {
                     setClickedPath(item.to);
                     if (e.altKey || e.ctrlKey || e.metaKey) {

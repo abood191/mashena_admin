@@ -1,37 +1,34 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notificationService } from "../../services/notification.service";
-
-export const notificationKeys = {
-  all: ["notifications"],
-  list: (filters) => [...notificationKeys.all, { filters }],
-};
-
-export const useNotifications = (filters = {}, options = {}) => {
-  return useQuery({
-    queryKey: notificationKeys.list(filters),
-    queryFn: () => notificationService.getNotifications(filters),
-    ...options,
-  });
-};
+import { toast } from "sonner";
 
 export const useRegisterFCMToken = () => {
   return useMutation({
-    mutationFn: (payload) => notificationService.registerToken(payload),
+    mutationFn: notificationService.registerToken,
   });
 };
 
 export const useRemoveFCMToken = () => {
   return useMutation({
-    mutationFn: (payload) => notificationService.removeToken(payload),
+    mutationFn: notificationService.removeToken,
+  });
+};
+
+export const useNotifications = (options = {}) => {
+  return useQuery({
+    queryKey: ["notifications", options],
+    queryFn: () => notificationService.getNotifications(options),
+    refetchInterval: 30_000,        // Poll every 30 seconds
+    refetchIntervalInBackground: false, // Stop polling when tab is hidden
   });
 };
 
 export const useMarkNotificationAsRead = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id) => notificationService.markAsRead(id),
+    mutationFn: notificationService.markAsRead,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 };
@@ -39,9 +36,21 @@ export const useMarkNotificationAsRead = () => {
 export const useMarkAllNotificationsAsRead = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => notificationService.markAllAsRead(),
+    mutationFn: notificationService.markAllAsRead,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    },
+  });
+};
+
+export const useSendAdminNotification = () => {
+  return useMutation({
+    mutationFn: notificationService.sendAdminNotification,
+    onSuccess: () => {
+      toast.success("تم إرسال الإشعار بنجاح");
+    },
+    onError: () => {
+      toast.error("فشل في إرسال الإشعار");
     },
   });
 };

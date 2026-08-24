@@ -52,13 +52,17 @@
     "liveTracking": "التتبع المباشر",
     "admins": "الأدمن",
     "accredited": "المستخدمين المعتمدين",
-    "settings": "الإعدادات",
+    "settings": "الإعدادات",  
     "logout": "تسجيل الخروج",
     "roles": "إدارة الصلاحيات",
     "wallet": "المحفظة",
     "ratings": "التقييمات",
     "ratingTags": "تاغات التقييم",
-    "coupons": "الكوبونات"
+    "coupons": "الكوبونات",
+    "tripHistory": "سجل الرحلات",
+    "notifications": "الإشعارات",
+    "notificationsList": "جميع الإشعارات",
+    "sendNotification": "إرسال إشعار"
   },
 
   "common": {
@@ -77,6 +81,65 @@
     "loading": "جاري التحميل...",
     "noResults": "لم يتم العثور على مستخدمين",
     "searchUser": "ابحث عن مستخدم..."
+  },
+  "tripHistory": {
+    "subtitle": "استعرض جميع الرحلات السابقة والنشطة في النظام",
+    "searchPlaceholder": "...رقم الرحلة، السائق، الراكب",
+    "status": "الحالة",
+    "allStatuses": "جميع الحالات",
+    "fromDate": "من تاريخ",
+    "toDate": "إلى تاريخ",
+    "showing": "عرض",
+    "to": "إلى",
+    "of": "من",
+    "trips": "رحلات",
+    "table": {
+      "id": "الرقم",
+      "status": "الحالة",
+      "rider": "الراكب",
+      "driver": "السائق",
+      "createdAt": "تاريخ الإنشاء",
+      "fare": "الأجرة"
+    }
+  },
+
+  "tripDetails": {
+    "loading": "جاري تحميل تفاصيل الرحلة...",
+    "notFound": "الرحلة غير موجودة",
+    "notFoundDesc": "الرحلة التي تبحث عنها غير موجودة.",
+    "goBack": "العودة",
+    "timeline": "مسار الرحلة الزمني",
+    "events": {
+      "matched": "تم التطابق",
+      "accepted": "تم القبول",
+      "started": "بدأت",
+      "completed": "مكتملة",
+      "canceled": "ملغاة"
+    },
+    "pending": "قيد الانتظار...",
+    "rider": "الراكب",
+    "driver": "السائق",
+    "fareAndMetrics": "الأجرة والمقاييس",
+    "details": {
+      "name": "الاسم",
+      "phone": "الهاتف",
+      "email": "البريد",
+      "vehicle": "المركبة",
+      "plate": "اللوحة",
+      "totalFare": "إجمالي الأجرة",
+      "estDistance": "المسافة المتوقعة",
+      "estDuration": "المدة المتوقعة"
+    },
+    "routeMap": "خريطة المسار",
+    "expectedRoute": "المسار المتوقع",
+    "actualRoute": "المسار الفعلي",
+    "pickup": "نقطة الانطلاق",
+    "destination": "الوجهة",
+    "mapStyles": {
+      "googleRoad": "جوجل طريق",
+      "satellite": "قمر صناعي",
+      "cartoLight": "خريطة مضيئة"
+    }
   },
 
   "ratings": {
@@ -477,6 +540,40 @@
       "googleSat": "صور جوجل",
       "cartoDark": "خريطة داكنة",
       "cartoLight": "خريطة فاتحة"
+    }
+  },
+
+  "notificationsManagement": {
+    "list": {
+      "title": "جميع الإشعارات",
+      "empty": "لا يوجد إشعارات.",
+      "markAllRead": "تحديد الكل كمقروء"
+    },
+    "send": {
+      "title": "إرسال إشعار",
+      "audience": "الجمهور المستهدف",
+      "sendToAll": "إرسال لجميع المستخدمين",
+      "sendToSpecific": "إرسال لمستخدمين محددين",
+      "userType": "نوع المستخدم",
+      "driver": "سائق",
+      "rider": "راكب",
+      "admin": "أدمن",
+      "searchPlaceholder": "ابحث بالاسم، الإيميل، أو رقم الهاتف...",
+      "noUsersFound": "لم يتم العثور على مستخدمين",
+      "selectedUsers": "المستخدمين المحددين",
+      "clearSelection": "مسح",
+      "content": "محتوى الإشعار",
+      "notificationTitle": "العنوان",
+      "notificationBody": "النص",
+      "imageUrl": "رابط الصورة (اختياري)",
+      "type": "النوع",
+      "screen": "الشاشة المستهدفة (اختياري)",
+      "updateId": "رقم التحديث (اختياري)",
+      "preview": "معاينة الإشعار",
+      "sendButton": "إرسال الإشعار",
+      "sending": "جاري الإرسال...",
+      "success": "تم إرسال الإشعار بنجاح!",
+      "error": "فشل في إرسال الإشعار"
     }
   }
 }

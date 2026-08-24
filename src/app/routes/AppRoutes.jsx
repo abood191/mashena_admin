@@ -29,6 +29,10 @@ export const routeComponents = {
   "/403": lazyWithPreload(() => import("../pages/errors/UnauthorizedPage")),
   "/profile": lazyWithPreload(() => import("../pages/profile/UserProfilePage")),
   "/details": lazyWithPreload(() => import("../pages/request/RequestDetailsPage")),
+  "/trip-history": lazyWithPreload(() => import("../pages/trips/TripHistoryPage")),
+  "/trip-history/:id": lazyWithPreload(() => import("../pages/trips/TripDetailsPage")),
+  "/notifications": lazyWithPreload(() => import("../pages/notifications/NotificationsPage")),
+  "/notifications/send": lazyWithPreload(() => import("../pages/notifications/SendNotificationPage")),
 };
 
 export function preloadRoute(path) {
@@ -58,6 +62,10 @@ const CouponsPage = routeComponents["/coupons"];
 const SettingsPage = routeComponents["/settings"];
 const UserProfilePage = routeComponents["/profile"];
 const UnauthorizedPage = routeComponents["/403"];
+const NotificationsPage = routeComponents["/notifications"];
+const SendNotificationPage = routeComponents["/notifications/send"];
+const TripHistoryPage = routeComponents["/trip-history"];
+const TripDetailsPage = routeComponents["/trip-history/:id"];
 
 // Global Visible Loader applied when loading route chunks
 function SuspenseFallback() {
@@ -98,9 +106,12 @@ export default function AppRoutes() {
         <Route path="/coupons" element={<CouponsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile/:type/:id" element={<UserProfilePage />} />
+        <Route path="/trip-history" element={<TripHistoryPage />} />
+        <Route path="/trip-history/:id" element={<TripDetailsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/notifications/send" element={<SendNotificationPage />} />
         <Route path="/403" element={<UnauthorizedPage />} />
       </Routes>
     </Suspense>
   );
 }
-

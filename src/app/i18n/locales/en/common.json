@@ -48,17 +48,21 @@
     "drivers": "Drivers",
     "requests": "Driver Requests",
     "riders": "Riders",
-    "trips": "Trips",
+    "trips": "Trips Tracker",
     "liveTracking": "Live Tracking",
     "admins": "Admins",
-    "accredited": "Accredited Users",
+    "accredited": "Accredited",
     "settings": "Settings",
     "logout": "Logout",
-    "roles": "Role Management",
+    "roles": "Role",
     "wallet": "Wallet",
     "ratings": "Ratings",
     "ratingTags": "Rating Tags",
-    "coupons": "Coupons"
+    "coupons": "Coupons",
+    "tripHistory": "Trip History",
+    "notifications": "Notifications",
+    "notificationsList": "All Notifications",
+    "sendNotification": "Send Notification"
   },
 
   "common": {
@@ -77,6 +81,65 @@
     "loading": "Loading...",
     "noResults": "No users found",
     "searchUser": "Search User..."
+  },
+  "tripHistory": {
+    "subtitle": "Review all past and ongoing trips across the system",
+    "searchPlaceholder": "...Trip ID, Rider, Driver",
+    "status": "STATUS",
+    "allStatuses": "All Statuses",
+    "fromDate": "FROM DATE",
+    "toDate": "TO DATE",
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "trips": "trips",
+    "table": {
+      "id": "ID",
+      "status": "STATUS",
+      "rider": "RIDER",
+      "driver": "DRIVER",
+      "createdAt": "CREATED AT",
+      "fare": "FARE"
+    }
+  },
+
+  "tripDetails": {
+    "loading": "Loading trip details...",
+    "notFound": "Trip Not Found",
+    "notFoundDesc": "The trip you are looking for does not exist.",
+    "goBack": "Go Back",
+    "timeline": "Trip Timeline",
+    "events": {
+      "matched": "Matched",
+      "accepted": "Accepted",
+      "started": "Started",
+      "completed": "Completed",
+      "canceled": "Canceled"
+    },
+    "pending": "Pending...",
+    "rider": "Rider",
+    "driver": "Driver",
+    "fareAndMetrics": "Fare & Metrics",
+    "details": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "vehicle": "Vehicle",
+      "plate": "Plate",
+      "totalFare": "Total Fare",
+      "estDistance": "Est. Distance",
+      "estDuration": "Est. Duration"
+    },
+    "routeMap": "Route Map",
+    "expectedRoute": "Expected Route",
+    "actualRoute": "Actual Route",
+    "pickup": "Pickup",
+    "destination": "Destination",
+    "mapStyles": {
+      "googleRoad": "Google Road",
+      "satellite": "Satellite",
+      "cartoLight": "Carto Light"
+    }
   },
 
   "ratings": {
@@ -428,7 +491,10 @@
     },
     "confirm": {
       "title": "Delete Coupon",
-      "message": "Are you sure you want to delete coupon \"{{code}}\"? This action cannot be undone."
+      "message": "Are you sure you want to delete coupon \"{{code}}\"? This action cannot be undone.",
+      "confirmRevert": "Are you sure you want to revert to default prices? This cannot be undone.",
+      "revertSuccess": "Default prices restored",
+      "revertFailed": "Failed to restore defaults"
     },
     "toast": {
       "loadFailed": "Failed to load coupons",
@@ -480,4 +546,4 @@
       "cartoLight": "Carto Light"
     }
   }
-}
+}

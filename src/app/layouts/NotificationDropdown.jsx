@@ -87,10 +87,11 @@ export default function NotificationDropdown() {
                 {notifications.map((notif) => (
                   <div 
                     key={notif.id} 
-                    className={`p-4 border-b border-border-subtle last:border-0 hover:bg-foreground/5 transition-colors cursor-pointer flex gap-3 ${!notif.read ? 'bg-[#4880FF]/5' : ''}`}
+                    className={`p-4 border-b border-border-subtle last:border-0 hover:bg-foreground/5 transition-colors cursor-pointer flex gap-3 ${!notif.isRead ? 'bg-[#4880FF]/5' : ''}`}
+                    onClick={(e) => !notif.isRead && handleMarkAsRead(e, notif.id)}
                   >
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm ${!notif.read ? 'font-bold text-foreground' : 'text-foreground/80'}`}>
+                      <p className={`text-sm ${!notif.isRead ? 'font-bold text-foreground' : 'text-foreground/80'}`}>
                         {notif.title || "Notification"}
                       </p>
                       <p className="text-xs text-foreground/60 mt-1 line-clamp-2 leading-relaxed">
@@ -100,7 +101,7 @@ export default function NotificationDropdown() {
                         {new Date(notif.createdAt).toLocaleString()}
                       </p>
                     </div>
-                    {!notif.read && (
+                    {!notif.isRead && (
                       <button 
                         onClick={(e) => handleMarkAsRead(e, notif.id)}
                         className="h-6 w-6 rounded-full bg-foreground/10 hover:bg-[#4880FF] hover:text-white text-foreground flex items-center justify-center shrink-0 transition-all"
