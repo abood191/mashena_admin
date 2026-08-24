@@ -12,6 +12,7 @@ import {
 import { useDrivers, useRiders } from "@/app/hooks/api/useUsers";
 import { useDebounce } from "@/hooks/useDebounce";
 import UsersTable from "@/components/users/UsersTable";
+import { useTheme } from "@/app/context/ThemeContext";
 
 const STATUS_COLORS = {
   ACTIVE: "bg-green-500/10 text-green-500 border-green-500/20",
@@ -244,11 +245,16 @@ function UserAutocomplete({
 
 /* ───────────────────── Main Page ───────────────────── */
 export default function WalletPage() {
+  const { theme } = useTheme();
   const [view, setView] = useState("list"); // "list" | "detail"
 
   // List Pagination State
   const [listSkip, setListSkip] = useState(0);
   const [listLimit] = useState(10);
+
+  // List Filter State
+  const [listSearch, setListSearch] = useState("");
+  const [listStatus, setListStatus] = useState("");
 
   // Detail State
   const [selectedWalletId, setSelectedWalletId] = useState(null);
@@ -269,7 +275,12 @@ export default function WalletPage() {
   const [selectedToDriver, setSelectedToDriver] = useState(null);
 
   // Queries
-  const { data: walletsData, isFetching: walletsFetching, error: walletsError } = useWallets({ skip: listSkip, limit: listLimit });
+  const { data: walletsData, isFetching: walletsFetching, error: walletsError } = useWallets({
+    skip: listSkip,
+    limit: listLimit,
+    ...(listSearch ? { search: listSearch } : {}),
+    ...(listStatus ? { status: listStatus } : {}),
+  });
   const wallets = walletsData?.data || [];
   const walletsCount = walletsData?.count || 0;
 
@@ -484,6 +495,43 @@ export default function WalletPage() {
       {/* ──── Wallets List View ──── */}
       {view === "list" && (
         <div className="space-y-4 animate-in fade-in zoom-in-95 duration-300">
+
+          {/* Filter Bar */}
+          <div className="flex flex-wrap gap-3 items-center">
+            {/* Search */}
+            <div className="relative flex-1 min-w-[200px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
+              <input
+                type="text"
+                placeholder="Search by name, phone, email..."
+                value={listSearch}
+                onChange={(e) => { setListSearch(e.target.value); setListSkip(0); }}
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-border-subtle bg-surface text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40"
+              />
+            </div>
+            {/* Status Filter */}
+            <select
+              value={listStatus}
+              onChange={(e) => { setListStatus(e.target.value); setListSkip(0); }}
+              className="px-4 py-2.5 rounded-2xl border border-border-subtle bg-surface text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 cursor-pointer font-medium"
+              style={{ colorScheme: theme }}
+            >
+              <option value="" style={{ backgroundColor: theme === "dark" ? "#0b1220" : "#ffffff", color: theme === "dark" ? "#ffffff" : "#0f172a" }}>All Statuses</option>
+              <option value="ACTIVE" style={{ backgroundColor: theme === "dark" ? "#0b1220" : "#ffffff", color: theme === "dark" ? "#ffffff" : "#0f172a" }}>Active</option>
+              <option value="FROZEN" style={{ backgroundColor: theme === "dark" ? "#0b1220" : "#ffffff", color: theme === "dark" ? "#ffffff" : "#0f172a" }}>Frozen</option>
+              <option value="CLOSED" style={{ backgroundColor: theme === "dark" ? "#0b1220" : "#ffffff", color: theme === "dark" ? "#ffffff" : "#0f172a" }}>Closed</option>
+            </select>
+            {/* Clear Filters */}
+            {(listSearch || listStatus) && (
+              <button
+                onClick={() => { setListSearch(""); setListStatus(""); setListSkip(0); }}
+                className="px-4 py-2.5 rounded-2xl border border-red-500/20 bg-red-500/5 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-all"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+
           <div className="bg-surface border border-border-subtle rounded-3xl overflow-hidden shadow-2xl">
             <UsersTable columns={walletColumns} data={wallets} loading={walletsFetching} />
           </div>

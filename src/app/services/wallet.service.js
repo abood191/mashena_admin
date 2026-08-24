@@ -1,8 +1,8 @@
 import { api } from "./apiClient";
 
 export const walletService = {
-  getWallets: ({ skip, limit, search }) =>
-    api.get("/api/wallets", { skip, limit, search }),
+  getWallets: ({ skip, limit, search, status }) =>
+    api.get("/api/wallets", { skip, limit, ...(search ? { search } : {}), ...(status ? { status } : {}) }),
 
   getWalletByUserId: (userId) =>
     api.get(`/api/wallets/users/${userId}`),
