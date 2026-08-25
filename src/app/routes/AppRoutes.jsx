@@ -31,6 +31,10 @@ export const routeComponents = {
   "/details": lazyWithPreload(() => import("../pages/request/RequestDetailsPage")),
   "/trip-history": lazyWithPreload(() => import("../pages/trips/TripHistoryPage")),
   "/trip-history/:id": lazyWithPreload(() => import("../pages/trips/TripDetailsPage")),
+  "/shared-rides": lazyWithPreload(() => import("../pages/shared-rides/SharedRidesPage")),
+  "/shared-rides/tracking/:id": lazyWithPreload(() => import("../pages/shared-rides/SharedRideTrackingPage")),
+  "/passenger-pools": lazyWithPreload(() => import("../pages/passenger-pools/PassengerPoolsPage")),
+  "/passenger-pools/tracking/:id": lazyWithPreload(() => import("../pages/passenger-pools/PassengerPoolTrackingPage")),
   "/notifications": lazyWithPreload(() => import("../pages/notifications/NotificationsPage")),
   "/notifications/send": lazyWithPreload(() => import("../pages/notifications/SendNotificationPage")),
 };
@@ -66,6 +70,10 @@ const NotificationsPage = routeComponents["/notifications"];
 const SendNotificationPage = routeComponents["/notifications/send"];
 const TripHistoryPage = routeComponents["/trip-history"];
 const TripDetailsPage = routeComponents["/trip-history/:id"];
+const SharedRidesPage = routeComponents["/shared-rides"];
+const SharedRideTrackingPage = routeComponents["/shared-rides/tracking/:id"];
+const PassengerPoolsPage = routeComponents["/passenger-pools"];
+const PassengerPoolTrackingPage = routeComponents["/passenger-pools/tracking/:id"];
 
 // Global Visible Loader applied when loading route chunks
 function SuspenseFallback() {
@@ -108,6 +116,10 @@ export default function AppRoutes() {
         <Route path="/profile/:type/:id" element={<UserProfilePage />} />
         <Route path="/trip-history" element={<TripHistoryPage />} />
         <Route path="/trip-history/:id" element={<TripDetailsPage />} />
+        <Route path="/shared-rides" element={<SharedRidesPage />} />
+        <Route path="/shared-rides/tracking/:id" element={<SharedRideTrackingPage />} />
+        <Route path="/passenger-pools" element={<PassengerPoolsPage />} />
+        <Route path="/passenger-pools/tracking/:id" element={<PassengerPoolTrackingPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/notifications/send" element={<SendNotificationPage />} />
         <Route path="/403" element={<UnauthorizedPage />} />

@@ -31,14 +31,14 @@
       "apiNote": "متصل بواجهة API — POST /api/auth/admin/login",
       "emailPlaceholder": "admin@example.com",
       "passwordPlaceholder": "••••••••",
-      "errors": { "generic": "فشل تسجيل الدخول" }
+      "errors": {
+        "generic": "فشل تسجيل الدخول"
+      }
     }
   },
-
   "topbar": {
     "search": "بحث (رقم الرحلة، السائق، الراكب...)"
   },
-
   "sidebar": {
     "vehicleTypes": "أنواع المركبات",
     "brand": "مشينا",
@@ -52,7 +52,7 @@
     "liveTracking": "التتبع المباشر",
     "admins": "الأدمن",
     "accredited": "المستخدمين المعتمدين",
-    "settings": "الإعدادات",  
+    "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "roles": "إدارة الصلاحيات",
     "wallet": "المحفظة",
@@ -62,9 +62,10 @@
     "tripHistory": "سجل الرحلات",
     "notifications": "الإشعارات",
     "notificationsList": "جميع الإشعارات",
-    "sendNotification": "إرسال إشعار"
+    "sendNotification": "إرسال إشعار",
+    "sharedRides": "الرحلات التشاركية",
+    "passengerPools": "غرف التجمع"
   },
-
   "common": {
     "cancel": "إلغاء",
     "save": "حفظ",
@@ -102,7 +103,6 @@
       "fare": "الأجرة"
     }
   },
-
   "tripDetails": {
     "loading": "جاري تحميل تفاصيل الرحلة...",
     "notFound": "الرحلة غير موجودة",
@@ -141,7 +141,6 @@
       "cartoLight": "خريطة مضيئة"
     }
   },
-
   "ratings": {
     "title": "التقييمات",
     "subtitle": "إدارة وتصفية جميع تقييمات النظام",
@@ -160,7 +159,6 @@
       "date": "التاريخ"
     }
   },
-
   "ratingTags": {
     "title": "تاغات التقييم",
     "subtitle": "إدارة تاغات التقييم للسائقين والركاب",
@@ -219,7 +217,6 @@
       "toggleFailed": "فشل تغيير الحالة"
     }
   },
-
   "roles": {
     "title": "إدارة الصلاحيات",
     "subtitle": "إنشاء الأدوار وإسناد الصلاحيات.",
@@ -238,7 +235,6 @@
     "allAssigned": "كل الصلاحيات مسندة بالفعل.",
     "saveChanges": "حفظ التغييرات",
     "saveHint": "لاحقاً سيستدعي هذا PUT /api/roles/{roleId}/permissions",
-
     "toast": {
       "roleExists": "هذا الدور موجود بالفعل.",
       "roleCreated": "تم إنشاء الدور بنجاح.",
@@ -263,7 +259,6 @@
       "delete": "حذف"
     }
   },
-
   "drivers": {
     "title": "السائقون",
     "searchPlaceholder": "بحث عن سائق...",
@@ -421,7 +416,6 @@
       "loaded": "تم تحميل الإعدادات."
     }
   },
-
   "coupons": {
     "title": "الكوبونات",
     "subtitle": "إدارة كوبونات الخصم ومتابعة استخدامها",
@@ -542,7 +536,6 @@
       "cartoLight": "خريطة فاتحة"
     }
   },
-
   "notificationsManagement": {
     "list": {
       "title": "جميع الإشعارات",
@@ -574,6 +567,39 @@
       "sending": "جاري الإرسال...",
       "success": "تم إرسال الإشعار بنجاح!",
       "error": "فشل في إرسال الإشعار"
+    }
+  },
+  "sharedRides": {
+    "subtitle": "إدارة وتتبع جميع الرحلات التشاركية بشكل حي",
+    "searchPlaceholder": "الاسم، الهاتف، العنوان...",
+    "status": "الحالة",
+    "allStatuses": "جميع الحالات",
+    "fromDate": "من تاريخ",
+    "toDate": "إلى تاريخ",
+    "noData": "لم يتم العثور على رحلات تشاركية تطابق الفلاتر.",
+    "table": {
+      "id": "الرقم",
+      "driver": "السائق",
+      "route": "المسار",
+      "passengers": "الركاب",
+      "actions": "إجراءات"
+    }
+  },
+  "passengerPools": {
+    "subtitle": "إدارة وتتبع غرف تجمع الركاب",
+    "searchPlaceholder": "الاسم، الهاتف، العنوان...",
+    "status": "الحالة",
+    "allStatuses": "جميع الحالات",
+    "fromDate": "من تاريخ",
+    "toDate": "إلى تاريخ",
+    "noData": "لم يتم العثور على غرف تجمع تطابق الفلاتر.",
+    "table": {
+      "roomId": "رقم الغرفة",
+      "status": "الحالة",
+      "meetingPoint": "نقطة التجمع",
+      "destination": "الوجهة",
+      "passengers": "الركاب",
+      "actions": "إجراءات"
     }
   }
 }

@@ -31,14 +31,14 @@
       "apiNote": "Connected to real API — POST /api/auth/admin/login",
       "emailPlaceholder": "admin@example.com",
       "passwordPlaceholder": "••••••••",
-      "errors": { "generic": "Login failed" }
+      "errors": {
+        "generic": "Login failed"
+      }
     }
   },
-
   "topbar": {
     "search": "Search (Trip ID, Driver, Rider...)"
   },
-
   "sidebar": {
     "brand": "Mashena",
     "vehicleTypes": "Vehicle Types",
@@ -62,9 +62,10 @@
     "tripHistory": "Trip History",
     "notifications": "Notifications",
     "notificationsList": "All Notifications",
-    "sendNotification": "Send Notification"
+    "sendNotification": "Send Notification",
+    "sharedRides": "Shared Rides",
+    "passengerPools": "Passenger Pools"
   },
-
   "common": {
     "cancel": "Cancel",
     "save": "Save",
@@ -75,8 +76,8 @@
     "of": "of",
     "total": "total",
     "search": "Search",
-    "no":"no",
-    "yes":"yes",
+    "no": "no",
+    "yes": "yes",
     "nodata": "No data available",
     "loading": "Loading...",
     "noResults": "No users found",
@@ -102,7 +103,6 @@
       "fare": "FARE"
     }
   },
-
   "tripDetails": {
     "loading": "Loading trip details...",
     "notFound": "Trip Not Found",
@@ -141,7 +141,6 @@
       "cartoLight": "Carto Light"
     }
   },
-
   "ratings": {
     "title": "Ratings",
     "subtitle": "Manage and filter all system ratings",
@@ -160,7 +159,6 @@
       "date": "Date"
     }
   },
-
   "ratingTags": {
     "title": "Rating Tags",
     "subtitle": "Manage rating tags for drivers and riders",
@@ -219,7 +217,6 @@
       "toggleFailed": "Failed to toggle status"
     }
   },
-
   "roles": {
     "title": "Role Management",
     "subtitle": "Create roles and assign permissions.",
@@ -238,7 +235,6 @@
     "allAssigned": "All permissions are already assigned.",
     "saveChanges": "Save changes",
     "saveHint": "Later this will call PUT /api/roles/{roleId}/permissions",
-
     "toast": {
       "roleExists": "Role already exists.",
       "roleCreated": "Role created successfully.",
@@ -263,7 +259,6 @@
       "delete": "Delete"
     }
   },
-
   "drivers": {
     "title": "Drivers",
     "searchPlaceholder": "Search drivers...",
@@ -422,7 +417,6 @@
       "loaded": "Settings loaded."
     }
   },
-
   "coupons": {
     "title": "Coupons",
     "subtitle": "Manage discount coupons and track their usage",
@@ -544,6 +538,39 @@
       "googleSat": "Google Sat",
       "cartoDark": "Carto Dark",
       "cartoLight": "Carto Light"
+    }
+  },
+  "sharedRides": {
+    "subtitle": "Manage and track all shared rides in real-time",
+    "searchPlaceholder": "Name, phone, address...",
+    "status": "Status",
+    "allStatuses": "All Statuses",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "noData": "No shared rides found matching the filters.",
+    "table": {
+      "id": "ID",
+      "driver": "Driver",
+      "route": "Route",
+      "passengers": "Passengers",
+      "actions": "Actions"
+    }
+  },
+  "passengerPools": {
+    "subtitle": "Manage and track passenger grouping rooms",
+    "searchPlaceholder": "Name, phone, address...",
+    "status": "Status",
+    "allStatuses": "All Statuses",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "noData": "No passenger pools found matching the filters.",
+    "table": {
+      "roomId": "Room ID",
+      "status": "Status",
+      "meetingPoint": "Meeting Point",
+      "destination": "Destination",
+      "passengers": "Passengers",
+      "actions": "Actions"
     }
   }
 }

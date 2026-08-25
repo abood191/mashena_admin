@@ -58,6 +58,16 @@ export const NAV_ITEMS = [
     icon: Route,
   },
   {
+    to: "/shared-rides",
+    labelKey: "sidebar.sharedRides",
+    icon: Route,
+  },
+  {
+    to: "/passenger-pools",
+    labelKey: "sidebar.passengerPools",
+    icon: Users,
+  },
+  {
     to: "/trip-history",
     labelKey: "sidebar.tripHistory",
     icon: History,
