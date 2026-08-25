@@ -23,6 +23,13 @@ export const useNotifications = (options = {}) => {
   });
 };
 
+export const useAdminNotificationHistory = (options = {}) => {
+  return useQuery({
+    queryKey: ["admin_notifications_history", options],
+    queryFn: () => notificationService.getAdminNotificationHistory(options),
+  });
+};
+
 export const useMarkNotificationAsRead = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -44,13 +51,11 @@ export const useMarkAllNotificationsAsRead = () => {
 };
 
 export const useSendAdminNotification = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: notificationService.sendAdminNotification,
     onSuccess: () => {
-      toast.success("تم إرسال الإشعار بنجاح");
-    },
-    onError: () => {
-      toast.error("فشل في إرسال الإشعار");
+      queryClient.invalidateQueries({ queryKey: ["admin_notifications_history"] });
     },
   });
 };

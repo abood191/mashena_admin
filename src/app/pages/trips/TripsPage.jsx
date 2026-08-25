@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useActiveTrips } from "../../hooks/api/useActiveTrips";
-import { AlertTriangle, Loader2, Map, MapPin, Navigation, Radio, ShieldAlert, UserRound } from "lucide-react";
+import { AlertTriangle, Loader2, Map, MapPin, Navigation, Radio, ShieldAlert, UserRound, RefreshCw } from "lucide-react";
 
 function formatTripId(tripId) {
   if (!tripId) return "Unknown";
@@ -8,7 +8,7 @@ function formatTripId(tripId) {
 }
 
 export default function TripsPage() {
-  const { data: activeTrips = [], isLoading, error } = useActiveTrips();
+  const { data: activeTrips = [], isLoading, error, refetch, isFetching } = useActiveTrips();
   const navigate = useNavigate();
 
   const getStatusBadgeClass = (status) => {
@@ -46,6 +46,14 @@ export default function TripsPage() {
         </div>
 
         <div className="flex items-center gap-4">
+          <button 
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] rounded-2xl p-2.5 flex items-center justify-center transition-colors disabled:opacity-50 cursor-pointer"
+            title="Refresh Trips"
+          >
+            <RefreshCw className={`w-4 h-4 text-indigo-400 ${isFetching ? 'animate-spin' : ''}`} />
+          </button>
           <div className="bg-white/[0.02] border border-white/5 rounded-2xl px-4 py-2 flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
             <span className="text-xs font-semibold text-white/70">

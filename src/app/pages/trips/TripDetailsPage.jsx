@@ -7,7 +7,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { 
   ChevronLeft, Loader2, AlertTriangle, User, Car, Clock, MapPin, 
-  DollarSign, CheckCircle2, Navigation, Route as RouteIcon
+  DollarSign, CheckCircle2, Navigation, Route as RouteIcon, RefreshCw
 } from "lucide-react";
 
 // Pin Icons
@@ -42,7 +42,7 @@ export default function TripDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data: trip, isLoading, error } = useTrip(id);
+  const { data: trip, isLoading, error, refetch, isFetching } = useTrip(id);
   const [mapStyle, setMapStyle] = useState("google");
 
   const TILE_LAYERS = {
@@ -103,6 +103,16 @@ export default function TripDetailsPage() {
               {formatTime(trip.createdAt)}
             </span>
           </div>
+        </div>
+        <div className="ml-auto">
+          <button 
+            onClick={() => refetch()} 
+            disabled={isFetching}
+            className="p-2 bg-surface border border-border-subtle rounded-xl hover:bg-foreground/5 transition-colors disabled:opacity-50 flex items-center gap-2 text-xs font-bold shadow-sm"
+          >
+            <RefreshCw className={`w-4 h-4 text-[#4880FF] ${isFetching ? 'animate-spin' : ''}`} />
+            {t("common.refresh", "Refresh")}
+          </button>
         </div>
       </div>
 

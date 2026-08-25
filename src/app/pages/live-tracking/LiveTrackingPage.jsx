@@ -6,12 +6,12 @@ import { useTripTracking } from "../../hooks/realtime/useTripTracking";
 import { useActiveTrips, useTrip } from "../../hooks/api/useActiveTrips";
 import TrackingMap from "./components/TrackingMap";
 import { tripsService } from "../../services/trips.service";
-import { AlertTriangle, CarFront, MapPin, Navigation, Radio, XCircle } from "lucide-react";
+import { AlertTriangle, CarFront, MapPin, Navigation, Radio, XCircle, RefreshCw } from "lucide-react";
 
 export default function LiveTrackingPage() {
   const { t } = useTranslation();
   const { isConnected, activeDriverIds } = useRealtimeTracking();
-  const { data: activeTrips = [], isLoading, error } = useActiveTrips();
+  const { data: activeTrips = [], isLoading, error, refetch: refetchTrips, isFetching: isFetchingTrips } = useActiveTrips();
   
   const [mapStyle, setMapStyle] = useState("google");
   
@@ -92,6 +92,14 @@ export default function LiveTrackingPage() {
 
           {/* Map Selector & Socket Status */}
           <div className="flex items-center gap-3.5">
+            <button 
+              onClick={() => refetchTrips()}
+              disabled={isFetchingTrips}
+              className="p-1.5 bg-foreground/5 border border-border-subtle rounded-xl hover:bg-foreground/10 transition-colors disabled:opacity-50"
+              title={t("common.refresh", "Refresh")}
+            >
+              <RefreshCw className={`w-4 h-4 text-indigo-400 ${isFetchingTrips ? 'animate-spin' : ''}`} />
+            </button>
             {/* Map Style Selector */}
             <div className="bg-black/40 border border-border-subtle p-1 rounded-xl flex gap-0.5 text-[9px] font-bold">
               {MAP_STYLES.map((style) => (

@@ -547,6 +547,13 @@
       "audience": "الجمهور المستهدف",
       "sendToAll": "إرسال لجميع المستخدمين",
       "sendToSpecific": "إرسال لمستخدمين محددين",
+      "target": {
+        "allSystem": "الكل",
+        "allDrivers": "جميع السائقين",
+        "allRiders": "جميع الركاب",
+        "allAdmins": "المدراء",
+        "specificUsers": "مستخدمين محددين"
+      },
       "userType": "نوع المستخدم",
       "driver": "سائق",
       "rider": "راكب",
