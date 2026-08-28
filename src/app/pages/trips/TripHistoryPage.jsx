@@ -98,7 +98,7 @@ export default function TripHistoryPage() {
               placeholder={t("tripHistory.searchPlaceholder", "Trip ID, Rider, Driver...")}
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-border-subtle bg-foreground/5 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-border-subtle bg-foreground/5 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 "
             />
           </div>
         </form>
@@ -108,7 +108,7 @@ export default function TripHistoryPage() {
           <div className="relative">
             <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
             <select
-              className="w-full bg-surface border-border-subtle text-foreground rounded-2xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 border appearance-none font-medium cursor-pointer"
+              className="w-full bg-surface border-border-subtle text-foreground rounded-2xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 border appearance-none font-medium cursor-pointer [&>option]:bg-white [&>option]:text-[#0f172a] dark:[&>option]:bg-[#0b1220] dark:[&>option]:text-white"
               value={filters.status}
               onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value, skip: 0 }))}
             >

@@ -4,7 +4,7 @@ import { sharedRideService } from "../../services/sharedRide.service";
 export const sharedRidesKeys = {
   all: ["sharedRides"],
   list: (filters) => ["sharedRides", "list", filters],
-  tracking: (id) => ["sharedRides", "tracking", id],
+  tracking: (id) => ["sharedRides", "tracking", String(id)],
 };
 
 export function useSharedRides(filters) {

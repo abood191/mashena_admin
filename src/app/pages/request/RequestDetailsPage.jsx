@@ -170,6 +170,7 @@ function RequestDetailsContent({ request, vehicleTypes, navigate, t }) {
       {/* Documents Uploader */}
       <DocumentsUploader
         driverProfileId={request.driverProfileId}
+        userId={request.userId}
         onDocsChange={setDocsMap}
       />
 

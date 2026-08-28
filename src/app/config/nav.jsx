@@ -12,7 +12,11 @@ import {
   Ticket,
   History,
   Bell,
-  Send
+  Send,
+  MessageSquareWarning,
+  AlertTriangle,
+  Zap,
+  ScrollText,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -117,5 +121,25 @@ export const NAV_ITEMS = [
     to: "/notifications/send",
     labelKey: "sidebar.sendNotification",
     icon: Send,
+  },
+  {
+    to: "/moderation/appeals",
+    labelKey: "sidebar.moderationAppeals",
+    icon: MessageSquareWarning,
+  },
+  {
+    to: "/moderation/violations",
+    labelKey: "sidebar.moderationViolations",
+    icon: AlertTriangle,
+  },
+  {
+    to: "/moderation/rules",
+    labelKey: "sidebar.moderationRules",
+    icon: Zap,
+  },
+  {
+    to: "/moderation/audit-logs",
+    labelKey: "sidebar.auditLogs",
+    icon: ScrollText,
   },
 ];

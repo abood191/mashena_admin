@@ -37,6 +37,10 @@ export const routeComponents = {
   "/passenger-pools/tracking/:id": lazyWithPreload(() => import("../pages/passenger-pools/PassengerPoolTrackingPage")),
   "/notifications": lazyWithPreload(() => import("../pages/notifications/NotificationsPage")),
   "/notifications/send": lazyWithPreload(() => import("../pages/notifications/SendNotificationPage")),
+  "/moderation/appeals": lazyWithPreload(() => import("../pages/moderation/AppealsQueuePage")),
+  "/moderation/violations": lazyWithPreload(() => import("../pages/moderation/ViolationsLogPage")),
+  "/moderation/rules": lazyWithPreload(() => import("../pages/moderation/RulesPage")),
+  "/moderation/audit-logs": lazyWithPreload(() => import("../pages/moderation/AuditLogsPage")),
 };
 
 export function preloadRoute(path) {
@@ -68,6 +72,10 @@ const UserProfilePage = routeComponents["/profile"];
 const UnauthorizedPage = routeComponents["/403"];
 const NotificationsPage = routeComponents["/notifications"];
 const SendNotificationPage = routeComponents["/notifications/send"];
+const AppealsQueuePage = routeComponents["/moderation/appeals"];
+const ViolationsLogPage = routeComponents["/moderation/violations"];
+const RulesPage = routeComponents["/moderation/rules"];
+const AuditLogsPage = routeComponents["/moderation/audit-logs"];
 const TripHistoryPage = routeComponents["/trip-history"];
 const TripDetailsPage = routeComponents["/trip-history/:id"];
 const SharedRidesPage = routeComponents["/shared-rides"];
@@ -122,6 +130,10 @@ export default function AppRoutes() {
         <Route path="/passenger-pools/tracking/:id" element={<PassengerPoolTrackingPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/notifications/send" element={<SendNotificationPage />} />
+        <Route path="/moderation/appeals" element={<AppealsQueuePage />} />
+        <Route path="/moderation/violations" element={<ViolationsLogPage />} />
+        <Route path="/moderation/rules" element={<RulesPage />} />
+        <Route path="/moderation/audit-logs" element={<AuditLogsPage />} />
         <Route path="/403" element={<UnauthorizedPage />} />
       </Routes>
     </Suspense>

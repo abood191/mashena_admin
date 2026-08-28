@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useActiveTrips } from "../../hooks/api/useActiveTrips";
-import { AlertTriangle, Loader2, Map, MapPin, Navigation, Radio, ShieldAlert, UserRound, RefreshCw } from "lucide-react";
+import { useRealtimeTracking } from "../../hooks/realtime/useRealtimeTracking";
+import { AlertTriangle, Loader2, Map, MapPin, Navigation, Radio, ShieldAlert, UserRound, RefreshCw, Wifi, WifiOff } from "lucide-react";
 
 function formatTripId(tripId) {
   if (!tripId) return "Unknown";
@@ -9,6 +10,7 @@ function formatTripId(tripId) {
 
 export default function TripsPage() {
   const { data: activeTrips = [], isLoading, error, refetch, isFetching } = useActiveTrips();
+  const { isConnected } = useRealtimeTracking(); // Enable realtime socket updates for this page
   const navigate = useNavigate();
 
   const getStatusBadgeClass = (status) => {
@@ -46,6 +48,16 @@ export default function TripsPage() {
         </div>
 
         <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-slate-900/50">
+             {isConnected ? (
+                <Wifi className="w-4 h-4 text-emerald-400" />
+             ) : (
+                <WifiOff className="w-4 h-4 text-red-400" />
+             )}
+             <span className={`text-[10px] font-bold uppercase ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
+                {isConnected ? 'LIVE' : 'OFFLINE'}
+             </span>
+          </div>
           <button 
             onClick={() => refetch()}
             disabled={isFetching}

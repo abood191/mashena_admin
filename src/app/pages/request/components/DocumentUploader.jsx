@@ -9,7 +9,7 @@ import { CheckCircle2, AlertCircle, Loader2, Upload, Calendar } from "lucide-rea
  * Now fully query-driven: loads existing documents via React Query.
  * Propagates a docsMap up to the parent for validation.
  */
-export function DocumentsUploader({ driverProfileId, onDocsChange }) {
+export function DocumentsUploader({ driverProfileId, userId, onDocsChange }) {
   const { t } = useTranslation("common");
 
   const docTypes = [
@@ -76,6 +76,7 @@ export function DocumentsUploader({ driverProfileId, onDocsChange }) {
             label={doc.label}
             required={doc.required}
             driverProfileId={driverProfileId}
+            userId={userId}
             initialData={getInitialData(doc.id)}
             onUploadSuccess={() => {
               // onDocsChange will be re-called via the useEffect above after invalidation triggers a refetch
@@ -94,7 +95,7 @@ export function DocumentsUploader({ driverProfileId, onDocsChange }) {
  * - Cleans up object URLs on unmount (no memory leaks)
  * - Prevents duplicate submissions via isPending state
  */
-function DocumentItem({ type, label, required, driverProfileId, initialData, t }) {
+function DocumentItem({ type, label, required, driverProfileId, userId, initialData, t }) {
   const [localData, setLocalData] = useState(initialData);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -174,7 +175,8 @@ function DocumentItem({ type, label, required, driverProfileId, initialData, t }
       } else {
         // UPLOAD new document
         await uploadMutation.mutateAsync({
-          driverProfileId,
+          userId,
+          driverProfileId, // for cache invalidation
           docType: type,
           issuedAt: localData.issuedAt,
           expiresAt: localData.expiresAt,

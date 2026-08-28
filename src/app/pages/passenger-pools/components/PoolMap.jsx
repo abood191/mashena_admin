@@ -84,6 +84,10 @@ const DriverMarker = memo(({ driverId }) => {
   useEffect(() => {
     if (!driverId) return;
     const unsubscribe = driverLocationStore.subscribe(driverId, (data) => {
+      if (!data) {
+        setPosition(null);
+        return;
+      }
       if (data?.latitude && data?.longitude) {
         setPosition([data.latitude, data.longitude]);
         if (data.bearing != null) setBearing(data.bearing);

@@ -175,7 +175,7 @@ export default function RatingsPage() {
             <select
               value={score}
               onChange={(e) => { setScore(e.target.value); setSkip(0); }}
-              className="w-full bg-surface border border-border-subtle rounded-2xl py-3 px-4 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all appearance-none cursor-pointer"
+              className="w-full bg-surface border border-border-subtle rounded-2xl py-3 px-4 text-foreground focus:outline-none focus:ring-2 focus:ring-[#4880FF]/30 transition-all appearance-none cursor-pointer [&>option]:bg-white [&>option]:text-[#0f172a] dark:[&>option]:bg-[#0b1220] dark:[&>option]:text-white"
             >
               <option value="">{t("ratings.allScores")}</option>
               <option value="5">{t("ratings.stars", { count: 5 })}</option>

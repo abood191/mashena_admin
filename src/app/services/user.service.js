@@ -23,4 +23,6 @@ export const userService = {
   getRiderById: (id) => api.get(`/api/user/riders/${id}`),
   getAdminById: (id) => api.get(`/api/user/admins/${id}`),
   getAccreditedById: (id) => api.get(`/api/user/accredited/${id}`),
+  
+  deleteUser: (id) => api.del(`/api/user/${id}`),
 };

@@ -112,12 +112,21 @@ function MapController({ center, zoom }) {
 // Cinematic focus controller for selected routes
 function MapFlyController({ selectedTripId, activeTrips }) {
   const map = useMap();
+  const lastFocusedId = useRef(null);
   
   useEffect(() => {
-    if (!selectedTripId || activeTrips.length === 0) return;
+    if (!selectedTripId || activeTrips.length === 0) {
+      if (!selectedTripId) lastFocusedId.current = null;
+      return;
+    }
+    
+    // Prevent auto-panning if we have already focused on this specific trip
+    if (lastFocusedId.current === selectedTripId) return;
     
     const trip = activeTrips.find((t) => t.id === selectedTripId);
     if (!trip || !trip.route || trip.route.length === 0) return;
+
+    lastFocusedId.current = selectedTripId;
 
     // Build precise bounding box for full road snapped coordinates
     const bounds = L.latLngBounds(trip.route);
@@ -638,6 +647,19 @@ export default function TrackingMap({ activeDriverIds, mapStyle = "google", acti
                               lineJoin: "round"
                             }}
                             eventHandlers={{ click: () => onSelectTrip(trip.id) }}
+                          />
+                        )}
+
+                        {/* 4. Actual Driven Route (Emerald Green) */}
+                        {trip.actualRoute && trip.actualRoute.length >= 2 && (
+                          <Polyline
+                            positions={trip.actualRoute}
+                            pathOptions={{
+                              color: "#10B981",
+                              weight: isSelected ? 6 : 4,
+                              opacity: 0.9,
+                              lineJoin: "round"
+                            }}
                           />
                         )}
 

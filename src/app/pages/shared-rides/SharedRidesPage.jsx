@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useSharedRides } from "../../hooks/api/useSharedRides";
-import { Loader2, Eye, Search, Filter, RefreshCw, Car } from "lucide-react";
+import { useRealtimeTracking } from "../../hooks/realtime/useRealtimeTracking";
+import { Loader2, Eye, Search, Filter, RefreshCw, Car, Wifi, WifiOff } from "lucide-react";
 
 export default function SharedRidesPage() {
   const { t } = useTranslation();
+  const { isConnected } = useRealtimeTracking(); // Enable socket updates
   
   // Filter states
   const [filters, setFilters] = useState({
@@ -41,14 +43,26 @@ export default function SharedRidesPage() {
             {t("sharedRides.subtitle", "Manage and track all shared rides in real-time")}
           </p>
         </div>
-        <button 
-          onClick={() => refetch()} 
-          disabled={isFetching}
-          className="p-2 bg-surface border border-border-subtle rounded-xl hover:bg-foreground/5 transition-colors disabled:opacity-50 flex items-center gap-2 text-sm font-medium"
-        >
-          <RefreshCw className={`w-4 h-4 text-[#4880FF] ${isFetching ? 'animate-spin' : ''}`} />
-          {t("common.refresh", "Refresh")}
-        </button>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-surface/50">
+             {isConnected ? (
+                <Wifi className="w-4 h-4 text-emerald-400" />
+             ) : (
+                <WifiOff className="w-4 h-4 text-red-400" />
+             )}
+             <span className={`text-[10px] font-bold uppercase ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
+                {isConnected ? 'LIVE' : 'OFFLINE'}
+             </span>
+          </div>
+          <button 
+            onClick={() => refetch()} 
+            disabled={isFetching}
+            className="p-2 bg-surface border border-border-subtle rounded-xl hover:bg-foreground/5 transition-colors disabled:opacity-50 flex items-center gap-2 text-sm font-medium"
+          >
+            <RefreshCw className={`w-4 h-4 text-[#4880FF] ${isFetching ? 'animate-spin' : ''}`} />
+            {t("common.refresh", "Refresh")}
+          </button>
+        </div>
       </div>
 
       {/* Filters Section */}

@@ -177,7 +177,7 @@ export default function TripDetailsPage() {
               <select
                 value={mapStyle}
                 onChange={(e) => setMapStyle(e.target.value)}
-                className="bg-surface border border-border-subtle text-foreground text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 cursor-pointer"
+                className="bg-surface border border-border-subtle text-foreground text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#4880FF]/40 cursor-pointer [&>option]:bg-white [&>option]:text-[#0f172a] dark:[&>option]:bg-[#0b1220] dark:[&>option]:text-white"
               >
                 <option value="google">{t("tripDetails.mapStyles.googleRoad", "Google Road")}</option>
                 <option value="satellite">{t("tripDetails.mapStyles.satellite", "Satellite")}</option>

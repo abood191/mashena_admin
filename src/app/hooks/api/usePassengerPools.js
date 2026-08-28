@@ -4,7 +4,7 @@ import { passengerPoolService } from "../../services/passengerPool.service";
 export const passengerPoolsKeys = {
   all: ["passengerPools"],
   list: (filters) => ["passengerPools", "list", filters],
-  tracking: (id) => ["passengerPools", "tracking", id],
+  tracking: (id) => ["passengerPools", "tracking", String(id)],
 };
 
 export function usePassengerPools(filters) {

@@ -123,10 +123,44 @@ export function useTripTracking(rawTripId) {
 
   trackLocationEvent();
   driverLocationStore.updateLocation(location.driverId, location);
+  
+  // Accumulate live path so it draws on the map in real-time
+  if (location.tripId) {
+    const updateTripActualRoute = (trip) => {
+      if (!trip) return trip;
+      return {
+        ...trip,
+        actualRoute: [
+          ...(trip.actualRoute || []),
+          [location.latitude, location.longitude]
+        ]
+      };
+    };
+
+    queryClient.setQueryData(tripKeys.active(), (current = []) => {
+      return current.map(t => t.id === location.tripId ? updateTripActualRoute(t) : t);
+    });
+    
+    queryClient.setQueryData(tripKeys.detail(location.tripId), (trip) => {
+      return updateTripActualRoute(trip);
+    });
+  }
 };
+
+    const handleTripRemoved = (payload) => {
+      const removedTripId = payload?.tripId || payload?.id;
+      if (removedTripId === tripId) {
+        driverLocationStore.clear();
+        setSnapshot(null);
+        queryClient.setQueryData(tripKeys.active(), (current = []) => {
+          return current.filter(t => t.id !== tripId);
+        });
+      }
+    };
 
     socketService.on("admin:trip:snapshot", handleSnapshot);
     socketService.on("admin:trip:driver-location", handleDriverLocation);
+    socketService.on("admin:trip:removed", handleTripRemoved);
     socketService.emit("admin:trip:join", { tripId });
     console.log(
   "JOINING ROOM",
@@ -137,6 +171,7 @@ export function useTripTracking(rawTripId) {
       socketService.emit("admin:trip:leave", { tripId });
       socketService.off("admin:trip:snapshot", handleSnapshot);
       socketService.off("admin:trip:driver-location", handleDriverLocation);
+      socketService.off("admin:trip:removed", handleTripRemoved);
       driverLocationStore.clear();
     };
   }, [queryClient, tripId]);

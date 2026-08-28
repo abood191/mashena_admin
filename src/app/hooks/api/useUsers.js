@@ -138,3 +138,15 @@ export const useAccreditedUser = (id) => {
     enabled: !!id,
   });
 };
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => userService.deleteUser(id),
+    onSuccess: () => {
+      // Invalidate all user lists
+      queryClient.invalidateQueries({ queryKey: userKeys.all });
+    },
+  });
+};

@@ -18,10 +18,11 @@ export const driverDocumentsService = {
     return api.get(`/api/driver-documents/driver-profile/${driverProfileId}`);
   },
 
-  upload: async ({ driverProfileId, docType, issuedAt, expiresAt, file }) => {
+  upload: async ({ userId, driverProfileId, docType, issuedAt, expiresAt, file }) => {
     const fd = new FormData();
-    fd.append("driverProfileId", driverProfileId);
+    fd.append("userId", userId);
     fd.append("docType", docType);
+    fd.append("status", "approved");
     if (issuedAt) fd.append("issuedAt", toISO(issuedAt));
     if (expiresAt) fd.append("expiresAt", toISO(expiresAt));
     fd.append("file", file);

@@ -84,6 +84,10 @@ const DriverMarker = memo(({ driverId }) => {
   useEffect(() => {
     if (!driverId) return;
     const unsubscribe = driverLocationStore.subscribe(driverId, (data) => {
+      if (!data) {
+        setPosition(null);
+        return;
+      }
       if (data?.latitude && data?.longitude) {
         setPosition([data.latitude, data.longitude]);
         if (data.bearing != null) setBearing(data.bearing);
@@ -150,8 +154,8 @@ export default function SharedRideMap({ snapshot }) {
     bounds.push(...actualRoutePath);
   }
 
-  // Fallback generic store ID using URL param to ensure driver syncs even if API snapshot fails
-  const driverId = snapshot?.driver?.id || snapshot?.driverId || `shared_ride_driver_${id}`;
+  // Use consistent store ID matching the socket hook
+  const driverId = `shared_ride_driver_${id}`;
 
   return (
     <div className="absolute inset-0 z-0">

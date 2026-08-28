@@ -7,13 +7,33 @@ class DriverLocationStore {
 
   // Set/update driver location info
   updateLocation(driverId, data) {
-     console.log("STORE UPDATE", driverId, data);
+     // console.log("STORE UPDATE", driverId, data);
     const existing = this.drivers.get(driverId);
     
-    // Smooth bearing fallback
-    let bearing = data.bearing ?? 0;
-    if (existing && data.bearing === undefined) {
-      bearing = existing.bearing;
+    // Smooth bearing fallback - calculate it geographically if backend omits it
+    let bearing = data.bearing;
+    if (bearing === undefined || bearing === null) {
+      if (existing && existing.latitude && data.latitude) {
+        const lat1 = existing.latitude;
+        const lng1 = existing.longitude;
+        const lat2 = data.latitude;
+        const lng2 = data.longitude;
+        
+        const dy = lat2 - lat1;
+        const dx = Math.cos((Math.PI / 180) * lat1) * (lng2 - lng1);
+        const distSq = dx * dx + dy * dy;
+        
+        // If they moved enough (approx > 0.1 meters) to avoid GPS jitter spin
+        if (distSq > 0.000000000001) {
+          let angle = (Math.atan2(dx, dy) * 180) / Math.PI;
+          if (angle < 0) angle += 360;
+          bearing = angle;
+        } else {
+          bearing = existing.bearing || 0;
+        }
+      } else {
+        bearing = existing?.bearing || 0;
+      }
     }
 
     const updated = {
@@ -63,6 +83,12 @@ class DriverLocationStore {
   // Clear everything
   clear() {
     this.drivers.clear();
+    
+    // Notify all individual listeners that their driver is gone
+    this.listeners.forEach((subscribers) => {
+      subscribers.forEach((cb) => cb(null));
+    });
+
     this.notifyListListeners();
   }
 
